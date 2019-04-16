@@ -1,0 +1,73 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/rambodrahmani
+vRicevitore
+!i10b 1
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!s100 5[Ld6`zo@[1[h^D8cdz^O3
+IM@LinHz0=Q>CJ<:DCC4D83
+R0
+Z2 w1555409625
+Z3 8/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/Sistema.v
+Z4 F/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/Sistema.v
+L0 39
+Z5 OV;L;10.5b;63
+Z6 !s108 1555409919.000000
+Z7 !s107 /home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/Sistema.v|
+Z8 !s90 -reportprogress|300|-work|/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/dalle_porte_and_or_not|/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/Sistema.v|
+!i113 1
+Z9 o-work /home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/dalle_porte_and_or_not
+Z10 tCvgOpt 0
+n@ricevitore
+vSistema
+!i10b 1
+R1
+r1
+!s85 0
+31
+!s100 Ik8JMi348l3WD<fMLXzBJ0
+IW@0`kga0NEX@3FIEJFCP83
+R0
+R2
+R3
+R4
+L0 28
+R5
+R6
+R7
+R8
+!i113 1
+R9
+R10
+n@sistema
+vTrasmettitore
+!i10b 1
+R1
+r1
+!s85 0
+31
+!s100 e3Y9h^16M2]]mIS5JWXoZ2
+I4Lcg6d<TjkSV^C^KY3;DJ0
+R0
+R2
+R3
+R4
+L0 34
+R5
+R6
+R7
+R8
+!i113 1
+R9
+R10
+n@trasmettitore
