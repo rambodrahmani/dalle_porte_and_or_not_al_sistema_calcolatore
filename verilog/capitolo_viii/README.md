@@ -1,4 +1,4 @@
-# Capitolo I: Reti Logiche, Linguaggio Verilog E Algebra Booleana
+# Capitolo VIII
 
 --
 

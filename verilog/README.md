@@ -1,4 +1,7 @@
-# Capitolo I: Reti Logiche, Linguaggio Verilog E Algebra Booleana
+# Verilog Source Files
+
+This folder contains source code files written in Verilog and tested using
+ModelSim.
 
 --
 
