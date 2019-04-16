@@ -25,19 +25,54 @@
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 16/06/2019.
  */
+
+/*
+ * Il sistema digitale, cioe' la rete globale di nome Sistema, e' descritto
+ * dal primo dei tre costrutti module...endmodule. Il fatto che il nome di
+ * questa rete globale non sia seguito da un elenco di nomi di variabili
+ * indica che essa non ha variabili di ingresso o di uscita. I tre statementi
+ * interni al costrutto module...endmodule ci dicono che la rete Sistema
+ * contiene al suo interno tre oggetti.
+ */
 module Sistema;
+    // uno degli ogetti e' una variabile binaria di tipo wire (cioe' associata
+    // a un filo) e di nome locale w
     wire w;
+
+    // oggetto di tipo Trasmettitore e di nome locale T
     Trasmettitore   T(w);
+
+    // oggetto di tipo Ricevitore e di nome locale R
     Ricevitore      R(x);
 endmodule
 
+/**
+ * A valle del costrutto module...endmodule che descrive la rete Sistema sono
+ * riportati i due costruitti module...endmodule che descrivono le due reti
+ * usate come sottoreti. Il primo di questi due costrutti descrive la rete di
+ * tipo Trasmettitore; il fatto che il nome Trasmettitore sia seguito dalla
+ * specificazione (z) indica che le reti di tale tipo hanno una variabile per
+ * le connessioni esterne e che questa variabile e' denotata formalmente z.
+ */
 module Trasmettitore(z);
+    // questo statement ci dice poi che la variabile z e' una variabile di
+    // uscita associata a un filo
     output z;
-    // internal description
+
+    // descrizione della struttura interna
 endmodule
 
+/**
+ * Il terzo dei costruitti module...endmodule descrive la rete di tipo
+ * Ricevitore; il fatto che il nome Ricevitore sia seguito dalla
+ * specificazione (x) indica che le reti di tale tipo hanno una variabile per
+ * le connessioni esterne e che questa variabile e' formalmente denotata x.
+ */
 module Ricevitore(x);
+    // questo statement ci dice poi che questa variabile e' una variabile di
+    // ingresso associata a un filo
     input x;
-    // internal description
+
+    // descrizione della struttura interna
 endmodule
 
