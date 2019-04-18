@@ -3,6 +3,8 @@
 Dalle Porte AND OR NOT Al Sistema Calcolatore. Un viaggio nel mondo delle reti
 logiche in campagnia del linguaggio Verilog.
 
+![modelsim_screenshot](/screenshots/2019-04-18-163014_1366x768_scrot.png)
+
 # Sommario
 Prefazione
 
