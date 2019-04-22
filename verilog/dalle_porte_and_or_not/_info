@@ -140,6 +140,28 @@ r1
 R3
 R4
 n@rete_@combinatoria
+vRete_Combinatoria_2
+!s110 1555949081
+!i10b 1
+!s100 OMBP3HF7TbSV0V8i861D>2
+I7CcV9Ij4H@Za97eEcADB;0
+R1
+R0
+w1555949071
+8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_2.v
+F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_2.v
+L0 15
+R2
+r1
+!s85 0
+31
+!s108 1555949081.000000
+!s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_2.v|
+!s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_2.v|
+!i113 1
+R3
+R4
+n@rete_@combinatoria_2
 vRete_di_Tipo_A
 !i10b 1
 R1
