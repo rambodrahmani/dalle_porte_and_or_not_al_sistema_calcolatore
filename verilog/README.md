@@ -1,7 +1,7 @@
 # Verilog Source Files
 
-This folder contains source code files written in Verilog and tested using
-ModelSim.
+Questa cartella contiene i files dei codici sorgenti scritti in Verilog e
+simulati utilizzando ModelSim.
 
 --
 
