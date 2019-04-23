@@ -18,13 +18,16 @@
  *
  */
 
-module Decoder_2_to_4(x1, x0, z3, z2, z1, z0);
-    input x1, x0;
+/**
+ * Demultiplexer 1 to 4.
+ */
+module Demultiplexer_1_to_4(x, b1, b0, z3, z2, z1, z0);
+    input x, b1, b0;
     output z3, z2, z1, z0;
 
-    assign z3 = ({x1, x0}=='B11)?1:0;
-    assign z2 = ({x1, x0}=='B10)?1:0;
-    assign z1 = ({x1, x0}=='B01)?1:0;
-    assign z0 = ({x1, x0}=='B00)?1:0;
+    assign z3 = ({b1, b0}=='B11)?x:0;   // 'B11 = 3
+    assign z2 = ({b1, b0}=='B10)?x:0;   // 'B10 = 2
+    assign z1 = ({b1, b0}=='B01)?x:0;   // 'B01 = 1
+    assign z0 = ({b1, b0}=='B00)?x:0;   // 'B00 = 0
 endmodule
 

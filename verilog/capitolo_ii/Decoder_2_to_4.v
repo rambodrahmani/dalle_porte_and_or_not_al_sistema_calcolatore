@@ -19,13 +19,16 @@
  *
  */
 
+/**
+ * Decoder 2 to 4.
+ */
 module Decoder_2_to_4(x1, x0, z3, z2, z1, z0);
     input x1, x0;
     output z3, z2, z1, z0;
 
-    assign z3 = ({x1, x0}=='B11)?1:0;
-    assign z2 = ({x1, x0}=='B10)?1:0;
-    assign z1 = ({x1, x0}=='B01)?1:0;
-    assign z0 = ({x1, x0}=='B00)?1:0;
+    assign z3 = ({x1, x0}=='B11)?1:0;   // 'B11 = 3
+    assign z2 = ({x1, x0}=='B10)?1:0;   // 'B10 = 2
+    assign z1 = ({x1, x0}=='B01)?1:0;   // 'B01 = 1
+    assign z0 = ({x1, x0}=='B00)?1:0;   // 'B00 = 0
 endmodule
 
