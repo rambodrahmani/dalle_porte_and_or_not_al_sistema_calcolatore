@@ -42,10 +42,9 @@ comp:
 # dichiarato al momento del suo utilizzo.
 # 2
 fine:
-    MOVB    %CL, conteggio
-    movl    $0, %ebx    # risultato per UNIX
-    movl    $1, %eax    # primitiva UNIX exit
-    int     $0x80
+    MOVB    %CL,    conteggio
+    MOVL    $0,     %EBX    # risultato per UNIX
+    MOVL    $1,     %EAX    # primitiva UNIX exit
 
 ##
 # 1
