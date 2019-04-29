@@ -19,7 +19,7 @@
     conteggio:  .BYTE   0x00
 
 .TEXT
-_main:
+_start:
     NOP
     MOV     $0x00,      %CL
     LEA     stringa,    %ESI
@@ -37,10 +37,10 @@ poi:
     JMP     comp
 
 fine:
-    MV      %CL,    conteggio
+    MOV     %CL,    conteggio
     MOVL    $0,     %EBX    # risultato per UNIX
     MOVL    $1,     %EAX    # primitiva UNIX exit
-
+    INT     $0x80
 ##
 # 1
 # 
