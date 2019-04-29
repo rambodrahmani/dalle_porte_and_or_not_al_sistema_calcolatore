@@ -1,5 +1,11 @@
 ##
-# Conteggio dei bit a 1 in un long.
+#
+# File: conteggio_bit.s
+#       Conteggio dei bit a 1 in un long.
+#
+# Author: Rambod Rahmani <rambodrahmani@autistici.org>
+#         Created on 28/04/2019.
+#
 ##
 
 .GLOBAL _start
