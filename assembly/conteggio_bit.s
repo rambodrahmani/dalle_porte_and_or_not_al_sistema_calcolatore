@@ -8,6 +8,8 @@
 #
 ##
 
+.INCLUDE "util.s"
+
 .GLOBAL _start
 
 # Dichiarazioni di variabile (direttive).
@@ -49,10 +51,7 @@ comp:
 # 2
 fine:
     MOVB    %CL,    conteggio
-    MOVL    $0,     %EBX    # risultato per UNIX
-    MOVL    $1,     %EAX    # primitiva UNIX exit
-    INT     $0x80
-
+    JMP     uscita
 ##
 # 1
 #

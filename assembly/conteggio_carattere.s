@@ -11,6 +11,8 @@
 #         Created on 29/04/2019.
 #
 ##
+.INCLUDE "util.s"
+
 .GLOBAL _start
 
 .DATA
@@ -21,27 +23,26 @@
 .TEXT
 _start:
     NOP
-    MOV     $0x00,      %CL
-    LEA     stringa,    %ESI
-    MOV     lettera,    %AL
+    MOV $0x00,      %CL
+    LEA stringa,    %ESI
+    MOV lettera,    %AL
 
 comp:
-    CMPB    $0x00,      (%ESI)  # 1
+    CMPB    $0x00,  (%ESI)  # 1
     JE      fine
-    CMP     (%ESI),     %AL
+    CMP     (%ESI), %AL
     JNE     poi
     INC     %CL
 
 poi:
-    INC     %ESI
-    JMP     comp
+    INC %ESI
+    JMP comp
 
 fine:
-    MOV     %CL,    conteggio
-    MOVL    $0,     %EBX    # risultato per UNIX
-    MOVL    $1,     %EAX    # primitiva UNIX exit
-    INT     $0x80
+    MOV %CL,    conteggio
+    JMP uscita
 ##
 # 1
 # 
 ##
+
