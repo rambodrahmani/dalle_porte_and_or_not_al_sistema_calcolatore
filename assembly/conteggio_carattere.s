@@ -11,6 +11,7 @@
 #         Created on 29/04/2019.
 #
 ##
+
 .INCLUDE "util.s"
 
 .GLOBAL _start
@@ -22,27 +23,33 @@
 
 .TEXT
 _start:
-    NOP
-    MOV $0x00,      %CL
-    LEA stringa,    %ESI
-    MOV lettera,    %AL
+    NOP                     # No Operation
+    MOV $0x00,      %CL     # Azzera il contenuto di CL
+    LEA stringa,    %ESI    # The lea (load effective address) instruction is
+                            # used to put a memory address into the destination.
+    MOV lettera,    %AL     # Metti il contenuto di lettera in AL
 
 comp:
     CMPB    $0x00,  (%ESI)  # 1
-    JE      fine
-    CMP     (%ESI), %AL
-    JNE     poi
-    INC     %CL
+    JE      fine            # Se ESI e' nullo salta a fine
+    CMP     (%ESI), %AL     # Controlla il valore contenuto nel puntatore
+                            # presente nel registro ESI.
+    JNE     poi             # Se il contenuto e' diverso da AL salta a poi
+    INC     %CL             # ...altrimenti incrementa CL di 1
 
 poi:
-    INC %ESI
-    JMP comp
+    INC %ESI                # Incrementa il puntatore in ESI
+    JMP comp                # Salta (torna) a comp
 
 fine:
     MOV %CL,    conteggio
     JMP uscita
 ##
 # 1
-# 
+# Fondamentale: che succede se mi scordo la B nella CMPB?
+# Succede che l'assemblatore non segnala niente, e ci mette una L (vedere il
+# disassemblato per rendersene conto). In questo modo il programma non funziona
+# (infatti, prende sempre una lettera in piu' perche' straborda nella locazione
+# successiva della variabile lettera.
 ##
 
