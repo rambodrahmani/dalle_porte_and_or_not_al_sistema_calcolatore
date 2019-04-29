@@ -67,7 +67,7 @@ print_zero:
     MOVB    $'0',   %BL
     CALL    video
     MOVB    $0x00,  %AL
-    JMP     comp
+    JMP     print
 
 ##
 # Stampa il carattere '1'.
@@ -76,7 +76,7 @@ print_one:
     MOVB    $'1',   %BL
     CALL    video
     MOVB    $0x00,  %AL
-    JMP     comp
+    JMP     print
 
 # Stessa cosa di prima. Attenzione ad una sottigliezza. Il nome finenon e' stato
 # dichiarato al momento del suo utilizzo.
@@ -85,7 +85,6 @@ fine:
     MOVB    %CL,    conteggio
     MOVB    $'\n',  %BL         # carattere nuova riga
     CALL    video
-
     JMP     uscita
 
 ##

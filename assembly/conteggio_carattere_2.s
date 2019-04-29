@@ -1,6 +1,9 @@
 ##
 #
-# File: conteggio_carattere.s
+# File: conteggio_carattere_2.s
+#       VARIAZIONE sul tema per l’indirizzamento (uso di displacement + registro
+#       di modifica).
+#
 #       Scrivere un programma che legge una stringa di memoria lunga un numero
 #       arbitrario di caratteri (ma terminata da \0), inserita in un buffer di
 #       memoria di indirizzo noto, e conta le volte che appare il carattere
@@ -26,18 +29,18 @@ _start:
     NOP                         # No Operation
     MOVB    $0x00,      %CL     # Azzera il contenuto di CL
     MOVB    $0x00,      %DL
-    LEA     stringa,    %ESI    # The lea (load effective address) instruction
+    MOV     $0,         %ESI    # The lea (load effective address) instruction
                                 # is used to put a memory address into the
                                 # destination.
     MOV     lettera,    %AL     # Metti il contenuto di lettera in AL
 
 comp:
-    CMPB    $0x00,  (%ESI)  # 1
-    JE      print           # Se ESI e' nullo salta abbiamo finito
-    CMP     (%ESI), %AL     # Controlla il valore contenuto nel puntatore
-                            # presente nel registro ESI.
-    JNE     poi             # Se il contenuto e' diverso da AL salta a poi
-    INC     %CL             # ...altrimenti incrementa CL di 1
+    CMPB    $0x00,  stringa(%ESI)   # 1
+    JE      print                   # Se ESI e' nullo salta abbiamo finito
+    CMP     stringa(%ESI),  %AL     # Controlla il valore contenuto nel
+                                    # puntatore presente nel registro ESI.
+    JNE     poi                     # Se il contenuto e' diverso da AL salta
+    INC     %CL                     # ...altrimenti incrementa CL di 1
 
 poi:
     INC %ESI                # Incrementa il puntatore in ESI
@@ -74,17 +77,8 @@ print_one:
     JMP     print
 
 fine:
-    MOV %CL,    conteggio
+    MOV     %CL,    conteggio
     MOVB    $'\n',  %BL         # carattere nuova riga
     CALL    video
-    JMP uscita
-
-##
-# 1
-# Fondamentale: che succede se mi scordo la B nella CMPB?
-# Succede che l'assemblatore non segnala niente, e ci mette una L (vedere il
-# disassemblato per rendersene conto). In questo modo il programma non funziona
-# (infatti, prende sempre una lettera in piu' perche' straborda nella locazione
-# successiva della variabile lettera.
-##
+    JMP     uscita
 
