@@ -17,22 +17,24 @@
     # La prima e' un LONG, cioè uno spazio da 4 locazioni contigue, che
     # contengono (inizialmente) il numero 0x0F0F0101. L’indirizzo della prima
     # locazione e' riferibile nel programma con il nome "dato".
-    dato:       .LONG 0x0F0F0101
+    # dato: .LONG 0x0F0F0101
+    dato:   .LONG 0xE4FAC
 
     # La seconda e' un BYTE, cioè uno spazio da 1 locazione, che contiene
     # (inizialmente) il numero 0x00. L’indirizzo di tale locazione e' riferibile
     # nel programma con il nome "conteggio".
-    conteggio:  .BYTE 0x00
+    conteggio: .BYTE 0x00
 
 .TEXT
 
 _start:
     NOP     # 1
-    MOVB    $0x00, %CL
+    MOVB    $0x00,  %CL
+    MOVB    $0x00,  %AL
 
     # Questo e' un caso di indirizzamento diretto, in cui l'indirizzo della
     # (prima) locazione e' stato sostituito dal nome simbolico.
-    MOVL dato, %EAX
+    MOVL    dato,   %EAX
 
 # In questo caso assegno all’istruzione CMPL un nome simbolico, che posso
 # riferire dentro la succes-sive JMP. Questo viene tradotto
@@ -40,10 +42,40 @@ _start:
 # mnemonico a destra). L’aspetto positivo e', ovviamente, che non sono
 # tenuto a farmi i conti per poterlo scrivere.
 comp:
-    CMPL    $0x00, %EAX
-    JE      fine
+    CMPL    $0x00,  %EAX
+    JE      print
     SHRL    %EAX
-    ADCB    $0x0, %CL
+    ADCB    $0x0,   %CL
+    JMP     comp
+
+##
+# Stampa il contenuto del registro CL in binario.
+##
+print:
+    CMPB    $0x00,  %CL
+    JE      fine
+    SHRB    %CL
+    ADCB    $0x0,   %AL
+    CMPB    $0x00,  %AL
+    JE      print_zero
+    JMP     print_one
+
+##
+# Stampa il carattere '0'.
+##
+print_zero:
+    MOVB    $'0',   %BL
+    CALL    video
+    MOVB    $0x00,  %AL
+    JMP     comp
+
+##
+# Stampa il carattere '1'.
+##
+print_one:
+    MOVB    $'1',   %BL
+    CALL    video
+    MOVB    $0x00,  %AL
     JMP     comp
 
 # Stessa cosa di prima. Attenzione ad una sottigliezza. Il nome finenon e' stato
@@ -51,7 +83,11 @@ comp:
 # 2
 fine:
     MOVB    %CL,    conteggio
+    MOVB    $'\n',  %BL         # carattere nuova riga
+    CALL    video
+
     JMP     uscita
+
 ##
 # 1
 #
