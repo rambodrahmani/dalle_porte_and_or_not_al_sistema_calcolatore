@@ -35,9 +35,9 @@ _start:
 # di 0 e' uguale ad 1 che si trova gia' inserito dentro EAX.
 
 ciclo_f:
-    MUL %ECX
-    DEC %CL
-    JNZ ciclo_f
+    MUL %ECX        # ricordiamo che in CL e' stato inserito numero
+    DEC %CL         # decremento CL di 1
+    JNZ ciclo_f     # sinche' CL non vale 0 ripeto il ciclo
 
 fine:
     MOV %EAX,   risultato
