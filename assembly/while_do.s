@@ -1,6 +1,6 @@
 ##
 #
-# File: ciclo_for.s
+# File: while_do.s
 #       Il linguaggio Assembler non ha costrutti di controllo di flusso di alto
 #       livello come il C++ (cicli, o if...then...else). Le uniche istruzioni di
 #       controllo che possono essere usate (a parte quelle per le chiamate di
@@ -17,29 +17,48 @@
 
 .TEXT
 _start:
-    # Un qualunque ciclo puo' essere tradotto in un IF + salto a un’etichetta.
-    # Di norma, per scrivere cicli in  Assembler  si  usa  incrementare/
-    # decrementare il registro CX (ECX, CL) o i registri EDI, ESI (questi
-    # ultimi, infatti, vengono utilizzati per l’accesso in memoria con registro
-    # puntatore, quindi facomodo poterli usare nei cicli per indirizzare vettori
-    # di variabili). Supponiamo di avere il seguente spezzone di codice:
+    # In questo caso il test della condizione è in fondo al ciclo, quindi
+    # scriveremo che
     #
-    #   for (int i=0; i<var; i++)       // dove ”var” è una variabile o costante
-    #       {ist1; ...; istN}
+    #   do
+    #       {ist1; ...; istN;}
+    #   while (AX < var);
     #
-    # In Assembler posso  usare CX come contatore e scrivere:
-    MOV $0,     %CX
+    # in assembly puo' essere tradotto come
+    MOV $0, %AX
 
 ciclo:
-    CMP var,    %CX
-    JE  fuori   
+    INC %AX
     ist_1
     ...
     ist_N
-    INC %CX
-    JMP ciclo
-    ...
+    CMP var,    %AX
+    JB  ciclo
 
-fuori:
-    #...
+##
+#
+# Osservazione: niente mi vieta di saltare nel mezzo di un ciclo programmando in
+# assembly. In C++ non lo si puo' fare, a meno di non usare l’istruzione goto,
+# che credo non vi sia stata descritta (perche', in un linguaggio dove il
+# controllo di flusso e' strutturato, serve solo a far danni). Una prassi del
+# genere va evitata come la peste, perche' conduce a programmi incomprensibili
+# ed inverificabili.  Avendo a che fare con JMP e JCond e' molto facile farsi
+# prendere la mano e scrivere programmi disordinati, nei quali si fanno salti e
+# contro salti al solo scopo di risparmiare un’istruzione, con il risultato che
+# si scrivono programmi incomprensibili ed impossibili da testare e debuggare
+# quando non funzionano (spaghetti-like programming). I linguaggi strutturati
+# (Pascal, C, etc.) sono stati inventati apposta alla fine degli anni '60
+# perche' i linguaggi che c'erano allora (Fortran, Assembler, etc.) consentivano
+# questo tipo di programmazione, che risultava inverificabile e non debuggabile.
+# La raccomandazione per un programmatore esperto di linguaggi ad alto livello
+# e' quindi la seguente: si ragioni pure in termini di costrutti di controllo di
+# flusso C++ (if...then...else, for, while, etc.), e si traduca ciascuno di
+# questi in Assembler nel modo sopra indicato, perche' questo e' uno stile di
+# programmazione (programmazione strutturata)  sicuro  e  corretto. Mentre i
+# linguaggi ad alto livello obbligano il programmatore a tenere questo stile
+# (forzandolo a scrivere blocchi di programma con un unico punto di ingresso ed
+# un unico punto di uscita), in Assembler il programmatore deve limitarsi da
+# solo.
+#
+##
 
