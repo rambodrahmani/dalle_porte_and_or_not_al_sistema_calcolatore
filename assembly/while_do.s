@@ -28,7 +28,7 @@ _start:
     #       {ist1; ...; istN}
     #
     # In Assembler posso  usare CX come contatore e scrivere:
-    MOV $0, %CX
+    MOV $0,     %CX
 
 ciclo:
     CMP var,    %CX
