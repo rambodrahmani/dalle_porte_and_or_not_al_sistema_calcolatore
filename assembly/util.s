@@ -46,7 +46,40 @@ video:
     RET
 
 uscita:
-    MOVL    $0, %EBX    # risultato per UNIX
+    MOVL    $0, %EBX    # risultato per sistema operativo UNIX
     MOVL    $1, %EAX    # primitiva UNIX exit
-    INT     $0x80
+                        # [1]
+    INT     $0x80       # Invokes system call - in this case system call number
+                        # 1 with argument 0
+                        # [2]
+
+# [1]
+# On many computer operating systems, a computer process terminates its
+# execution by making an exit system call. More generally, an exit in a
+# multithreading environment means that a thread of execution has stopped
+# running. For resource management, the operating system reclaims resources
+# (memory, files, etc.) that were used by the process. The process is said to be
+# a dead process after it terminates. Under Unix and Unix-like operating
+# systems, a process is started when its parent process executes a fork system
+# call. The parent process may then wait for the child process to terminate, or
+# may continue execution (possibly forking off other child processes). When the
+# child process terminates ("dies"), either normally by calling exit, or
+# abnormally due to a fatal error or signal (e.g., SIGTERM, SIGINT, SIGKILL), an
+# exit status is returned to the operating system and a SIGCHLD signal is sent
+# to the parent process. The exit status can then be retrieved by the parent
+# process via the wait system call.
+
+# [2]
+# You can make use of Linux system calls in your assembly programs. You need to
+# take the following steps for using Linux system calls in your program:
+#
+# 1. Put the system call number in the EAX register.
+# 2. Store the arguments to the system call in the registers EBX, ECX, etc.
+# 3. Call the relevant interrupt (80h).
+# 4. The result is usually returned in the EAX register.
+# There are six registers that store the arguments of the system call used.
+# These are the EBX, ECX, EDX, ESI, EDI, and EBP. These registers take the
+# consecutive arguments, starting with the EBX register. If there are more than
+# six arguments, then the memory location of the first argument is stored in the
+# EBX register.
 
