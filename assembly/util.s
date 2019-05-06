@@ -3,6 +3,12 @@
 # File: util.s
 #       Fornisce funzioni di utilita'. Da includere nei file assembly che
 #       effettuano operazioni di I/O.
+#       Contiene tre sottoprogrammi: tastiera, video, uscita.
+#
+#       Tastiera, video e uscita utilizzano il servizio UNIX 0x80 che gestisce
+#       l'I/O in modo bufferizzato (con opportuni parametri in RAX, RBx, RCX,
+#       RDX). Tastiera e video ripristinano tutti i registri utilizzati (tranne
+#       RAX per il sottoprogramma tastiera, che lascia il risultato in AL).
 #
 # Author: Rambod Rahmani <rambodrahmani@autistici.org>
 #         Created on 29/04/2019.
@@ -13,23 +19,37 @@
     buff:   .byte 0
 
 .TEXT
+
+##
+# tastiera: legge il successivo carattere battuto a tastiera e pone il suo
+# codice ASCII nel registro AL; i caratteri battuti a tastiera, che compaiono in
+# eco su video, vengono effettivamente letti quando da tastiera viene premuto il
+# tasto Enter; in lettura, Enter viene riconosciuto come carattere '\n' (nuova
+# linea).
+##
 tastiera:
-    PUSHQ   %RBX
+    PUSHQ   %RBX                # salva il contenuto dei registri
     PUSHQ   %RCX
     PUSHQ   %RDX
     MOVQ    $3, %RAX            # primitiva UNIX read
     MOVQ    $0, %RBX            # ingresso standard
     LEAQ    buff(%RIP), %RCX    # indirizzo buffer di ingresso
     MOVQ    $1, %RDX            # numero di byte da leggere
-    INT     $0x80
-    MOVB    buff(%RIP), %AL
+    INT     $0x80               # invoke system call
+    MOVB    buff(%RIP), %AL     # mette il carattere letto nel registro AL
     POPQ    %RDX
     POPQ    %RCX
-    POPQ    %RBX
+    POPQ    %RBX                # contenuto dei registri ripristinato
     RET
 
+##
+# video: scrive su video il carattere il cui codice ASCII e' contenuto in BL; i
+# caratteri inviati su video vengono effettivamente visualizzati quando viene
+# inviati su video il carattere '\n' (nuova linea); viene inserito dal driver
+# del video anche il carattere '\r' (ritorno carrello).
+##
 video:
-    PUSHQ   %RAX
+    PUSHQ   %RAX                # salva il contenuto dei registri
     PUSHQ   %RBX
     PUSHQ   %RCX
     PUSHQ   %RDX
@@ -38,13 +58,16 @@ video:
     MOVQ    $1, %RBX            # uscita standard
     LEAQ    buff(%RIP), %RCX    # indirizzo buffer di uscita
     MOVQ    $1, %RDX            # numero byte da scrivere
-    INT     $0x80
+    INT     $0x80               # invoke system call
     POPQ    %RDX
     POPQ    %RCX
     POPQ    %RBX
-    POPQ    %RAX
+    POPQ    %RAX                # contenuto dei registri ripristinati
     RET
 
+##
+# uscita: restituisce il controllo al sistema operativo.
+##
 uscita:
     MOVL    $0, %EBX    # risultato per sistema operativo UNIX
     MOVL    $1, %EAX    # primitiva UNIX exit
