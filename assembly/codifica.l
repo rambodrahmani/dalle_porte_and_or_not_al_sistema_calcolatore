@@ -193,23 +193,23 @@ LOAD codifica.o
  *(.igot.plt)
  .igot.plt      0x0000000000402000        0x0 codifica.o
 
-.data           0x0000000000402000        0x6
+.data           0x0000000000402000        0x1
  *(.data .data.* .gnu.linkonce.d.*)
- .data          0x0000000000402000        0x6 codifica.o
+ .data          0x0000000000402000        0x1 codifica.o
 
 .data1
  *(.data1)
-                0x0000000000402006                _edata = .
+                0x0000000000402001                _edata = .
                 [!provide]                        PROVIDE (edata = .)
-                0x0000000000402006                . = .
-                0x0000000000402006                __bss_start = .
+                0x0000000000402001                . = .
+                0x0000000000402001                __bss_start = .
 
-.bss            0x0000000000402006        0x0
+.bss            0x0000000000402001        0x0
  *(.dynbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
- .bss           0x0000000000402006        0x0 codifica.o
+ .bss           0x0000000000402001        0x0 codifica.o
  *(COMMON)
-                0x0000000000402006                . = ALIGN ((. != 0x0)?0x8:0x1)
+                0x0000000000402001                . = ALIGN ((. != 0x0)?0x8:0x1)
 
 .lbss
  *(.dynlbss)

@@ -1,21 +1,6 @@
 ##
 #
-# File: codifica.s
-#       Legge in %AL caratteri fino al fine linea; per ogni carattere letto, lo
-#       stampa e quindi ricava e stampa gli otto caratteri (in codifica ASCII)
-#       corrispondenti agli 8 bit della codifica del carattere letto, seguito da
-#       un fine-linea.
-#
-#       Esempio di utilizzo:
-#
-#       [rambodrahmani@rr-workstation assembly]$ ./codifica 
-#       rambod
-#       r 01110010
-#       a 01100001
-#       m 01101101
-#       b 01100010
-#       o 01101111
-#       d 01100100
+# File: codifica1a.s
 #
 # Author: Rambod Rahmani <rambodrahmani@autistici.org>
 #         Created on 07/05/2019.
@@ -25,6 +10,10 @@
 .INCLUDE "util.s"
 
 .GLOBAL _start
+
+.DATA
+    numero:     .BYTE   9
+    risultato:  .LONG   1
 
 .TEXT
 _start:
