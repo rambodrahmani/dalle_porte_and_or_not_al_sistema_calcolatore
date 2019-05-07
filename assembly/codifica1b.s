@@ -1,6 +1,6 @@
 ##
 #
-# File: codifica1a.s
+# File: codifica1b.s
 #       Programma codifica1 (prima nuova versione del programma codifica):
 #       - due file: il primo contiene il programma principale, il secondo
 #         un sottoprogramma esamina, utilizzato dal primo file.
@@ -24,17 +24,6 @@
 #       - il programma principale pone i dati in alfa e beta, quindi chiama
 #         esamina.
 #
-#       Esempio di utilizzo:
-#
-#       [rambodrahmani@rr-workstation assembly]$ ./codifica 
-#       rambod
-#       r 01110010
-#       a 01100001
-#       m 01101101
-#       b 01100010
-#       o 01101111
-#       d 01100100
-#
 # Author: Rambod Rahmani <rambodrahmani@autistici.org>
 #         Created on 07/05/2019.
 #
@@ -42,41 +31,38 @@
 
 .INCLUDE "util.s"
 
-.EXTERN alfa, beta, esamina
-
 .DATA
-    kappa:  .fill   8,  1
+.GLOBAL alfa, beta
+    alfa:   .BYTE   0
+    beta:   .QUAD   0
 
-.GLOBAL _start
+.GLOBAL esamina
 
 .TEXT
-_start:
+esamina:
+    PUSHQ   %RAX
+    PUSHQ   %RBX
+    PUSHQ   %RSI
+    MOVB    alfa(%RIP), %AL
+    MOVQ    beta(%RIP), %RBX
+    MOVQ    $0, %RSI
 
-ancora:
-    CALL    tastiera        # leggi il carattere digitato su tastiera in %AL
-    CMPB    $'\n',  %AL     # se il carattere letto corrisponde al nuova linea
-    JE      fine            # salta a fine
-    MOVB    %AL,    %BL     # altrimenti, sposta il carattere letto in %BL
-    CALL    video           # stampa a video il contenuto di %BL
-    MOVB    $' ',   %BL     # mette in %BL la codifica ASCII di ' '
-    CALL    video
-    MOVB    %AL,    alfa(%RIP)
-    LEAQ    kappa(%RIP), %RAX
-    MOVQ    %RAX,   beta(%RIP)
-    CALL    esamina
-    LEAQ    kappa(%RIP), %RAX
-    MOVQ    $0,     %RSI
+ciclo:
+    TESTB   $0x80,  %AL
+    JZ      zero
+    MOVB    $'1',   (%RBX, %RSI)
+    JMP     avanti
 
-ripeti:
-    MOVB    (%RAX, %RSI), %BL
-    CALL    video
+zero:
+    MOVB    $'0', (%RBX, %RSI)
+
+avanti:
+    SHLB    $1, %AL
     INCQ    %RSI
     CMPQ    $8, %RSI
-    JB      ripeti
-    MOVB    $'\n',  %BL
-    CALL    video
-    JMP     ancora
-
-fine:
-    JMP uscita
+    JB      ciclo
+    POPQ    %RSI
+    POPQ    %RBX
+    POPQ    %RAX
+    RET
 
