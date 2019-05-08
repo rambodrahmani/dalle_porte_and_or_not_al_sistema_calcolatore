@@ -42,10 +42,10 @@
 
 .INCLUDE "util.s"
 
-.EXTERN alfa, beta, esamina
+.EXTERN alfa, beta, esamina  # extern e' opzionale e potremmo anche non metterlo
 
 .DATA
-    kappa:  .fill   8,  1
+    kappa:  .fill   8,  1    # .fill numero-componenti, numero-byte-per-comp.
 
 .GLOBAL _start
 
@@ -59,17 +59,17 @@ ancora:
     MOVB    %AL,    %BL     # altrimenti, sposta il carattere letto in %BL
     CALL    video           # stampa a video il contenuto di %BL
     MOVB    $' ',   %BL     # mette in %BL la codifica ASCII di ' '
-    CALL    video
-    MOVB    %AL,    alfa(%RIP)
-    LEAQ    kappa(%RIP), %RAX
-    MOVQ    %RAX,   beta(%RIP)
-    CALL    esamina
+    CALL    video           # stampa a video il contenuto di %BL.
+    MOVB    %AL,    alfa(%RIP)  # copia in alfa il contenuto di AL
+    LEAQ    kappa(%RIP), %RAX   # copia in %RAX l'indirizzo di kappa
+    MOVQ    %RAX,   beta(%RIP)  # copia in beta il contenuto di %RAX
+    CALL    esamina             # chiama il programma esamina in codifica1b.s
     LEAQ    kappa(%RIP), %RAX
     MOVQ    $0,     %RSI
 
 ripeti:
-    MOVB    (%RAX, %RSI), %BL
-    CALL    video
+    MOVB    (%RAX, %RSI), %BL   # copia il contenuto puntato da RAX + RSI in BL
+    CALL    video               
     INCQ    %RSI
     CMPQ    $8, %RSI
     JB      ripeti

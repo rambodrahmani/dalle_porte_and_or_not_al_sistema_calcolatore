@@ -42,7 +42,7 @@ ancora:
 ciclo:
     TESTB   $0x80,  %AL     # simula la AND logica, modificando soltanto le flag
                             # coinvolte
-    JZ      zero            #
+    JZ      zero            # [1]
     MOVB    $'1',   %BL     # mette in %BL la codifica ASCII di '1'
     CALL    video           # stampa il contenuto del registro %BL
     JMP     avanti          # salto incondizionato ad 'avanti'
@@ -62,4 +62,10 @@ avanti:
 
 fine:
     JMP uscita
+
+# [1]
+# Verifica il bit piu' significativo di AL, infatti 0x80 = 128 in decimale,
+# ovvero 10000000 in binario su 8 bit, che e' appunto la dimensione di AL.
+# Con un AND quindi ottengo un esame del bit piu' significativo di AL dal
+# quale dipende poi la condizione di salto nel caso questo bit sia uguale a 0.
 

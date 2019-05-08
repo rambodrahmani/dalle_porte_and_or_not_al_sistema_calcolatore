@@ -40,29 +40,38 @@
 
 .TEXT
 esamina:
-    PUSHQ   %RAX
+    PUSHQ   %RAX                # salva il contenuto dei registri RAX, RBX, RSI
     PUSHQ   %RBX
     PUSHQ   %RSI
-    MOVB    alfa(%RIP), %AL
-    MOVQ    beta(%RIP), %RBX
-    MOVQ    $0, %RSI
+    MOVB    alfa(%RIP), %AL     # copia il contenuto di alfa in AL
+    MOVQ    beta(%RIP), %RBX    # copia il contenuto di beta in RBX
+    MOVQ    $0, %RSI            # azzera il contatore RSI
 
 ciclo:
-    TESTB   $0x80,  %AL
-    JZ      zero
-    MOVB    $'1',   (%RBX, %RSI)
-    JMP     avanti
+    TESTB   $0x80,  %AL             # esame del bit piu' significativo di %AL
+    JZ      zero                    # salta a 'zero' se il bit e' uguale a zero
+    MOVB    $'1',   (%RBX, %RSI)    # copia '1' nella locazione puntata
+                                    # da RBX + RSI
+    JMP     avanti                  # salto incondizionato a 'avanti'
 
 zero:
-    MOVB    $'0', (%RBX, %RSI)
+    MOVB    $'0', (%RBX, %RSI)      # copia '0' nella locazione puntata
+                                    # da RBX + RSI
+                                    # [1]
 
 avanti:
-    SHLB    $1, %AL
-    INCQ    %RSI
-    CMPQ    $8, %RSI
-    JB      ciclo
+    SHLB    $1, %AL     # Shift Left %AL
+    INCQ    %RSI        # incrementa il contatore RSI
+    CMPQ    $8, %RSI    # compare il contenuto del contatore RSI con 8
+    JB      ciclo       # se il valore del contatore e' minore di 8 salta
     POPQ    %RSI
     POPQ    %RBX
-    POPQ    %RAX
-    RET
+    POPQ    %RAX        # ripristina il contenuto dei registri
+    RET                 # ritorna
+
+# [1]
+# Piu' precisamente, con questo tipo di indirizzamento, viene letto il contenuto
+# di RBX, viene poi aggiunto il contenuto di RSI, il valore ottenuto viene
+# utilizzato come indirizzo della locazione di memoria dove effettuare
+# l'operazione di MOV.
 
