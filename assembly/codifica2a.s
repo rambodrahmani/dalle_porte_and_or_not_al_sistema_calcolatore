@@ -8,11 +8,11 @@
 #       .global e' obbligatorio mentre quello .extern e' opzionale. In un file
 #       C++, gli identificatori delle variabili definite al di fuori delle
 #       funzioni e gli identificatori delle funzioni sono implicitamente
-#       Vglobali (la dichiarazione .global puo' quindi essere omessa). In un
-#       file C++ si posso riferirei identificatori definiti in altri file,
-#       purche' siano esplicitamente dichiarati esterni. Per le funzioni la
-#       parola chiave extern puo' essere omessa, ma resta obbligatoria la
-#       dichiarazione e siano globali nei file dove sono definiti.
+#       globali (la dichiarazione .global puo' quindi essere omessa). In un
+#       file C++ si posso riferire identificatori definiti in altri file,
+#       purche' siano esplicitamente dichiarati esterni e siano globali nei file
+#       dove sono definiti. Per le funzioni la parola chiave extern puo' essere
+#       omessa, ma resta obbligatoria la dichiarazione.
 #
 #       Il comando g++:
 #           g++ id_file1.s ... id_fileN.s -o id_file
