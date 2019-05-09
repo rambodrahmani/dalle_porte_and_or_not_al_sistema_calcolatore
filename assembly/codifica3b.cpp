@@ -3,6 +3,17 @@
  *  File:   codifica3b.cpp
  *          Terza nuova versione del programma codifica.
  *
+ *          In Assembly, oppositamente a quanto si fa in C++, l'identificatore
+ *          .global e' obbligatorio mentre quello .extern e' opzionale. In un
+ *          file C++, gli identificatori delle variabili definite al di fuori
+ *          delle funzioni e gli identificatori delle funzioni sono
+ *          implicitamente globali (la dichiarazione .global puo' quindi essere
+ *          omessa). In un file C++ si posso riferirei identificatori definiti
+ *          in altri file, purche' siano esplicitamente dichiarati esterni. Per
+ *          le funzioni la parola chiave extern puo' essere omessa, ma resta
+ *          obbligatoria la dichiarazione e siano globali nei file dove sono
+ *          definiti.
+ *
  *          Compilato usando: g++ codifica3a.cpp codifica3b.cpp -o codifica3
  *
  *          Esempio di esecuzione:
