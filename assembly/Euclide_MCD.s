@@ -24,6 +24,22 @@
 #                       i=i+1
 #                       ripeti
 #
+#       Esempio:
+#           A = 15
+#           B = 10
+#           0) 15 10
+#           1) 5 10
+#           2) 0 5
+#
+#       Esempio:
+#           A = 15120
+#           B = 4389
+#           0) 15120 4389
+#           1) 1953 4389
+#           2) 483 1953
+#           3) 21 483
+#           4) 0 21
+#
 # Author: Rambod Rahmani <rambodrahmani@autistici.org>
 #         Created on 12/05/2019.
 #
@@ -32,66 +48,13 @@
 .INCLUDE "C:/amb_GAS/utility"
 
 .DATA
-    messaggio:  .FILL   256,1,0     # [1]
+    X:  .WORD   0x000
+    Y:  .WORD   0x000
 
 .TEXT
 
 .GLOBAL _main
-_main:
+main:
     NOP
-    MOV   $80, %CX      # numero massimo di caratteri da leggere
-    LEA   messaggio, %EBX
-
-ciclo:
-    CALL  inchar        # leggi un carattere in AL
-    CMP   $0x0D, %AL    
-    JE    dopo
-
-    # se non e' un carattere compreso tra 'a' e 'z' leggi un altro carattere
-    CMP   $'a', %AL
-    JB    ciclo
-    CMP   $'z', %AL
-    JA    ciclo
-
-    CALL  outchar       # scrive il carattere in AL su terminale
-    AND   $0x5F, %AL    # converti il carattere in maiuscolo [2]
-    MOV   %AL, (%EBX)
-    INC   %EBX
-    DEC   %CX       # decrementa il numero massimo di carattere da leggere
-    JNZ   ciclo     # se abbiamo ancora caratteri da leggere, ripeti il ciclo
-
-dopo:
-    MOVB  $0x0A, (%EBX)
-    MOVB  $0x0D, 1(%EBX)
-    CALL  newline
-    LEA   messaggio, %EBX
-    CALL  outline
-    CALL  pause     # pausa per poter leggere l'output su video
-    CALL  exit
-
-# [1]
-# {label} FILL expr{,value{,valuesize}}
-# where:
-#   label      is an optional label.
-#   expr       evaluates to the number of bytes to fill or zero.
-#   value      evaluates to the value to fill the reserved bytes with. value is
-#              optional and if omitted, it is 0. value must be 0 in a NOINIT
-#              area.
-#   valuesize  is the size, in bytes, of value. It can be any of 1, 2, or 4.
-#              valuesize is optional and if omitted, it is 1.
-
-# [2]
-# In ASCII 'a'-'z' and 'A'-'Z' are equivalent except one bit, 0x20.
-#
-# ASCII a = 01100001
-# ASCII A = 01000001
-#
-# One solution would be isolating the lowercase chars and clearing or setting
-# the bit 0x20 with an AND (uppercase) or OR (lowercase), respectively.
-#
-# Quindi, dato che
-# 0x20 = 0010 0000,
-# 0x5F = 0101 1111,
-# per resettare il bit 0x20 facciamo quindi un AND con 0x5F che mantiene tutti i
-# bit originali del carattere presente in AL e resetta il bit 0x20.
+    
 
