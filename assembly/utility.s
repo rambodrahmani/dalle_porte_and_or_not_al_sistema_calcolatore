@@ -23,6 +23,14 @@
 
 #------------------------------------------------------------------------------
 
+# H=07h - DIRECT CHARACTER INPUT, WITHOUT ECHO
+# Return: AL = character read from standard input
+#
+# Notes:
+#   - does not check ^C/^Break
+#
+# SeeAlso: AH=01h, AH=06h, AH=08h, AH=0Ah.
+
 .TEXT
 
 inchar: PUSH %EBX
@@ -58,6 +66,17 @@ inchar :PUSH %EAX
 */
 
 #------------------------------------------------------------------------------
+
+# AH = 02h - WRITE CHARACTER TO STANDARD OUTPUT
+# Entry: DL = character to write
+# Return: AL = last character output
+#
+# Notes:
+#   - ^C/^Break are checked
+#   - the last character output will be the character in DL unless DL=09h on
+#     entry, in which case AL=20h as tabs are expanded to blanks
+#   - if standard output is redirected to a file, no error checks
+#     (write-protected, full media, etc.) are performedSeeAlso: AH=06h,AH=09h
 
 .TEXT
 outchar: PUSH %EAX
