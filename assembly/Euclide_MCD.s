@@ -48,8 +48,8 @@
 .INCLUDE "C:/amb_GAS/utility"
 
 .DATA
-    X:  .WORD   0x000
-    Y:  .WORD   0x000
+    X:  .WORD   0x000   # A
+    Y:  .WORD   0x000   # B
 
 .TEXT
 
@@ -57,4 +57,63 @@
 main:
     NOP
     
+# 1. legge da tastiera un numero naturale a 5 cifre in base 10.
+punto1:
+    MOV   $'X', %AL
+    CALL  outchar
+    MOV   $':', %AL
+    CALL  outchar           # stampa 'X:'
+    CALL  indecimal_short   # legge il numero decimale da terminale in AX
+    MOV   %AX, X            # salva il numero letto in X
+    CALL  newline
+    MOV   $'Y', %AL
+    CALL  outchar
+    MOV   $':', %AL
+    CALL  outchar           # stampa 'Y:'
+    CALL  indecimal_short   # legge il numero decimale da terminale in AX
+    MOV   %AX, Y            # salva il numero letto in Y
+
+# 2. Se A = 0 o B = 0, termina.
+punto2:
+    CMPW  $0, X
+    JE    fine_prog
+    CMPW  $0, Y
+    JE    fine_prog
+
+# 3. Esegue l'algoritmo di Euclide per il calcolo del loro MCD. In SI c'e' la
+#    variabile 'i'
+punto3:
+    MOV   $0, %SI       # azzera il contatore SI (i)
+
+ciclo:
+    MOV   %SI, %AX
+    CALL  outdecimal_short
+    MOV   $')', %AL
+    CALL  outchar       # stampa 'i)'
+    MOV   $' ', %AL
+    CALL  outchar
+    MOV   X, %AX
+    CALL  outdecimal_short
+    CALL  newline
+
+    CMPW  $0, X
+punto4:
+    JE    punto1
+    MOV   X, %AX
+    MOV   Y, %CX
+    CMP   %AX, %CX
+    JBE   dopo
+    XCHG  %AX, %CX
+
+dopo:
+    MOV   $0, %DX
+    DIV   %CX
+    MOV   %DX, X
+    MOV   %CX, Y
+
+    INC   %SI
+    JMP   ciclo
+
+fine_prog:
+    CALL  exit
 
