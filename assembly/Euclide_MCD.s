@@ -1,29 +1,31 @@
 ##
 #
-# File: caratteri_maiuscoli.s
-#       Scrivere un programma che accetta in ingresso una stringa di massimo 80
-#       caratteri esclusivamente minuscoli terminata da ritorno carrello, stampa
-#       i singoli caratteri mentre vengono digitati, poi va a capo e stampa
-#       l'intera stringa a video maiuscolo.
+# File: Euclide_MCD.s
+#       MCD: il massimo comune divisore di due o piu' numeri, indicato con il
+#       simbolo MCD, e' il piu' grande divisore comune dei numeri considerati, e
+#       viene di solito calcolato con il metodo di scomposizione in fattori
+#       primi.
 #
-#       Compilato usando:
+#       Scrivere un programma Assembly che si comporta come segue:
+#           1. legge da tastiera due numeri naturali A e B in base 10, sotto
+#              l'ipotesi che siano rappresentabili su 16 bit.
+#           2. Se almeno uno dei due e' nullo, termina. Altrimenti,
+#           3. esegue l'algoritmo di Euclide per il calcolo del loro MCD,
+#              (riassunto di seguito), stampando tutti i risultati intermedi.
+#           4. ritorna al punto 1.
 #
-#           C:\WORK> ASSEMBLE.BAT CARATT˜1.S
-#           Press any key to continue.
-#
-#       Esempio di esecuzione:
-#
-#           C:\WORK> CARATT˜1.EXE
-#           rambod
-#           RAMBOD
-#
-#           Checkpoint number 0. Press any key to continue
-#
-#           Press Q to exit . . .
-#           C:\WORK>
+#       L'algoritmo di Euclide per il calcolo dell'MCD tra due numeri A e B e':
+#           passo 0: i=0; X(0)=A;  Y(0)=B;
+#           passo i: stampa i, X(i), Y(i).
+#                    se X(i)=0, allora Y(i)=MCD e l'algoritmo e' terminato.
+#                    altrimenti:
+#                       X(i+1)=max( X(i), Y(i) ) mod  min( X(i), Y(i) )
+#                       Y(i+1)=min ( X(i), Y(i) )
+#                       i=i+1
+#                       ripeti
 #
 # Author: Rambod Rahmani <rambodrahmani@autistici.org>
-#         Created on 11/05/2019.
+#         Created on 12/05/2019.
 #
 ##
 
@@ -42,8 +44,8 @@ _main:
 
 ciclo:
     CALL  inchar        # leggi un carattere in AL
-    CMP   $0x0D, %AL    # 0x0D corrisponde al ritorno carrello
-    JE    dopo          # se viene digitato, salta all'etichetta 'dopo'
+    CMP   $0x0D, %AL    
+    JE    dopo
 
     # se non e' un carattere compreso tra 'a' e 'z' leggi un altro carattere
     CMP   $'a', %AL
