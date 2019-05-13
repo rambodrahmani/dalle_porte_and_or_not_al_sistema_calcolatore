@@ -92,4 +92,3 @@ dopo:
 # 0x5F = 0101 1111,
 # per resettare il bit 0x20 facciamo quindi un AND con 0x5F che mantiene tutti i
 # bit originali del carattere presente in AL e resetta il bit 0x20.
-

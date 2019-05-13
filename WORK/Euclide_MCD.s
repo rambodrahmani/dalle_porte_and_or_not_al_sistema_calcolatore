@@ -72,7 +72,6 @@ punto1:
     CALL  outchar           # stampa 'Y:'
     CALL  indecimal_short   # legge il numero decimale da terminale in AX
     MOV   %AX, Y            # salva il numero letto in Y
-    CALL  newline
 
 # 2. Se A = 0 o B = 0, termina.
 punto2:
@@ -90,16 +89,12 @@ ciclo:
     MOV   %SI, %AX
     CALL  outdecimal_short
     MOV   $')', %AL
-    CALL  outchar
+    CALL  outchar       # stampa 'i)'
     MOV   $' ', %AL
-    CALL  outchar         # stampa 'i) '
+    CALL  outchar
     MOV   X, %AX
-    CALL  outdecimal_short     # stampa il valore di X
-    MOV   $' ', %AX
-    CALL  outchar              # stampa il carattere spazio
-    MOV   Y, %AX
-    CALL  outdecimal_short     # stampa il valore di Y
-    CALL  newline              # stampa nuova linea
+    CALL  outdecimal_short
+    CALL  newline
 
     CMPW  $0, X
 punto4:
