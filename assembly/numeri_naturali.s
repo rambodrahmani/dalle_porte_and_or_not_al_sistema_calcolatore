@@ -68,7 +68,7 @@ inizio:
     MOV   $':', %AL
     CALL  outchar           # stampa 'N:'
     CALL  indecimal_tiny
-    MOV   %AL, A            # salva il decimale letto in CL
+    MOV   %AL, %CL          # salva il decimale letto in CL
     CALL  newline
 
 # 2. se A >= B, ovvero se N = 0, termina
