@@ -86,19 +86,22 @@ inizio:
     MOV   B, %AX
 
 ciclo:
-    ADD   %DX, %AX
+    ADD   %DX, %AX  # AX = AX + DX = B + (B - A)
     JC    inizio
 
+# si evita di fare i prodotti 2*(B - A), ... , N*(B - A) in quanto quando faccio
+# la somma N-esima DX contiene gia' (B - A) N-1 volte.
+
 stampa:
-    CALL  outdecimal_short
-    PUSH  %AX
+    CALL  outdecimal_short  # stampa il contenuto di AX
+    PUSH  %AX               # salva il contenuto di AX
     MOV   $' ', %AL
-    CALL  outchar
-    POP   %AX
-    DEC   %CL
-    JNZ   ciclo
-    JMP   inizio
+    CALL  outchar           # stampa il carattere ' '
+    POP   %AX               # ripristina il contenuto di AX
+    DEC   %CL               # decrementa il contatore CL (N)
+    JNZ   ciclo             # ripeti il ciclo se il contatore e' diverso da zero
+    JMP   inizio            # altrimenti abbiamo finito, ripeti il programma
 
 fine:
-    CALL  exit
+    CALL  exit      # termina
 
