@@ -45,7 +45,7 @@
 .EXTERN alfa, beta, esamina  # extern e' opzionale e potremmo anche non metterlo
 
 .DATA
-    kappa:  .fill   8,  1    # .fill numero-componenti, numero-byte-per-comp.
+    kappa:  .fill   8, 1    # .fill numero-componenti, numero-byte-per-comp.
 
 .GLOBAL _start
 
