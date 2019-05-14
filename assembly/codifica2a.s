@@ -73,13 +73,15 @@
 main:
 
 ancora:
-    CALL    leggisucc
-    MOVB    %AL, %R12B
-    CMPB    $'\n', %R12B
-    JE      fine
-    MOVB    %R12B, %DIL
-    CALL    scrivichar
-    MOVB    %R12B, alfa(%RIP)
+    CALL    leggisucc       # legge il carattere successivo e pone la sua
+                            # codifica ASCII in AL
+    MOVB    %AL, %R12B      # copia la codifica del carattere letto in R12B
+    CMPB    $'\n', %R12B    # compara il carattere con il ritorno carrello
+    JE      fine            # se sono uguali allora salta a fine
+    MOVB    %R12B, %DIL     # altrimenti copialo in DIL
+    CALL    scrivichar      # scrive su video il carattere contenuto in DIL
+                            # seguito dal carattere spazio
+    MOVB    %R12B, alfa(%RIP)   # 
     LEAQ    kappa(%RIP), %RAX
     MOVQ    %RAX, beta(%RIP)
     CALL    esamina

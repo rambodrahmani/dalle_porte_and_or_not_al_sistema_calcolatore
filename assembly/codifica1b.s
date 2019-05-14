@@ -36,9 +36,9 @@
     alfa:   .BYTE   0
     beta:   .QUAD   0
 
-.GLOBAL esamina
-
 .TEXT
+
+.GLOBAL esamina
 esamina:
     PUSHQ   %RAX                # salva il contenuto dei registri RAX, RBX, RSI
     PUSHQ   %RBX

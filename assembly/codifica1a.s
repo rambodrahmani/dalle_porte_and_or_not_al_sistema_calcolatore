@@ -65,18 +65,18 @@ ancora:
     MOVQ    %RAX,   beta(%RIP)  # copia in beta il contenuto di %RAX
     CALL    esamina             # chiama il programma esamina in codifica1b.s
     LEAQ    kappa(%RIP), %RAX
-    MOVQ    $0,     %RSI
+    MOVQ    $0,     %RSI        # azzera il contatore dei bit della codifica
 
 ripeti:
     MOVB    (%RAX, %RSI), %BL   # copia il contenuto puntato da RAX + RSI in BL
-    CALL    video               
-    INCQ    %RSI
-    CMPQ    $8, %RSI
-    JB      ripeti
-    MOVB    $'\n',  %BL
-    CALL    video
-    JMP     ancora
+    CALL    video               # stampa a video il contenuto di BL
+    INCQ    %RSI                # incrementa il contatore RSI
+    CMPQ    $8, %RSI            # controlla se sono stati stampati 8 caratteri
+    JB      ripeti              # se sono meno di 8, ripeti
+    MOVB    $'\n',  %BL         # copia in BL il carattere '\n'
+    CALL    video               # stampa a video il contenuto di BL
+    JMP     ancora              # ricomincia da capo (leggi da tastiera)
 
 fine:
-    JMP uscita
+    JMP uscita                  # termina
 
