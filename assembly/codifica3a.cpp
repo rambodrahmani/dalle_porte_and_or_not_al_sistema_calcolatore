@@ -28,6 +28,18 @@
  *          o 01101111
  *          d 01100100
  *
+ *          - Sviluppo della versione C++ numero 3:
+ *              g++ codifica3a.cpp codifica3b.cpp -o codifica3
+ *              ./codifica3
+ *
+ *          - Sviluppo della versione mista numero 4:
+ *              g++ codifica4a.cpp codifica4.s -o codifica4
+ *              ./codifica4
+ *
+ *          - Sviluppo della versione mista numero 5:
+ *              g++ codifica5a.s codifica5b.cpp -o codifica5
+ *              ./codifica5
+ *
  *  Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 09/05/2019.
  *

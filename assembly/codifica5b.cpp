@@ -1,7 +1,7 @@
 /**
  *
- *  File:   codifica3b.cpp
- *          Terza nuova versione del programma codifica.
+ *  File:   codifica5b.cpp
+ *          Quinta nuova versione del programma codifica. Programma misto.
  *
  *          In Assembly, oppositamente a quanto si fa in C++, l'identificatore
  *          .global e' obbligatorio mentre quello .extern e' opzionale. In un
@@ -40,7 +40,7 @@
  *              ./codifica5
  *
  *  Author: Rambod Rahmani <rambodrahmani@autistici.org>
- *          Created on 09/05/2019.
+ *          Created on 14/05/2019.
  *
  */
 
@@ -48,7 +48,8 @@ char alfa;
 
 char *beta;
 
-void esamina()
+extern "C" void esamina()   // differenza rispetto al file codifica3b.cpp:
+                            // extern "C"
 {
     for(int i = 0; i < 8; i++)
     {
