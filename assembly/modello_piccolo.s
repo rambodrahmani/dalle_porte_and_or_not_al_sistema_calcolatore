@@ -2,61 +2,37 @@
 #
 #   File:   modello_piccolo.s
 #           Compilato con
-#               g++ -mcmodel=large modello_grande.cpp -o modello_grande
+#               g++ -mcmodel=small modello_piccolo.cpp -o modello_piccolo
 #
-#           -mcmodel=large
-#               Generate code for the large model. This model makes no
-#               assumptions about addresses and sizes of sections.
+#           -mcmodel=small
+#               Generate code for the small code model: the program and its
+#               symbols must be linked in the lower 2 GB of the address space.
+#               Pointers are 64 bits. Programs can be statically or dynamically
+#               linked. This is the default code model.
 #
-#           Modello di un programma:
-#            - stabilisce come si deve effettuare la memorizzazione delle parti
-#              del programma per assicurare che tutti gli indirizzi prodotti
-#              dalle istruzioni elaborative possano correttamente indirizzare i
-#              dati, e quelli prodotti dalle istruzioni di controllo possano
-#              saltare nei punti previsti.
+#           Modello di Programma Piccolo:
+#               - la sezione .TEXT e la sezione .DATA vengono complessivamente
+#                 memorizzate nei primi 3 Gbyte di memoria;
+#               - gli indirizzi numerici sono rappresentabili con 32 bit, e
+#                 possono essere posti nel campo IMM o nel campo DISP, delle
+#                 istruzioni che prevedono tali campi.
 #
-#           Parti di un programma:
-#            - sono 4, ossia la sezione .TEXT, la sezione .DATA, la pila e la
-#              heap (gli indirizzi devono comunque essere canonici, altrimenti
-#              la MMU non li traduce);
-#            - la pila e lo heap possono essere memorizzati ovnque, poiche'
-#              viene utilizzato un indirizzamento canonico con un registro base 
-#              (la pila viene indirizzata tramite i registri RSP e RBP e lo heap
-#              tramite un puntatore);
-#            - le zone istruzioni .TEXT e .DATA devono obbedire a determinate
-#              regole.
+#           Indirizzamenti usati nel modello di Programma Piccolo:
+#               - con il modello piccolo, il Compilatore, per esprimere un
+#                 indirizzo di memoria, puo' utilizzare un'espressione canonica,
+#                 anche senza registro base;
+#               - il valore numerico che puo' assumere il campo DISP va da
+#                 (2*31 - 1) a -2*31 (lo stesso dicasi per il campo IMM);
+#               - senza l'utilizzo del registro base, il massimo valore di DISP
+#                 eventualmente presente nella prima istruzione deve assicurare
+#                 di raggiungere l'indirizzo dell'ultima, e il minimo valore di
+#                 DISP eventualmente presente nell'ultima istruzione deve
+#                 assicurare di raggiungere l'indirizzo della prima.
 #
-#           File in C++ e modello:
-#            - il concetto di modello ha effetto quando nel programma si
-#              utilizza un file C++ da far tradurre al compilatore;
-#            - un file scritto direttamente in Assembly deve rispettare il
-#              modello e non viene modificato dal compilatore.
+#           Blocco di memoria di utilizzare per la memorizzazione delle zone
+#           .TEXT e .DATA:
+#               - deve quindi avere dimensioni inferiori ai 2*31 (2 Gigabyte).
 #
-#           Modello di Programma Grande:
-#           - la sezione .TEXT e la sezione .DATA possono essere memorizzati
-#             ovunque;
-#           - gli indirizzi simbolici vengono tradotti, modificati per
-#             collegamento ed eventualmente rilocati;
-#           - se rappresentabili con 32 bit, possono essere posti singolarmente
-#             nei campi DISP e IMM delle istruzioni che prevedono tali campi;
-#           - se richiedono per la rappresentazione piu' di 32 bit (uno o piu'
-#             bit dei 32 bit significativi sono diversi dal bit alla loro
-#             destra), tipicamente 64, viene utilizzata dal Cimpilatore
-#             l'istruzione MOVABSQ, l'unica che possiene un campo IMM di 64 bit.
-# 
-#           Indirizzamenti usati nel modello Grande:
-#           - per indirizzare un dato, il compilatore usa tipicamente
-#             un'espressione canonica, con un registro base di 64 bit
-#             preventivamente caricato con una sitruzione MOVABSQ, quest'ultima
-#             avente un operando immediato di 64 bit;
-#           - per effettuare un salto incondizionato, il compilatore usa
-#             tipicamente un'espressione indiretta, con un registro
-#             preventivamente caricato con una istruzione MOVABSQ, quest'ultima
-#             avente un operando immediato di 64 bit;
-#           - per effettuare un salto condizionato, con cicli manifestatamente
-#             cortim il compilatore utilizza un'espressione relativa (rispetto
-#             a RIP).
-# 
 #   Author: Rambod Rahmani <rambodrahmani@autistici.org>
 #           Created on 14/05/2019.
 #
@@ -71,34 +47,27 @@
 .TEXT
 
 fai:
-    MOVABSQ  $i, %R14
-    MOVL     $5, (%R14)     # i = 5
-    RET
+    MOVL    $5, i   # i = 5
+    RET             # return
 
 .GLOBAL main
 main:
-    MOVABSQ  $fai, %RBX
-    CALL     *%RBX
-    MOVABSQ  $ar, %R12
-    MOVABSQ  $i, %R14
-    MOVSLQ   (%R14), %R15
-    MOVL     $8, (%R12, %R15, 4)
-    # ar[5] = 8
+    CALL    fai     # RIP implicito, chiama la funzione fai
+    MOVSLQ  i, R15
+    MOVL    $8, ar(, %R15, 4)
 
     # stampa tutti gli elementi di ar
-    MOVL    $0,  (%R14)
+    MOVL    $0, i
 
 ciclo:
-    MOVSLQ   (%R14), %R15
-    MOVL     (%R12, %R15, 4), %EDI
-    MOVABSQ  $scriviint, %R13
-    CALL     *%R13
-    INCL     (%R14)
-    CMPL     $10, (%R14)
-    JL       ciclo  # RIP implicito
-    MOVABSQ  $nuovalinea, %R13
-    CALL     *%R13
+    MOVSLQ  i, %R15
+    MOVL    ar(, %R15, 4), %EDI
+    CALL    scriviint   # RIP implicito, chiama la funzione scriviint
+    INCL    i           # incrementa i di 1
+    CMPL    $10, i      # confronta il valore di i con 10
+    JL      ciclo       # RIP implicito, salta all'etichetta ciclo se i < 10
+    CALL    nuovalinea  # RIP implicito, chiama la funzione nuovalinea
 
-    MOVL     $0, %EAX
-    RET
+    MOVL     $0, %EAX   # return value
+    RET                 # return
 
