@@ -73,7 +73,11 @@
 
 .GLOBAL fai
 fai:
-    MOVABSQ  $i, %R14
-    MOVL     $5, (%R14) # i = 5
-    RET
+    MOVABSQ  $i, %R14       # [1]
+    MOVL     $5, (%R14)     # i = 5
+    RET                     # ritorna al chiamante
+
+# [1]
+# Copia l'indirizzo di i in R14.
+
 

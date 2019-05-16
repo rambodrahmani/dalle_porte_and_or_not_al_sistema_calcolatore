@@ -75,27 +75,32 @@
 
 .GLOBAL main
 main:
-    MOVABSQ  $fai, %RBX
-    CALL     *%RBX
-    MOVABSQ  $i, %R14
-    MOVSLQ   (%R14), %R15
-    MOVABSQ  $ar, %R12
+    MOVABSQ  $fai, %RBX     # copia l'indirizzo di fai in RBX
+    CALL     *%RBX          # chiama la funzione il cui indirizzo e' in RBX
+    MOVABSQ  $i, %R14       # copia l'indirizzo di i in R14
+    MOVSLQ   (%R14), %R15   # [1]
+    MOVABSQ  $ar, %R12      # copia l'indirizzo del primo elemento di ar in R12
     MOVL     $8, (%R12, %R15, 4)    # ar[5] = 8
 
     # stampa tutti gli elementi di ar
     MOVL    $0,  (%R14)
 
 ciclo:
-    MOVSLQ   (%R14), %R15
-    MOVL     (%R12, %R15, 4), %EDI
-    #MOVABSQ  $scriviint, %R13
-    #CALL     *%R13
-    INCL     (%R14)
-    CMPL     $10, (%R14)
-    JL       ciclo  # RIP implicito
-    #MOVABSQ  $nuovalinea, %R13
-    #CALL     *%R13
+    MOVSLQ   (%R14), %R15   # copia il valore da R14 in R15
+    MOVL     (%R12, %R15, 4), %EDI  # copia progressivamente gli elementi del
+                                    # vettore in EDI
+    MOVABSQ  $scriviint, %R13       # copia l'indirizzo di scriviint in R13
+    CALL     *%R13               # chiama la funzione il cui indirizzo e' in R13
+    INCL     (%R14)        # incrementa l'indice per scorrere gli elementi di ar
+    CMPL     $10, (%R14)   # compare il valore dell'indice con 10
+    JL       ciclo  # se e' minore di 10, ripeto il ciclo
+    MOVABSQ  $nuovalinea, %R13  # copio l'indirizzo di nuovalinea in R13
+    CALL     *%R13         # chiamo la funzione il cui indirizzo si trova in R13
 
-    MOVL     $0, %EAX
-    RET
+    MOVL     $0, %EAX   # valore di ritorno
+    RET                 # chiamata di ritorno
+
+# [1]
+# Copia il valore nella locazione di memoria il cui indirizzo si trova in R14 in
+# R15.
 

@@ -81,9 +81,9 @@ fai:
 main:
     MOVABSQ  $fai, %RBX     # copia l'indirizzo di fai in RBX
     CALL     *%RBX          # chiama la funzione il cui indirizzo e' in RBX
-    MOVABSQ  $ar, %R12
-    MOVABSQ  $i, %R14
-    MOVSLQ   (%R14), %R15
+    MOVABSQ  $ar, %R12      # copia l'indirizzo del primo elemento di ar in R12
+    MOVABSQ  $i, %R14       # copia l'indirizzo di i in R14
+    MOVSLQ   (%R14), %R15   # [5]
     MOVL     $8, (%R12, %R15, 4) # ar[i] = 8, i = 5 => ar[5] = 8
                                  # [3]
 
@@ -125,4 +125,8 @@ ciclo:
 # [4]
 # Copia progressivamente, ad ogni passo incremento R15, gli elementi del vettore
 # in EDI.
+
+# [5]
+# Copia il valore nella locazione di memoria il cui indirizzo si trova in R14 in
+# R15.
 
