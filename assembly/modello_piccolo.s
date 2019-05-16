@@ -54,15 +54,15 @@ fai:
 main:
     CALL    fai     # RIP implicito, chiama la funzione fai
     MOVSLQ  i, R15
-    MOVL    $8, ar(, %R15, 4)
+    MOVL    $8, ar(, %R15, 4)   # ar[5] = 8, [1]
 
     # stampa tutti gli elementi di ar
     MOVL    $0, i
 
 ciclo:
-    MOVSLQ  i, %R15
-    MOVL    ar(, %R15, 4), %EDI
-    CALL    scriviint   # RIP implicito, chiama la funzione scriviint
+    MOVSLQ  i, %R15     # copia il valore di i in R15
+    MOVL    ar(, %R15, 4), %EDI     # [2]
+    CALL    scriviint   # RIP implicito, chiama la funzione scriviint, [3]
     INCL    i           # incrementa i di 1
     CMPL    $10, i      # confronta il valore di i con 10
     JL      ciclo       # RIP implicito, salta all'etichetta ciclo se i < 10
@@ -70,4 +70,18 @@ ciclo:
 
     MOVL     $0, %EAX   # return value
     RET                 # return
+
+# [1]
+# In questo caso l'offset per raggiungere il quinto elemento di ar.
+# In AT&T syntax this form represents
+#   OFFSET(BASE REGISTER, INDEX REGISTER, INDEX SCALE)
+# so the address represented is the value of
+# BASE REGISTER (if present) + INDEX * SCALE (if present) + OFFSET
+
+# [2]
+# Copia gli elementi di ar progressivamente in EDI.
+
+# [3]
+# Stampa progressivamente gli elementi di ar che vengono precedentemente copiati
+# in EDI.
 
