@@ -23,23 +23,25 @@
 .TEXT
 _start:
     NOP
-    MOV $0, %ECX
-    MOV $1, %EAX
-    MOV numero, %CL
+    MOV $0, %ECX        # azzera il contenuto di ECX
+    MOV $1, %EAX        # mette a 1 EAX, il moltiplicando default a 32 bit
+    MOV numero, %CL     # copia numero in CL (parte bassa di ECX)
     CMP $9, %CL
-    JA  fine        # se CL contiene un numero piu' grande di 9 mi fermo
+    JA  fine            # se CL contiene un numero piu' grande di 9 mi fermo
     CMP $1, %CL
-    JBE fine        # se CL contiene un numero piu' piccolo di 1 mi fermo
+    JBE fine            # se CL contiene un numero piu' piccolo di 1 mi fermo
 
 # Se numero e' compreso tra 1 e 9 continuo, ricordiamo infatti che il fattoriale
 # di 0 e' uguale ad 1 che si trova gia' inserito dentro EAX.
 
 ciclo_f:
-    MUL %ECX        # ricordiamo che in CL e' stato inserito numero
+    MUL %ECX        # AEX = AEX*ACX, ricordiamo che in CL e' stato inserito
+                    # numero
     DEC %CL         # decremento CL di 1
-    JNZ ciclo_f     # sinche' CL non vale 0 ripeto il ciclo
+    JNZ ciclo_f     # sinche' CL non vale 0 ripeto il ciclo, devo infatti
+                    # moltiplicare 'numero' per tutti i valori da 9 a 1
 
 fine:
-    MOV %EAX,   risultato
+    MOV %EAX,   risultato   # copia il fattoriale nella variabile risultato
     JMP uscita
 

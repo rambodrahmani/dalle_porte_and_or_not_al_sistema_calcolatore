@@ -53,9 +53,11 @@ ciclo:
 
     CALL  outchar       # scrive il carattere in AL su terminale
     AND   $0x5F, %AL    # converti il carattere in maiuscolo [2]
-    MOV   %AL, (%EBX)
-    INC   %EBX
-    DEC   %CX       # decrementa il numero massimo di carattere da leggere
+    MOV   %AL, (%EBX)   # copia il contenuto del registro AL e lo copia nella
+                        # locazione di memoria il cui indirizzo e' contenuto nel
+                        # registro EBX
+    INC   %EBX      # incrementa l'indirizzo puntato da EBX (prossimo carattere)
+    DEC   %CX       # decrementa il numero massimo di caratteri da leggere
     JNZ   ciclo     # se abbiamo ancora caratteri da leggere, ripeti il ciclo
 
 dopo:
