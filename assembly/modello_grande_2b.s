@@ -1,8 +1,6 @@
 ##
 #
 #   File:   modello_grande_2b.s
-#           Compilato con g++ modello_grande.s -o modello_grande_as
-#
 #           Compilato con
 #               g++ -mcmodel=large modello_grande.cpp -o modello_grande
 #
