@@ -1,6 +1,6 @@
 /**
  *
- *  File:   parametri_array.cpp
+ *  File:   parametri_array_2.cpp
  *          Esempio di passaggio di array tra funzioni con la notazione con
  *          puntatori espliciti.
  *
