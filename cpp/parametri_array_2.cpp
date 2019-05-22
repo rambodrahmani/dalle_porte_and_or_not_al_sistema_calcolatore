@@ -1,8 +1,8 @@
 /**
  *
  *  File:   parametri_array.cpp
- *          Esempio di passaggio di array tra funzioni con la notazione propria
- *          degli array.
+ *          Esempio di passaggio di array tra funzioni con la notazione con
+ *          puntatori espliciti.
  *
  *  Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/05/19.
@@ -18,7 +18,7 @@ using namespace std;
  * it returns b, otherwise it reutrns an array where each element is given by
  * the sum of the corresponding element of a and b.
  */
-extern "C" int* due(int a[], int b[], int n)
+extern "C" int* due(int* a, int* b, int n)
 {
     // array index
     int i;
@@ -30,19 +30,19 @@ extern "C" int* due(int a[], int b[], int n)
     // sum the elements of a into s1
     for (i = 0; i < n; i++)
     {
-        s1 = s1 + a[i];
+        s1 = s1 + *(a + i);
     }
 
     // sum the elements of b into s2
     for (i = 0; i < n; i++)
     {
-        s2 = s2 + b[i];
+        s2 = s2 + *(b + i);
     }
 
     // sum the corresponding elements of a and b
     for (i = 0; i < n; i++)
     {
-        a[i] = a[i] + b[i];
+        *(a + i) = *(a + i) + *(b + i);
     }
 
     // if the sum of the elements of a is lesser than the sum of the elements of
@@ -83,14 +83,14 @@ extern "C" void uno()
     // print integer array ar
     for (i = 0; i < n; i++)
     {
-        cout << ar[i] << ' ';
+        cout << *(ar + i) << ' ';
     }
     cout << endl;
 
     // print integer array br
     for (i = 0; i < n; i++)
     {
-        cout << cr[i] << ' ';
+        cout << *(cr + i) << ' ';
     }
     cout << endl;
 }
