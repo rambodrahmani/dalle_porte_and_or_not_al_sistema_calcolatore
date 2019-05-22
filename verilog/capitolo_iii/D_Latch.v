@@ -1,14 +1,26 @@
 /**
  *
  * File: D_Latch.v
- *       Si consideri ora un sistema digitale o una rete logica in cui siano
- *       inclusi dei D latch. Il linguaggio Verilog permette di evitare la
- *       descrizione della loro struttura, a patto che ciascuno di essi sia
- *       dichiarato come rete di tipo predefinito reg e che nel descrivere il
- *       suo utilizzo si seguano regole ben precise, quale le seguenti (le
- *       variabili c, d, q, /reset hanno il solito significiato e debbono
- *       essere precedentemente dichiarate):
- *          
+ *       Il D latch altro non e' che un latch SR preceduto da una rete
+ *       combinatoria che permette di comandarlo tramite una variabile
+ *       d (data) e una variabile c (control) , traducendo i comandi impartiti
+ *       tramite tali variabili nei comandi da impartire al latch SR interno.
+ *       
+ *       Piu' formalmente, il comportamento del D latch e' il seguente: per
+ *       tutto il tempo in cui c e' a 1, il D latch e' in una fase di
+ *       inseguimento (cioe' di trasparenza) durante la quale continuamente
+ *       memorizza e presenta in uscita il valore della variabile di ingresso
+ *       d; quando la variabile c e' a 0, il D latch e' in una fase di
+ *       conservazione, in cui mantiene costante il valore della variabile di
+ *       uscita q (valore che e' pari all'ultimo valore di d memorizzato).
+ *
+ *       Per assicurare una corretta memorizzazione dell'ultimo valore di
+ *       d presente in ingresso prima che il D latch passi dalla fase di
+ *       inseguimento alla fase di conservazione, occorre che tale valore
+ *       rimanga costante per qualche tempo prima (Tsetup) e per qualche tempo
+ *       dopo (Thold) rispetto alla transizione da 1 a 0 del valore della
+ *       variabile c.
+ *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 22/05/2019.
  *
