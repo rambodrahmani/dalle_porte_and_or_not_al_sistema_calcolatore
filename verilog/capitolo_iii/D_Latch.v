@@ -10,19 +10,22 @@
  *       essere precedentemente dichiarate):
  *          
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
- *         Created on 11/05/2019.
+ *         Created on 22/05/2019.
  *
  */
 
-module D_Latch_System(q, qN, s, r, c, d);
-    input c, d;
-    output q, qN, s, r;
+module D_Latch(q, qN, s, r, preset_, preclear_, d, c);
+    input preset_, preclear_;
+    input d, c;
+    output s, r;
+    output q, qN;
 
+    // d latch additional circuitry
     assign #1 s = d & c;
     assign #1 r = ~d & c;
 
-    // Default SR Latch Behavoir
-    assign #1 q = ~(r|qN);
-    assign #1 qN = ~(s|q);
+    // default SR Latch with reset implementation
+    assign #1 q = ~((preset_ & r) | qN | ~preclear_);
+    assign #1 qN = ~(~preset_ | (s & preclear_) | q);
 endmodule
 
