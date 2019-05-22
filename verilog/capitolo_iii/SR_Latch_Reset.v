@@ -18,7 +18,7 @@
  *
  */
 
-module Latch_SR(q, qN, s, r, preset_, preclear_);
+module SR_Latch_Reset(q, qN, s, r, preset_, preclear_);
     input s, r, preset_, preclear_;
     output q, qN;
 
