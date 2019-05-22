@@ -25,7 +25,7 @@ module D_Latch(q, qN, s, r, preset_, preclear_, d, c);
     assign #1 r = ~d & c;
 
     // default SR Latch with reset implementation
-    assign #1 q = ~((preset_ & r) | qN | ~preclear_);
-    assign #1 qN = ~(~preset_ | (s & preclear_) | q);
+    assign #2 q = ~((preset_ & r) | qN | ~preclear_);
+    assign #2 qN = ~(~preset_ | (s & preclear_) | q);
 endmodule
 
