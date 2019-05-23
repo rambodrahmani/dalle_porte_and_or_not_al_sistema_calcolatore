@@ -71,6 +71,28 @@ R2
 R3
 R4
 n@decoder_2_to_4_@e@n
+vEprom
+!s110 1558645647
+!i10b 1
+!s100 4dc`XSO[8kHGK]iN;CO;33
+Icj4gWi;a`?>lDLdg`a^<S1
+R1
+R0
+w1558645645
+8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Eprom.v
+F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Eprom.v
+L0 35
+R2
+r1
+!s85 0
+31
+!s108 1558645647.000000
+!s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Eprom.v|
+!s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Eprom.v|
+!i113 1
+R3
+R4
+n@eprom
 vMinterm
 !i10b 1
 R1

@@ -32,6 +32,37 @@
  *
  */
 
-module Eprom(d3_d0, a22_a0, s_, mr_, mw_);
+module Eprom(d7_d0, a15_a0, s_, mr_);
+    input [15:0] a15_a0;
+    input s_, mr_;
+
+    output [7:0] d7_d0;
+
+    wire b;
+    assign b = ({s_, mr_} == 'B00)?1:0;
+
+    assign d7_d0 = (b == 1) ? F(a15_a0):'HZZ;
+
+        function [7:0] F;       // function F returns an 8-bit value
+            input [15:0] a15_a0;
+            casex(a15_a0)       // here we hard code the EPROM functiontalities
+                'H0000 : F = 'B00000000;
+                'H0001 : F = 'B00010000;
+                'H0010 : F = 'B00100000;
+                'H0011 : F = 'B00110000;
+                'H0100 : F = 'B01000000;
+                'H0101 : F = 'B01010000;
+                'H0110 : F = 'B01100000;
+                'H0111 : F = 'B01110000;
+                'H1000 : F = 'B10000000;
+                'H1001 : F = 'B10010000;
+                'H1010 : F = 'B10100000;
+                'H1011 : F = 'B10110000;
+                'H1100 : F = 'B11000000;
+                'H1101 : F = 'B11010000;
+                'H1110 : F = 'B11100000;
+                'H1111 : F = 'B11110000;
+            endcase
+        endfunction
 endmodule
 
