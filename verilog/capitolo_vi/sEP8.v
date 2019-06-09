@@ -113,8 +113,91 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
 
     // REGISTRO DI STATO, REGISTRO MJR E CODIFICA DEGLI STATI INTERNI
     reg [6:0]   STAR, MJR;
-    parameter fetch0=0,
-                ...
+    parameter fetch0=0
+              fetch1=1
+              fetch2=2
+              fetchF2_0=3
+              fetchF2_1=4
+              fetchF3_0=5
+              fetchF4_0=6
+              fetchF4_1=7
+              fetchF5_0=8
+              fetchF5_1=9
+              fetchF5_2=10
+              fetchF6_0=11
+              fetchF6_1=12
+              fetchF7_0=13
+              fetchF7_1=14
+              fetchEnd=15
+              fetchEnd1=16
+              nop=17
+              hlt=18
+              ALtoAH=19
+              AHtoAL=20
+              incDP=21
+              ldAL=22
+              ldAH=23
+              storeAL=24
+              storeAH=25
+              ldSP=26
+              ldSP1=27
+              ldimmDP=28
+              ldimmDP1=29
+              lddirDP=30
+              lddirDP1=31
+              lddirDP2=32
+              storeDP=33
+              storeDP1=34
+              in=35
+              in1=36
+              in2=37
+              in3=38
+              out=39
+              out1=40
+              out2=41
+              out3=42
+              out4=43
+              aluAL=44
+              aluAH=45
+              jmp=46
+              pushAL=47
+              pushAH=48
+              pushDP=49
+              popAL=50
+              popAL1=51
+              popAH=52
+              popAH1=53
+              popDP=54
+              popDP1=55
+              call=56
+              call1=57
+              ret=58
+              ret1=59
+              nvi=60
+              readB=61
+              readW=62
+              readM=63
+              readL=64
+              read0=65
+              read1=66
+              read2=67
+              read3=68
+              read4=69
+              writeB=70
+              writeW=71
+              writeM=72
+              writeL=73
+              write0=74
+              write1=75
+              write2=76
+              write3=77
+              write4=78
+              write5=79
+              write6=80
+              write7=81
+              write8=82
+              write9=83
+              write10=84
               write11=85;
 
     // RETI COMBINATORIE NON STANDARD
@@ -170,12 +253,136 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
         // ...
     endfunction
 
-    // 
+    // La rete combinatoria alu_flag() opera in parallelo alla rete precedente
+    // e fornisce in uscita il valore dei flag OF, SF, ZF e CF, cosi' come
+    // richiesti nelle istruzioni logico/aritmetiche. 
     function [3:0] alu_flag;
         input [7:0] opcode, operando1, operando2;
         // ...
         // ...
     endfunction
+
+    // ALTRI MNEMONICI
+    parameter [2:0] F0 = 'B000, F1 = 'B001, F2 = 'B010, F3 = 'B011,
+                    F4 = 'B100, F5 = 'B101, F6 = 'B110, F7 = 'B111;
+
+    //--------------------------------------------------------------------------
+    //                             INITIAL RESET
+    always @(reset_ == 0) #1
+        begin
+            IP <= 'HFF0000;
+            F <= 'H00;
+            DIR <= 0;
+            MR_ <= 1;
+            MW_ <= 1;
+            IOR_ <= 1;
+            IOW_ <= 1;
+            STAR <= fetch0;
+        end
+
+    //--------------------------------------------------------------------------
+    //                      WHEN THE CLOCK SIGNAL ARRIVES
+    always @(posedge clock) if (reset_ == 1) #3
+        casex(STAR)
+            //------------------------------------------------------------------
+            //                  FASE DI CHIAMATA
+            fetch0:
+            fetch1:
+            fetch2:
+            fetchF2_0:
+            fetchF2_1:
+            fetchF3_0:
+            fetchF4_0:
+            fetchF4_1:
+            fetchF5_0:
+            fetchF5_1:
+            fetchF5_2:
+            fetchF6_0:
+            fetchF6_1:
+            fetchF7_0:
+            fetchF7_1:
+
+            //------------------------------------------------------------------
+            //              TERMINAZIONE DELLA FASE DI CHIAMTA
+            //              E PASSAGGIO ALLA FASE DI ESECUZIONE
+            fetchEnd:
+            fetchEnd1:
+
+            //------------------------------------------------------------------
+            //                      FASE DI ESECUZIONE
+
+            //------------ istruzione NOP
+            nop:
+
+            //------------ istruzione HLT
+            hlt:
+            ALtoAH:
+            AHtoAL:
+            incDP:
+            ldAH:
+            storeAL:
+            storeAH:
+            ldSP:
+            ldSP1:
+            ldimmDP:
+            ldimmDP1:
+            lddirDP:
+            lddirDP1:
+            lddirDP2:
+            storeDP:
+            storeDP1:
+            in:
+            in1:
+            in2:
+            in3:
+            out:
+            out1:
+            out2:
+            out3:
+            out4:
+            aluAL:
+            aluAH:
+            jmp:
+            pushAL:
+            pushAH:
+            pushDP:
+            popAL:
+            popAL1:
+            popAH:
+            popAH1:
+            popDP:
+            popDP1:
+            call:
+            call1:
+            ret:
+            ret1:
+            nvi:
+            readB:
+            readW:
+            readM:
+            readL:
+            read0:
+            read1:
+            read2:
+            read3:
+            read4:
+            writeB:
+            writeW:
+            writeM:
+            writeL:
+            write0:
+            write1:
+            write2:
+            write3:
+            write4:
+            write5:
+            write6:
+            write7:
+            write8:
+            write9:
+            write10:
+            write11:
+        endcase
 endmodule
 
 // [0]
