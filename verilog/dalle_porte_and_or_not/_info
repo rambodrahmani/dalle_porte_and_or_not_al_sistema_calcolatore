@@ -30,7 +30,7 @@ Z3 o-work dalle_porte_and_or_not
 Z4 tCvgOpt 0
 n@a@n@d
 vClock
-Z5 !s110 1559994894
+Z5 !s110 1560067251
 !i10b 1
 !s100 U=o]m<ghYFFR9z49kBjm92
 IBNE>VKY>j2DzMPzAVSUQc3
@@ -44,15 +44,15 @@ R2
 r1
 !s85 0
 31
-Z7 !s108 1559994894.000000
-Z8 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Clock.v|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop.v|
-Z9 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop.v|
+Z7 !s108 1560067250.000000
+Z8 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Clock.v|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v|
+Z9 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v|
 !i113 1
 R3
 R4
 n@clock
 vD_flip_flop
-R5
+!s110 1559994894
 !i10b 1
 !s100 L9;o_WSD5?f4H7ZS=A6IK0
 IBG85ReYIDRPga6bkTi:2C3
@@ -66,13 +66,35 @@ R2
 r1
 !s85 0
 31
+!s108 1559994894.000000
+!s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Clock.v|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop.v|
+!s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop.v|
+!i113 1
+R3
+R4
+n@d_flip_flop
+vD_flip_flop_Reg
+R5
+!i10b 1
+!s100 A]NO[K55ka@aJLbhTUHPD3
+IgYcS:<aSke2ST99l1d^cN2
+R1
+R0
+w1560066913
+8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v
+F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v
+L0 13
+R2
+r1
+!s85 0
+31
 R7
 R8
 R9
 !i113 1
 R3
 R4
-n@d_flip_flop
+n@d_flip_flop_@reg
 vD_Latch_Reg
 !s110 1559987778
 !i10b 1
