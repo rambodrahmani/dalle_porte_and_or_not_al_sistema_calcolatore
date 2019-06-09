@@ -1,7 +1,16 @@
 /**
  *
  * File: D_flip_flop.v
- *       
+ *       Un flip-flop che si comporti, a prescindere dalla sua
+ *       implementazione, come quello ora introdotto, e' detto
+ *       positive-edge-triggered D flip-flop in quanto, visto da un
+ *       utilizzatore, memorizza esclusivamente il valore della variabile di
+ *       ingresso d che e' presente all'atto della transizione da 0 a 1 della
+ *       variabile c, cioe', come si dice comunemente, all'arrivo del fronte
+ *       di salita di c. Esistono anche i negative-edge-triggered D flip-flop,
+ *       che memorizzano esclusivamente il valore della variabile d che e'
+ *       presente all'atto della transizione da 1 a 0 della variabile c.
+ *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 08/06/2019.
  *
