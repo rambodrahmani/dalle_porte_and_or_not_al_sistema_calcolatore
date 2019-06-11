@@ -113,91 +113,91 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
 
     // REGISTRO DI STATO, REGISTRO MJR E CODIFICA DEGLI STATI INTERNI
     reg [6:0]   STAR, MJR;
-    parameter fetch0=0
-              fetch1=1
-              fetch2=2
-              fetchF2_0=3
-              fetchF2_1=4
-              fetchF3_0=5
-              fetchF4_0=6
-              fetchF4_1=7
-              fetchF5_0=8
-              fetchF5_1=9
-              fetchF5_2=10
-              fetchF6_0=11
-              fetchF6_1=12
-              fetchF7_0=13
-              fetchF7_1=14
-              fetchEnd=15
-              fetchEnd1=16
-              nop=17
-              hlt=18
-              ALtoAH=19
-              AHtoAL=20
-              incDP=21
-              ldAL=22
-              ldAH=23
-              storeAL=24
-              storeAH=25
-              ldSP=26
-              ldSP1=27
-              ldimmDP=28
-              ldimmDP1=29
-              lddirDP=30
-              lddirDP1=31
-              lddirDP2=32
-              storeDP=33
-              storeDP1=34
-              in=35
-              in1=36
-              in2=37
-              in3=38
-              out=39
-              out1=40
-              out2=41
-              out3=42
-              out4=43
-              aluAL=44
-              aluAH=45
-              jmp=46
-              pushAL=47
-              pushAH=48
-              pushDP=49
-              popAL=50
-              popAL1=51
-              popAH=52
-              popAH1=53
-              popDP=54
-              popDP1=55
-              call=56
-              call1=57
-              ret=58
-              ret1=59
-              nvi=60
-              readB=61
-              readW=62
-              readM=63
-              readL=64
-              read0=65
-              read1=66
-              read2=67
-              read3=68
-              read4=69
-              writeB=70
-              writeW=71
-              writeM=72
-              writeL=73
-              write0=74
-              write1=75
-              write2=76
-              write3=77
-              write4=78
-              write5=79
-              write6=80
-              write7=81
-              write8=82
-              write9=83
-              write10=84
+    parameter fetch0=0,
+              fetch1=1,
+              fetch2=2,
+              fetchF2_0=3,
+              fetchF2_1=4,
+              fetchF3_0=5,
+              fetchF4_0=6,
+              fetchF4_1=7,
+              fetchF5_0=8,
+              fetchF5_1=9,
+              fetchF5_2=10,
+              fetchF6_0=11,
+              fetchF6_1=12,
+              fetchF7_0=13,
+              fetchF7_1=14,
+              fetchEnd=15,
+              fetchEnd1=16,
+              nop=17,
+              hlt=18,
+              ALtoAH=19,
+              AHtoAL=20,
+              incDP=21,
+              ldAL=22,
+              ldAH=23,
+              storeAL=24,
+              storeAH=25,
+              ldSP=26,
+              ldSP1=27,
+              ldimmDP=28,
+              ldimmDP1=29,
+              lddirDP=30,
+              lddirDP1=31,
+              lddirDP2=32,
+              storeDP=33,
+              storeDP1=34,
+              in=35,
+              in1=36,
+              in2=37,
+              in3=38,
+              out=39,
+              out1=40,
+              out2=41,
+              out3=42,
+              out4=43,
+              aluAL=44,
+              aluAH=45,
+              jmp=46,
+              pushAL=47,
+              pushAH=48,
+              pushDP=49,
+              popAL=50,
+              popAL1=51,
+              popAH=52,
+              popAH1=53,
+              popDP=54,
+              popDP1=55,
+              call=56,
+              call1=57,
+              ret=58,
+              ret1=59,
+              nvi=60,
+              readB=61,
+              readW=62,
+              readM=63,
+              readL=64,
+              read0=65,
+              read1=66,
+              read2=67,
+              read3=68,
+              read4=69,
+              writeB=70,
+              writeW=71,
+              writeM=72,
+              writeL=73,
+              write0=74,
+              write1=75,
+              write2=76,
+              write3=77,
+              write4=78,
+              write5=79,
+              write6=80,
+              write7=81,
+              write8=82,
+              write9=83,
+              write10=84,
               write11=85;
 
     // RETI COMBINATORIE NON STANDARD
@@ -211,8 +211,106 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
     // 1 altrimenti 0.
     function valid_fetch;
         input [7:0] opcode;
-        // ...
-        // ...
+        valid_fetch = 0;
+        casex(opcode[7:5])
+            'B000:          // FORMATO F0
+                casex(opcode[4:0])
+                    'B00000: valid_fetch = 1;
+                    'B00001: valid_fetch = 1;
+                    'B00010: valid_fetch = 1;
+                    'B00011: valid_fetch = 1;
+                    'B00100: valid_fetch = 1;
+                    'B00101: valid_fetch = 1;
+                    'B00110: valid_fetch = 1;
+                    'B00111: valid_fetch = 1;
+                    'B01000: valid_fetch = 1;
+                    'B01001: valid_fetch = 1;
+                    'B01010: valid_fetch = 1;
+                    'B01011: valid_fetch = 1;
+                    'B01111: valid_fetch = 1;
+                    'B10000: valid_fetch = 1;
+                    'B10001: valid_fetch = 1;
+                endcase
+            'B001:          // FORMATO F1
+                casex(opcode[4:0])
+                    'B00000: valid_fetch = 1;
+                    'B00001: valid_fetch = 1;
+                    'B00010: valid_fetch = 1;
+                    'B00011: valid_fetch = 1;
+                    'B00100: valid_fetch = 1;
+                    'B00101: valid_fetch = 1;
+                endcase
+            'B010:          // FORMATO F2
+                casex(opcode[4:0])
+                    'B00000: valid_fetch = 1;
+                    'B00001: valid_fetch = 1;
+                    'B00010: valid_fetch = 1;
+                    'B00011: valid_fetch = 1;
+                    'B00100: valid_fetch = 1;
+                    'B00101: valid_fetch = 1;
+                    'B00110: valid_fetch = 1;
+                    'B00111: valid_fetch = 1;
+                    'B01000: valid_fetch = 1;
+                    'B01001: valid_fetch = 1;
+                    'B01010: valid_fetch = 1;
+                    'B01011: valid_fetch = 1;
+                endcase
+            'B011:          // FORMATO F3
+                casex(opcode[4:0])
+                    'B00000: valid_fetch = 1;
+                    'B00001: valid_fetch = 1;
+                endcase
+            'B100:          // FORMATO F4
+                casex(opcode[4:0])
+                    'B00000: valid_fetch = 1;
+                    'B00001: valid_fetch = 1;
+                    'B00010: valid_fetch = 1;
+                    'B00011: valid_fetch = 1;
+                    'B00100: valid_fetch = 1;
+                    'B00101: valid_fetch = 1;
+                    'B00110: valid_fetch = 1;
+                    'B00111: valid_fetch = 1;
+                    'B01000: valid_fetch = 1;
+                    'B01001: valid_fetch = 1;
+                    'B01010: valid_fetch = 1;
+                    'B01011: valid_fetch = 1;
+                endcase
+            'B101:          // FORMATO F5
+                casex(opcode[4:0])
+                    'B00000: valid_fetch = 1;
+                    'B00001: valid_fetch = 1;
+                    'B00010: valid_fetch = 1;
+                    'B00011: valid_fetch = 1;
+                    'B00100: valid_fetch = 1;
+                    'B00101: valid_fetch = 1;
+                    'B00110: valid_fetch = 1;
+                    'B00111: valid_fetch = 1;
+                    'B01000: valid_fetch = 1;
+                    'B01001: valid_fetch = 1;
+                    'B01010: valid_fetch = 1;
+                    'B01011: valid_fetch = 1;
+                endcase
+            'B110:          // FORMATO F6
+                casex(opcode[4:0])
+                    'B00000: valid_fetch = 1;
+                    'B00001: valid_fetch = 1;
+                endcase
+            'B111:          // FORMATO F7
+                casex(opcode[4:0])
+                    'B00000: valid_fetch = 1;
+                    'B00001: valid_fetch = 1;
+                    'B00010: valid_fetch = 1;
+                    'B00011: valid_fetch = 1;
+                    'B00100: valid_fetch = 1;
+                    'B00101: valid_fetch = 1;
+                    'B00110: valid_fetch = 1;
+                    'B00111: valid_fetch = 1;
+                    'B01000: valid_fetch = 1;
+                    'B01001: valid_fetch = 1;
+                    'B01010: valid_fetch = 1;
+                    'B01011: valid_fetch = 1;
+                endcase
+        endcase
     endfunction
 
     // La rete combinatoria first_execution_state() riceve in ingresso il byte
@@ -287,20 +385,76 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             //------------------------------------------------------------------
             //                  FASE DI CHIAMATA
             fetch0:
+            begin
+                A23_A0<=IP; IP<=IP+1; MJR<=fetch1; STAR<=readB;
+            end
+
             fetch1:
+            begin
+                OPCODE<=APP0;
+                MJR<=(APP0[7:5]==F0)?fetchEnd:
+                     (APP0[7:5]==F1)?fetchEnd:
+                     (APP0[7:5]==F2)?fetchF2_0:
+                     (APP0[7:5]==F3)?fetchF3_0:
+                     (APP0[7:5]==F4)?fetchF4_0:
+                     (APP0[7:5]==F5)?fetchF5_0:
+                     (APP0[7:5]==F6)?fetchF6_0:
+                     /* default */   fetchF7_0;
+                STAR<=(valid_fetch(APP0)==1)?fetch2:nvi;
+            end
+
             fetch2:
+            begin
+                STAR<=MJR;
+            end
+
             fetchF2_0:
+            begin
+            end
+
             fetchF2_1:
+            begin
+            end
+
             fetchF3_0:
+            begin
+            end
+
             fetchF4_0:
+            begin
+            end
+
             fetchF4_1:
+            begin
+            end
+
             fetchF5_0:
+            begin
+            end
+
             fetchF5_1:
+            begin
+            end
+
             fetchF5_2:
+            begin
+            end
+
             fetchF6_0:
+            begin
+            end
+
             fetchF6_1:
+            begin
+            end
+
             fetchF7_0:
+            begin
+            end
+
             fetchF7_1:
+            begin
+            end
 
             //------------------------------------------------------------------
             //              TERMINAZIONE DELLA FASE DI CHIAMTA
@@ -357,6 +511,27 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             ret:
             ret1:
             nvi:
+
+            //------------------------------------------------------------------
+            //          MICROSOTTOPROGRAMMA PER LETTURE IN MEMORIA
+            // Le etichette degli stati interni da immettere nel registro STAR
+            // per accedere al microsottoprogramma per la lettura in memoria
+            // sono readB (lettura di una locazione), readW (lettura di due
+            // locazioni), readM (lettura di tre locazioni), readL (lettura di
+            // quattro locazioni).
+            // Ciascun microsottoprogramma, quando invocato, deve trovare nel
+            // registro A23_A0 l'indirizzo della prima (ed eventualmente
+            // unica) locazione a cui accedere.
+            //
+            // Il microsottoprogramma per la lettura in memoria lascia
+            //  a) in APP0 il contenuto della prima (ed eventualmente unica)
+            //     locazione a cui accede;
+            //  b) in APP1 il contenuto della seconda (ed eventualmente
+            //     ultima) locazione a cui accede;
+            //  c) in APP2 il contenuto della terza (ed eventualmente ultima)
+            //     locazione a cui accede;
+            //  d) in APP3 il contenuto della quarta locazione a cui
+            //     eventualmente accede.
             readB:
             readW:
             readM:
@@ -366,6 +541,27 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             read2:
             read3:
             read4:
+
+            //------------------------------------------------------------------
+            //          MICROSOTTOPROGRAMMA PER SCRITTURE IN MEMORIA
+            // Le etichette degli stati interni da immettere nel registro STAR
+            // per accedere al microsottoprogramma per la scrittura in memoria
+            // sono writeB (scrittura di una locazione), writeW (scrittura di
+            // due locazioni), writeM (scrittura di tre locazioni), writeL
+            // (scrittura di quattro locazioni).
+            // Ciascun microsottoprogramma, quando invocato, deve trovare nel
+            // registro A23_A0 l'indirizzo della prima (ed eventualmente
+            // unica) locazione a cui accedere.
+            //
+            // Il microsottoprogramma per la scrittura in memoria immette
+            //  a) il contenuto del registro APP0 nella prima (ed
+            //     eventualmente unica) locazione a cui accede;
+            //  b) il contenuto del registro APP1 nella seconda (ed
+            //     eventualmente ultima) locazione a cui accede;
+            //  c) il contenuto del registro APP2 nella terza (ed
+            //     eventualmente ultima) locazione a cui accede;
+            //  d) il contenuto del registro APP3 nella quarta locazione a cui
+            //     eventualmente accede.
             writeB:
             writeW:
             writeM:
@@ -390,3 +586,4 @@ endmodule
 // memoria che permettono l'accesso a locazioni multiple cosecutive.
 
 // [1]
+
