@@ -77,13 +77,13 @@ LOAD mess.o
 .plt.sec
  *(.plt.sec)
 
-.text           0x0000000000401000       0x86
+.text           0x0000000000401000       0x89
  *(.text.unlikely .text.*_unlikely .text.unlikely.*)
  *(.text.exit .text.exit.*)
  *(.text.startup .text.startup.*)
  *(.text.hot .text.hot.*)
  *(.text .stub .text.* .gnu.linkonce.t.*)
- .text          0x0000000000401000       0x86 mess.o
+ .text          0x0000000000401000       0x89 mess.o
                 0x0000000000401064                _start
  *(.gnu.warning)
 

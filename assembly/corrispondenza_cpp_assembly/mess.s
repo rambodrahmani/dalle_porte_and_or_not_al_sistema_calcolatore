@@ -28,7 +28,7 @@
 .GLOBAL _start
 #-------------------------------------------------------------------------------
 _start:
-    MOVQ    $mess, %RBX             # copia in RBX l'indirizzo contenuto in mess
+    MOVABSQ $mess, %RBX             # copia in RBX l'indirizzo contenuto in mess
     MOVB    $(f_mess - mess), %CL   # copia in CL la lungezza della stringa mess
 
 ripeti:

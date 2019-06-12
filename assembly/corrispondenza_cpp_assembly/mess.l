@@ -161,26 +161,27 @@ GAS LISTING mess.s 			page 1
   28              	.GLOBAL _start
   29              	#-------------------------------------------------------------------------------
   30              	_start:
-  31 0064 48C7C300 	    MOVQ    $mess, %RBX             # copia in RBX l'indirizzo contenuto in mess
-  31      000000
-  32 006b B115     	    MOVB    $(f_mess - mess), %CL   # copia in CL la lungezza della stringa mess
+  31 0064 48BB0000 	    MOVABSQ $mess, %RBX             # copia in RBX l'indirizzo contenuto in mess
+  31      00000000 
+  31      0000
+  32 006e B115     	    MOVB    $(f_mess - mess), %CL   # copia in CL la lungezza della stringa mess
   33              	
   34              	ripeti:
-  35 006d 8A03     	    MOVB    (%RBX), %AL     # copia in AL il carattere ASCII puntato da RBX
-  36 006f E8B7FFFF 	    CALL    video           # stampa il carattere ASCII contenuto di AL
+  35 0070 8A03     	    MOVB    (%RBX), %AL     # copia in AL il carattere ASCII puntato da RBX
+  36 0072 E8B4FFFF 	    CALL    video           # stampa il carattere ASCII contenuto di AL
   36      FF
-  37 0074 4883C301 	    ADDQ    $1, %RBX        # incrementa di 1 l'indirizzo contenuto in RBX
-  38 0078 80E901   	    SUBB    $1, %CL         # decrementa di 1 il contatore CL
-  39 007b 75F0     	    JNZ     ripeti          # se ho ancora caratteri da stampanre, ripeti
+  37 0077 4883C301 	    ADDQ    $1, %RBX        # incrementa di 1 l'indirizzo contenuto in RBX
+  38 007b 80E901   	    SUBB    $1, %CL         # decrementa di 1 il contatore CL
+  39 007e 75F0     	    JNZ     ripeti          # se ho ancora caratteri da stampanre, ripeti
   40              	
-  41 007d B00A     	    MOVB    $'\n', %AL      # copia in AL il carattere ASCII '\n'
-  42 007f E8A7FFFF 	    CALL    video           # stampa il carattere ASCII contenuto in AL
+  41 0080 B00A     	    MOVB    $'\n', %AL      # copia in AL il carattere ASCII '\n'
+  42 0082 E8A4FFFF 	    CALL    video           # stampa il carattere ASCII contenuto in AL
   42      FF
-  43 0084 EBD2     	    JMP     uscita          # salta a uscita
-  44              	
+  43 0087 EBCF     	    JMP     uscita          # salta a uscita
 GAS LISTING mess.s 			page 4
 
 
+  44              	
 GAS LISTING mess.s 			page 5
 
 
@@ -192,6 +193,6 @@ DEFINED SYMBOLS
                ser.s:51     .text:000000000000002b video
                ser.s:71     .text:0000000000000058 uscita
               mess.s:30     .text:0000000000000064 _start
-              mess.s:34     .text:000000000000006d ripeti
+              mess.s:34     .text:0000000000000070 ripeti
 
 NO UNDEFINED SYMBOLS
