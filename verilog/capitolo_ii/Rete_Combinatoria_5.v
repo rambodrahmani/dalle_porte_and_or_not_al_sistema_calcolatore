@@ -1,5 +1,4 @@
 /**
- *
  * File:    Rete_Combinatoria_5.v
  *          Esempio di rete combinatoria con quattro variabili di ingresso x3,
  *          x2, x1, x0 e una variabile di uscita z, usata per dimostrare
@@ -18,7 +17,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 23/04/2019.
- *
  */
 
 module Rete_Combinatoria_5(x3, x2, x1, x0, z);

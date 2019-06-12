@@ -1,5 +1,4 @@
 /**
- *
  * File:    NAND.v
  *          Al contrario la porta NAND restituisce la negazione di una porta
  *          AND, quindi restituisce 1 quando negli ingressi e' presente lo 0, e
@@ -22,7 +21,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 18/04/2019.
- *
  */
 
 module NAND(x1, x0, z);

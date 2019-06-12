@@ -1,5 +1,4 @@
 /**
- *
  * File: D_Latch.v
  *       Il D latch altro non e' che un latch SR preceduto da una rete
  *       combinatoria che permette di comandarlo tramite una variabile
@@ -23,7 +22,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 22/05/2019.
- *
  */
 
 module D_Latch(q, qN, s, r, preset_, preclear_, d, c);

@@ -1,5 +1,4 @@
 /**
- *
  * File:    Rete_Combinatoria_3.v
  *          In alcuni casi la tabella di verita' di una rete combinatoria puo'
  *          essere non-completamente specificata, cioe' puo' accadere che in
@@ -37,7 +36,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 module Rete_Combinatoria_3(x2, x1, x0, z1, z0);

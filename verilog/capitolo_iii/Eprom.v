@@ -1,5 +1,4 @@
 /**
- *
  * File: Eprom.v
  *       Circuiti di largo utilizzo sono le cosiddette ROM (Read Only Memory),
  *       PROM (Programmable Read Only Memory), EPROM (Erasable Programmable
@@ -29,7 +28,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 23/05/2019.
- *
  */
 
 module Eprom(d7_d0, a15_a0, s_, mr_);

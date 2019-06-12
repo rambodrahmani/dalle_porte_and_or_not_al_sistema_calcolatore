@@ -1,5 +1,4 @@
 /**
- *
  * File:    NOT.v
  *          Porta logica che inverte il segnale in ingresso.
  *          Questa porta logica ha un solo ingresso ed una uscita che sara' 1 se
@@ -18,7 +17,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 18/04/2019.
- *
  */
 
 module NOT(x, z);

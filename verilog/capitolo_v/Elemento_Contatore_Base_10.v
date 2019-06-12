@@ -1,5 +1,4 @@
 /**
- *
  * File: Elemento_Contatore_Base_10.v
  *       Base B = 10. Con cifra 0 codificata 0000, cifra 1 codificata 0001,
  *       ..., cifra 9 codificata 1001 (codifica 8-4-2-1). Il registro ha la
@@ -13,7 +12,6 @@
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 module Elemento_Contatore_Base_3(eu, q3_q0, ei, clock, reset_);

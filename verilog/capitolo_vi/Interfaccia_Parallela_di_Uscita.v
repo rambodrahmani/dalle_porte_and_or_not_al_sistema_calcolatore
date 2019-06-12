@@ -1,5 +1,4 @@
 /**
- *
  * File: Interfaccia_Parallela_di_Uscita.v
  *       Il funzionamento dell'interfaccia e' estremamente semplice. Quando
  *       essa e' selezionata (/s = 0) e /iow passa da 1 a 0 (inizio di un
@@ -14,7 +13,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 module Interfaccia_Parallela_di_Uscita(d7_d0, s_, iow_, byte_out);

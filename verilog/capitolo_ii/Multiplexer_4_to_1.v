@@ -1,5 +1,4 @@
 /**
- *
  * File:    Multiplexer_4_to_1.v
  *          La rete combinatoria che svolte funzioni complementari rispetto al
  *          demultiplexer e' nota come multiplexer 2^N_to_1. Essa ha
@@ -14,7 +13,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 23/04/2019.
- *
  */
 
 /**

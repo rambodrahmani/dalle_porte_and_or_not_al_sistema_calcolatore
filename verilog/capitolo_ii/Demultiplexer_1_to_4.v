@@ -1,5 +1,4 @@
 /**
- *
  * File:    Demultiplexer_1_to_4.v
  *          Il demultiplexer_1_to_2^N e' una rete combinatoria dotata di una
  *          variabile di ingresso x detta variabile da commutare, di
@@ -15,7 +14,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 /**

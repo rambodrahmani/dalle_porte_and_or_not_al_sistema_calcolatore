@@ -1,5 +1,4 @@
 /**
- *
  * File:    XOR.v
  *          EXOR (EXclusive OR) e' una porta logica che riceve in ingresso "n"
  *          valori e restituisce "1" in uscita se, e solo se, vi e' almeno un
@@ -20,7 +19,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 module XOR(x1, x0, z);

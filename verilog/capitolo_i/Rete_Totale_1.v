@@ -1,5 +1,4 @@
 /**
- *
  * File:    Rete_Totale_1.v
  *          La seguente descrizione in linguaggio Verilog evidenzia invece
  *          come, in tale linguaggio si possono dichiarare e usare le
@@ -13,7 +12,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 16/06/2019.
- *
  */
 
 /*

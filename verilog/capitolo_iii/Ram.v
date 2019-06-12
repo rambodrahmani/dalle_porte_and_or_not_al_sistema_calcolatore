@@ -1,5 +1,4 @@
 /**
- *
  * File: Ram.v
  *       Una memoria RAM (Random Access Memory) static puo' essere vista come
  *       una matrice di D latch contornata da reti logiche combinatorie che
@@ -62,7 +61,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 22/05/2019.
- *
  */
 
 module Ram(d3_d0, a22_a0, s_, mr_, mw_);

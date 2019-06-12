@@ -1,5 +1,4 @@
 /**
- *
  * File:    Decoder_2_to_4.v
  *          Il decoder N_to_2^N e' una rete combinatoria dotata di N variabili
  *          di ingresso e di P = 2^N variabili di uscita, ed in cui ogni
@@ -16,7 +15,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 /**

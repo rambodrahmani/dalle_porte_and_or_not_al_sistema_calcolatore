@@ -1,5 +1,4 @@
 /**
- *
  * File:    XNOR.v
  *          EXNOR (EXclusive NOR) e' una porta logica che riceve in ingresso "n"
  *          valori e restituisce "1" in uscita se, e solo se, tutti gli ingressi
@@ -21,7 +20,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 module XNOR(x1, x0, z);

@@ -1,5 +1,4 @@
 /**
- *
  * File: D_Latch_Reg.v
  *       Si consideri ora un sistema digitale o una rete logica in cui sono
  *       inclusi dei D latch. Il linguaggio Verilog permette di evitare la
@@ -9,7 +8,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 08/06/2019.
- *
  */
 
 module D_Latch_Reg(d, c, q, reset_);

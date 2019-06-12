@@ -1,5 +1,4 @@
 /**
- *
  * File: Registro_Multifunzionale.v
  *       Un registro multifunzionale e' una rete sequenziale sincronizzata
  *       che, come conseguenza dell'arrivo di un segnale di sincronizzazione,
@@ -23,7 +22,6 @@
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 module Registro_Carica_Parallelo_TraslaSinistro(z3_z0, x3_x0, b0, clock, reset_);

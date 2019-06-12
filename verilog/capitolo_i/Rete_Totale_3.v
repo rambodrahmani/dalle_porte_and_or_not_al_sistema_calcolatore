@@ -1,5 +1,4 @@
 /**
- *
  * File:    Rete_Totale_3.v
  *          La descrizione della Rete_Totale puo' essere fortemente compattata
  *          esplicitando solo le variabili strettamente necessarie per
@@ -9,7 +8,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 16/06/2019.
- *
  */
 
 /*

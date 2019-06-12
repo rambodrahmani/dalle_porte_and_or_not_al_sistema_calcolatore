@@ -1,5 +1,4 @@
 /**
- *
  * File: ContatoreUp_Ncifre_Base2.v
  *       Un contatore e' una rete sequenziale sincronizzata il cui stato di
  *       uscita puo' essere interpretato come un numero che, all'arrivo di
@@ -22,7 +21,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 module ContatoreUp_Ncifre_Base2(numero, clock, reset_);

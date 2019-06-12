@@ -1,5 +1,4 @@
 /**
- *
  * File: sEP8.v
  *       Esaminiamo adesso in maggior dettaglio il funzionamento del
  *       processore sEP8. Come gia' detto piu' volte, esso preleva dalla
@@ -80,7 +79,6 @@
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 //------------------------------------------------------------------------------

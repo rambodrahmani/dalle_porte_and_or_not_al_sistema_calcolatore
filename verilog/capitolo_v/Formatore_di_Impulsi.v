@@ -1,5 +1,4 @@
 /**
- *
  * File: Formatore_di_Impulsi.v
  *       Come secondo esempio di rete sequenziale sincronizzata, descriviamo
  *       un consumatore che riceve da un produttore, tramite la variabile
@@ -40,7 +39,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 23/05/2019.
- *
  */
 
 module Formatore_di_Impulsi(dav_, rfd, numero, out, clock, reset_);

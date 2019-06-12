@@ -1,5 +1,4 @@
 /**
- *
  * File:    Sistema.v
  *          Consideriamo un sistema dove un modulo Trasmettitore T invia
  *          informazioni a un modulo Ricevitore R, variando la tensione su un

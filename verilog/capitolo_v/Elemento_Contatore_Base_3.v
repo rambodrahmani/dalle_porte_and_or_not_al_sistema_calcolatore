@@ -1,5 +1,4 @@
 /**
- *
  * File: Elemento_Contatore_Base_3.v
  *       Base B = 3. Con cifra 0 codificata oo, cifra 1 codificata 01 e cifra
  *       2 codificata 10. Il registro ha capiacita' di due bit; indicando con
@@ -12,7 +11,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 module Elemento_Contatore_Base_3(eu, q1_q0, ei, clock, reset_);

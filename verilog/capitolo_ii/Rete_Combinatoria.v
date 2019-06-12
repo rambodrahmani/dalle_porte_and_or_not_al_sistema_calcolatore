@@ -1,5 +1,4 @@
 /**
- *
  * File:    Rete_Combinatoria.v
  *          Consideriamo una rete combinatoria con la seguente tabella di
  *          verita':
@@ -25,7 +24,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 module Rete_Combinatoria(x2, x1, x0, z1, z0);

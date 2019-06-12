@@ -1,5 +1,4 @@
 /**
- *
  * File:    Minterm.v
  *          Un mintermine e' una funzione booleana che assume il valore 1 (ossia
  *          vero, asserito) in corrispondenza di un'unica configurazione di
@@ -12,7 +11,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 module Minterm(x1, x0, z3, z2, z1, z0);

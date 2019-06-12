@@ -1,5 +1,4 @@
 /**
- *
  * File:    Latch_SR.v
  *          In elettronica digitale, il latch (letteralmente "serratura",
  *          "chiavistello") e' un circuito elettronico bistabile, caratterizzato
@@ -60,7 +59,6 @@
  *          
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 11/05/2019.
- *
  */
 
 module Latch_SR(q, qN, s, r);

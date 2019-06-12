@@ -1,5 +1,4 @@
 /**
- *
  * File:    NOR.v
  *          Al contrario la porta NOR restituisce la negazione di una porta OR e
  *          quindi restituisce 1 solo quando tutti i valori in ingresso sono 0.
@@ -19,7 +18,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 module NOR(x1, x0, z);

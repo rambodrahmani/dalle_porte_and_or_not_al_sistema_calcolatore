@@ -1,5 +1,4 @@
 /**
- *
  * File: Elemento_Contatore_Base_2.v
  *       Base B = 2. Con cifra 0 codificata come 0 e cifra 1 codificata con 1.
  *       Il registro ha la capacita' di un bit; indicando con q la sua
@@ -11,7 +10,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 module Elemento_Contatore_Base_2(eu, q, ei, clock, reset_);

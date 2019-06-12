@@ -1,11 +1,9 @@
 /**
- *
  * File: D_flip_flop_Reg.v
  *       
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 `include "Clock.v"

@@ -1,12 +1,10 @@
 /**
- *
  * File: Clock.v
  *       This module provides a clock signal which can be used by external
  *       modules to synchronize.
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 08/06/2019.
- *
  */
 
 module Clock(clock);

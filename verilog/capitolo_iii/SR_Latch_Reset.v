@@ -1,5 +1,4 @@
 /**
- *
  * File: SR_Latch_Reset.v
  *       Latch SR dotato di preset e preclear per poter impostare lo stato
  *       iniziale.
@@ -15,7 +14,6 @@
  *          
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 22/05/2019.
- *
  */
 
 module SR_Latch_Reset(q, qN, s, r, preset_, preclear_);

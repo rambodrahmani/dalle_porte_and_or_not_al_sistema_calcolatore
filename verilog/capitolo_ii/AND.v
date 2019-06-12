@@ -1,5 +1,4 @@
 /**
- *
  * File:    AND.v
  *          AND e' una porta logica che riceve in ingresso almeno due valori e
  *          restituisce 1 solo se tutti i valori di ingresso hanno valore 1.
@@ -24,7 +23,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 18/04/2019.
- *
  */
 
 module AND(x1, x0, z);

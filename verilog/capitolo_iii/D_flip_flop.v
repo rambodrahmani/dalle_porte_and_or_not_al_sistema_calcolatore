@@ -1,5 +1,4 @@
 /**
- *
  * File: D_flip_flop.v
  *       Un flip-flop che si comporti, a prescindere dalla sua
  *       implementazione, come quello ora introdotto, e' detto
@@ -13,7 +12,6 @@
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 08/06/2019.
- *
  */
 
 `include "Clock.v"

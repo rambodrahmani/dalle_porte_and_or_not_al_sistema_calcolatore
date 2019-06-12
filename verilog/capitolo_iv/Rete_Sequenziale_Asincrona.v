@@ -1,5 +1,4 @@
 /**
- *
  * File: Rete_Sequenziale_Asincrona.v
  *       Una rete sequenziale asincrona con N variabili di ingresso x[N-1],
  *       ...,x[0], M variabili di uscita z[M-1], ..., z[0] e K stati interni
@@ -28,7 +27,6 @@
  *       
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 09/06/2019.
- *
  */
 
 module Rete_Sequenziale_Asincrona(z7_z0, x7_x0);

@@ -1,5 +1,4 @@
 /**
- *
  * File:    Rete_Combinatoria_2.v
  *          Qualora lo si ritenga vantaggioso ai fini della leggibilita', si
  *          puo' evitare di inserire la descrizione delle singole leggi Fm
@@ -9,7 +8,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 module Rete_Combinatoria_2(x2, x1, x0, z1, z0);

@@ -1,5 +1,4 @@
 /**
- *
  * File:    Rete_Combinatoria_4.v
  *          L'ottimizzazione delle strutture circuitali, ivi inclusa la
  *          sintesi a costo minimo delle reti combinatorie, e' ormai affidata
@@ -23,7 +22,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 23/04/2019.
- *
  */
 
 module Rete_Combinatoria_4(x3, x2, x1, x0, z);

@@ -1,5 +1,4 @@
 /**
- *
  * File:    Decoder_2_to_4_EN.v
  *          Il decoder con abilitazione e' un decoder N_to_2^N dotato di
  *          un'ulteriore variabile di ingresso en, avente lo scopo di forzare
@@ -10,7 +9,6 @@
  *
  * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/04/2019.
- *
  */
 
 /**
