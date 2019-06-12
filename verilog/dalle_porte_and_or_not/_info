@@ -30,42 +30,40 @@ Z3 o-work dalle_porte_and_or_not
 Z4 tCvgOpt 0
 n@a@n@d
 vClock
-Z5 !s110 1560067251
 !i10b 1
+R1
+r1
+!s85 0
+31
 !s100 U=o]m<ghYFFR9z49kBjm92
 IBNE>VKY>j2DzMPzAVSUQc3
-R1
 R0
 w1559994625
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Clock.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Clock.v
-Z6 L0 12
+Z5 L0 12
 R2
-r1
-!s85 0
-31
-Z7 !s108 1560067250.000000
-Z8 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Clock.v|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v|
-Z9 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v|
+Z6 !s108 1560067250.000000
+Z7 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Clock.v|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v|
+Z8 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v|
 !i113 1
 R3
 R4
 n@clock
 vD_flip_flop
-!s110 1559994894
 !i10b 1
+R1
+r1
+!s85 0
+31
 !s100 L9;o_WSD5?f4H7ZS=A6IK0
 IBG85ReYIDRPga6bkTi:2C3
-R1
 R0
 w1559994882
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop.v
-R6
+R5
 R2
-r1
-!s85 0
-31
 !s108 1559994894.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Clock.v|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop.v|
 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop.v|
@@ -74,42 +72,40 @@ R3
 R4
 n@d_flip_flop
 vD_flip_flop_Reg
-R5
 !i10b 1
+R1
+r1
+!s85 0
+31
 !s100 A]NO[K55ka@aJLbhTUHPD3
 IgYcS:<aSke2ST99l1d^cN2
-R1
 R0
 w1560066913
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_flip_flop_Reg.v
 L0 13
 R2
-r1
-!s85 0
-31
+R6
 R7
 R8
-R9
 !i113 1
 R3
 R4
 n@d_flip_flop_@reg
 vD_Latch_Reg
-!s110 1559987778
 !i10b 1
+R1
+r1
+!s85 0
+31
 !s100 YOGNJAN5fXN>OingMBAiU2
 I696dn^o`O<a_;R`UmQXUP2
-R1
 R0
 w1559987771
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_Latch_Reg.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_Latch_Reg.v
-Z10 L0 15
+Z9 L0 15
 R2
-r1
-!s85 0
-31
 !s108 1559987778.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_Latch_Reg.v|
 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/D_Latch_Reg.v|
@@ -160,20 +156,19 @@ R3
 R4
 n@decoder_2_to_4_@e@n
 vEprom
-!s110 1558645647
 !i10b 1
+R1
+r1
+!s85 0
+31
 !s100 4dc`XSO[8kHGK]iN;CO;33
 Icj4gWi;a`?>lDLdg`a^<S1
-R1
 R0
 w1558645645
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Eprom.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Eprom.v
 L0 35
 R2
-r1
-!s85 0
-31
 !s108 1558645647.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Eprom.v|
 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Eprom.v|
@@ -182,20 +177,19 @@ R3
 R4
 n@eprom
 vFormatore_di_Impulsi
-!s110 1558647775
 !i10b 1
+R1
+r1
+!s85 0
+31
 !s100 FZ0OBKEn?Qnddz<C8[VM81
 IP4?9<hhzSD6CcoYEf=Kia1
-R1
 R0
 w1558647746
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_v/Formatore_di_Impulsi.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_v/Formatore_di_Impulsi.v
 L0 46
 R2
-r1
-!s85 0
-31
 !s108 1558647775.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_v/Formatore_di_Impulsi.v|
 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_v/Formatore_di_Impulsi.v|
@@ -257,7 +251,7 @@ R0
 w1555937367
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/NAND.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/NAND.v
-Z11 L0 28
+Z10 L0 28
 R2
 !s108 1555937431.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/NAND.v|
@@ -299,7 +293,7 @@ R0
 w1555937399
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/NOT.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/NOT.v
-Z12 L0 24
+Z11 L0 24
 R2
 !s108 1555937434.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/NOT.v|
@@ -320,7 +314,7 @@ R0
 w1555925444
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/OR.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/OR.v
-R11
+R10
 R2
 !s108 1555925533.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/OR.v|
@@ -330,20 +324,19 @@ R3
 R4
 n@o@r
 vRam
-!s110 1558604031
 !i10b 1
+R1
+r1
+!s85 0
+31
 !s100 aVh?b87Vjf=Xl`:=M?U<c2
 IQX2<N?bVM@TiOcII1liQf1
-R1
 R0
 w1558564112
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Ram.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Ram.v
 L0 68
 R2
-r1
-!s85 0
-31
 !s108 1558604031.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Ram.v|
 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_iii/Ram.v|
@@ -363,7 +356,7 @@ R0
 w1555942672
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria.v
-Z13 L0 31
+Z12 L0 31
 R2
 !s108 1555942677.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria.v|
@@ -384,7 +377,7 @@ R0
 w1555949071
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_2.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_2.v
-R10
+R9
 R2
 !s108 1555949081.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_2.v|
@@ -447,7 +440,7 @@ R0
 w1556023892
 8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_5.v
 F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_5.v
-R12
+R11
 R2
 !s108 1556023896.000000
 !s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_ii/Rete_Combinatoria_5.v|
@@ -465,14 +458,14 @@ r1
 !s100 =SWlALOM^Z@^O`=?5FGJA1
 IBWJ?7CICLA9@iPNg3]k6h2
 R0
-Z14 w1555422751
-Z15 8/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_3.v
-Z16 F/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_3.v
+Z13 w1555422751
+Z14 8/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_3.v
+Z15 F/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_3.v
 L0 36
 R2
-Z17 !s108 1555422765.000000
-Z18 !s107 /home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_3.v|
-Z19 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_3.v|
+Z16 !s108 1555422765.000000
+Z17 !s107 /home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_3.v|
+Z18 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_3.v|
 !i113 1
 R3
 R4
@@ -486,14 +479,14 @@ r1
 !s100 iK2PO_`ZY6fAbIC`C6FBR1
 I_^MNRA3RzM3eF?X:a393K3
 R0
+R13
 R14
 R15
-R16
 L0 50
 R2
+R16
 R17
 R18
-R19
 !i113 1
 R3
 R4
@@ -510,7 +503,7 @@ R0
 w1555422081
 8/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_1.v
 F/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_1.v
-R13
+R12
 R2
 !s108 1555422486.000000
 !s107 /home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_1.v|
@@ -531,7 +524,7 @@ R0
 w1555422473
 8/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_2.v
 F/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_2.v
-Z20 L0 19
+Z19 L0 19
 R2
 !s108 1555422488.000000
 !s107 /home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Rete_Totale_2.v|
@@ -549,14 +542,14 @@ r1
 !s100 >RK2_C2T4SRhJRdYOm^1K1
 I<7;Q^]_`Q>R`k@<H=IiaH1
 R0
+R13
 R14
 R15
-R16
-R20
+R19
 R2
+R16
 R17
 R18
-R19
 !i113 1
 R3
 R4
@@ -570,14 +563,14 @@ r1
 !s100 c5M?1eSYVIeoo`N9f=cQz0
 I3FFO2L1O:iPM1:Lb1c_n70
 R0
-Z21 w1555412426
-Z22 8/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Sistema.v
-Z23 F/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Sistema.v
+Z20 w1555412426
+Z21 8/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Sistema.v
+Z22 F/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Sistema.v
 L0 71
 R2
-Z24 !s108 1555412906.000000
-Z25 !s107 /home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Sistema.v|
-Z26 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Sistema.v|
+Z23 !s108 1555412906.000000
+Z24 !s107 /home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Sistema.v|
+Z25 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/Dalle_Porte_AND_OR_NOT_Al_Sistema_Calcolatore/verilog/capitolo_i/Sistema.v|
 !i113 1
 R3
 R4
@@ -591,14 +584,14 @@ r1
 !s100 XaF>9[F?<ZW7ZQXjS2mE91
 ID8z4Wi3Yb@4^UFQ5QYi`?1
 R0
+R20
 R21
 R22
-R23
 L0 37
 R2
+R23
 R24
 R25
-R26
 !i113 1
 R3
 R4
@@ -612,14 +605,14 @@ r1
 !s100 ]C?ck[;WBR;RQelWWT@hY1
 I:M?::z;cYVobR5>VT6lm<2
 R0
+R20
 R21
 R22
-R23
 L0 57
 R2
+R23
 R24
 R25
-R26
 !i113 1
 R3
 R4
