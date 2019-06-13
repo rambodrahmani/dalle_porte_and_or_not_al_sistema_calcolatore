@@ -198,11 +198,15 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
               write10=84,
               write11=85;
 
-    // RETI COMBINATORIE NON STANDARD
+    //--------------------------------------------------------------------------
+    //                    RETI COMBINATORIE NON STANDARD
     // Il processore contiene al suo interno cinque reti combinatorie non
     // standard, e cioe' le cinque reti valid_fetch(),
     // first_execution_state(), jmp_condition(), alu_result() e alu_flag(), di
     // cui viene data di seguito una breve descrizione.
+
+    //--------------------------------------------------------------------------
+    //                            VALID_FETCH
     // La rete combinatoria valid_fetch() riceve in ingresso il nyte che viene
     // messo nel registro OPCODE; se tale byte coincide con il codice
     // operativo di una istruzione valida, allora la rete fornisce in uscita
@@ -311,14 +315,111 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
         endcase
     endfunction
 
+    //--------------------------------------------------------------------------
+    //                          FIRST_EXECUTION_STATE
     // La rete combinatoria first_execution_state() riceve in ingresso il byte
     // contenuto nel registro OPCODE e fornisce in uscita la codifica dello
     // stato interno corrispondente al primo degli statement che descrivono la
     // fase di esecuzione di quella istruzione.
     function first_execution_state;
         input [7:0] opcode;
+        casex(opcode)
+            // Formato F0
+            'B00000000: first_execution_state = hlt;
+            'B00000001: first_execution_state = nop;
+            'B00000010: first_execution_state = ALtoAH;
+            'B00000011: first_execution_state = AHtoAL;
+            'B00000100: first_execution_state = incDP;
+            'B00000101: first_execution_state = hlt;
+            'B00000110: first_execution_state = hlt;
+            'B00000111: first_execution_state = hlt;
+            'B00001000: first_execution_state = hlt;
+            'B00001001: first_execution_state = hlt;
+            'B00001010: first_execution_state = hlt;
+			'B00001011: first_execution_state = hlt;
+            'B00001100: first_execution_state = hlt;
+            'B00001101: first_execution_state = hlt;
+            'B00001110: first_execution_state = hlt;
+            'B00001111: first_execution_state = hlt;
+            'B00010000: first_execution_state = hlt;
+            'B00010001: first_execution_state = hlt;
+
+            // Formato F1
+            'B00100000: first_execution_state = hlt;
+            'B00100001: first_execution_state = hlt;
+            'B00100010: first_execution_state = hlt;
+            'B00100011: first_execution_state = hlt;
+            'B00100100: first_execution_state = hlt;
+            'B00100101: first_execution_state = hlt;
+
+            // Formato F2
+            'B01000000: first_execution_state = hlt;
+            'B01000001: first_execution_state = hlt;
+            'B01000010: first_execution_state = hlt;
+            'B01000011: first_execution_state = hlt;
+            'B01000100: first_execution_state = hlt;
+            'B01000101: first_execution_state = hlt;
+            'B01000110: first_execution_state = hlt;
+            'B01000111: first_execution_state = hlt;
+            'B01001000: first_execution_state = hlt;
+            'B01001001: first_execution_state = hlt;
+            'B01001010: first_execution_state = hlt;
+            'B01001011: first_execution_state = hlt;
+
+            // Formato F3
+            'B01100000: first_execution_state = hlt;
+            'B01100001: first_execution_state = hlt;
+
+            // Formato F4
+            'B10000000: first_execution_state = hlt;
+            'B10000001: first_execution_state = hlt;
+            'B10000010: first_execution_state = hlt;
+            'B10000011: first_execution_state = hlt;
+            'B10000100: first_execution_state = hlt;
+            'B10000101: first_execution_state = hlt;
+            'B10000110: first_execution_state = hlt;
+            'B10000111: first_execution_state = hlt;
+            'B10001000: first_execution_state = hlt;
+            'B10001001: first_execution_state = hlt;
+            'B10001010: first_execution_state = hlt;
+            'B10001011: first_execution_state = hlt;
+
+            // Formato F5
+			      'B10100000: first_execution_state = hlt;
+            'B10100001: first_execution_state = hlt;
+            'B10100010: first_execution_state = hlt;
+            'B10100011: first_execution_state = hlt;
+            'B10100100: first_execution_state = hlt;
+            'B10100101: first_execution_state = hlt;
+            'B10100110: first_execution_state = hlt;
+            'B10100111: first_execution_state = hlt;
+            'B10101000: first_execution_state = hlt;
+            'B10101001: first_execution_state = hlt;
+            'B10101010: first_execution_state = hlt;
+            'B10101011: first_execution_state = hlt;
+
+            // Formato F6
+            'B11000000: first_execution_state = hlt;
+            'B11000001: first_execution_state = hlt;
+
+            // Formato F7
+            'B11100000: first_execution_state = hlt;
+            'B11100001: first_execution_state = hlt;
+            'B11100010: first_execution_state = hlt;
+            'B11100011: first_execution_state = hlt;
+            'B11100100: first_execution_state = hlt;
+            'B11100101: first_execution_state = hlt;
+            'B11100110: first_execution_state = hlt;
+            'B11100111: first_execution_state = hlt;
+            'B11101000: first_execution_state = hlt;
+            'B11101001: first_execution_state = hlt;
+            'B11101010: first_execution_state = hlt;
+            'B11101011: first_execution_state = hlt;
+        endcase
     endfunction
 
+    //--------------------------------------------------------------------------
+    //                              JMP_CONDITION
     // La rete combinatoria jmp_condition() riceve in ingresso il contenuto
     // del registro OPCODE e il contenuto del registro dei flag F e fornisce
     // in uscita 1 se:
@@ -334,6 +435,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
         // ...
     endfunction
 
+    //--------------------------------------------------------------------------
+    //                              ALU_RESULT
     // La rete combinatoria alu_result() compie le operazioni previste nelle
     // istruzioni logico/aritmetiche. Piu' precisamente essa riceve in
     // ingresso il contenuto del registro OPCODE, l'operando sorgente
@@ -349,6 +452,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
         // ...
     endfunction
 
+    //--------------------------------------------------------------------------
+    //                              ALU_FLAG
     // La rete combinatoria alu_flag() opera in parallelo alla rete precedente
     // e fornisce in uscita il valore dei flag OF, SF, ZF e CF, cosi' come
     // richiesti nelle istruzioni logico/aritmetiche. 
@@ -358,7 +463,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
         // ...
     endfunction
 
-    // ALTRI MNEMONICI
+    // FORMATI LINGUAGGIO MNEMONICO
     parameter [2:0] F0 = 'B000, F1 = 'B001, F2 = 'B010, F3 = 'B011,
                     F4 = 'B100, F5 = 'B101, F6 = 'B110, F7 = 'B111;
 
@@ -377,138 +482,358 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
         end
 
     //--------------------------------------------------------------------------
-    //                      WHEN THE CLOCK SIGNAL ARRIVES
+    //          ALL'ARRIVO DEL SEGNALE DI SINCRONIZZAZIONE DEL CLOCK
     always @(posedge clock) if (reset_ == 1) #3
         casex(STAR)
             //------------------------------------------------------------------
             //                  FASE DI CHIAMATA
             fetch0:
             begin
-                A23_A0<=IP; IP<=IP+1; MJR<=fetch1; STAR<=readB;
+                A23_A0 <= IP;
+                IP <= IP + 1;
+                MJR <= fetch1;
+                STAR <= readB;
             end
 
             fetch1:
             begin
-                OPCODE<=APP0;
-                MJR<=(APP0[7:5]==F0)?fetchEnd:
-                     (APP0[7:5]==F1)?fetchEnd:
-                     (APP0[7:5]==F2)?fetchF2_0:
-                     (APP0[7:5]==F3)?fetchF3_0:
-                     (APP0[7:5]==F4)?fetchF4_0:
-                     (APP0[7:5]==F5)?fetchF5_0:
-                     (APP0[7:5]==F6)?fetchF6_0:
-                     /* default */   fetchF7_0;
-                STAR<=(valid_fetch(APP0)==1)?fetch2:nvi;
+                OPCODE <= APP0;
+
+                MJR <= (APP0[7:5] == F0)? fetchEnd:
+                       (APP0[7:5] == F1)? fetchEnd:
+                       (APP0[7:5] == F2)? fetchF2_0:
+                       (APP0[7:5] == F3)? fetchF3_0:
+                       (APP0[7:5] == F4)? fetchF4_0:
+                       (APP0[7:5] == F5)? fetchF5_0:
+                       (APP0[7:5] == F6)? fetchF6_0:
+                       /* default */      fetchF7_0;
+
+                STAR <= (valid_fetch(APP0) == 1)? fetch2:nvi;
             end
 
             fetch2:
             begin
-                STAR<=MJR;
+                STAR <= MJR;
             end
 
+            // Formato F2: Indirizzo dell'operando Sorgente da 1 byte in DP,
+            // operando destinatario AL o AH.
             fetchF2_0:
             begin
+                A23_A0 <= DP;
+                MJR <= fetchF2_1;
+                STAR <= readB;
             end
 
             fetchF2_1:
             begin
+                SOURCE <= APP0;
+                STAR <= fetchEnd;
             end
 
+            // Formato F3: Operando sorgente in AL o AH, indirizzo dell'operando
+            // destinatario da 1 byte in DP.
             fetchF3_0:
             begin
+                DEST_ADDR <= DP;
+                STAR <= fetchEnd;
             end
 
+            // Formato F4: Operando sorgente immediato da 1 byte, operando
+            // destinatario in AL o AH.
             fetchF4_0:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 1;
+                MJR <= fetchF4_1;
+                STAR <= readB;
             end
 
             fetchF4_1:
             begin
+                SOURCE <= APP0;
+                STAR <= fetchEnd;
             end
 
+            // Formato F5: Operando sorgente in memoria, operando destinatario
+            // in AL o AH.
             fetchF5_0:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 3;
+                MJR <= fetchF5_1;
+                STAR <= readM;
             end
 
             fetchF5_1:
             begin
+                A23_A0 <={APP2, APP1, APP0};
+                MJR <= fetchF5_2;
+                STAR <= readB;
             end
 
             fetchF5_2:
             begin
+                SOURCE <= APP0;
+                STAR <= fetchEnd;
             end
 
+            // Formato F6: Operando sorgente in AL o AH, operando destinatario
+            // in memoria.
             fetchF6_0:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 3;
+                MJR <= fetchF6_1;
+                STAR <= readM;
             end
 
             fetchF6_1:
             begin
+                DEST_ADDR <= {APP2, APP1, APP0};
+                STAR <= fetchEnd;
             end
 
+            // Formato F7: Operando sorgente in memoria.
             fetchF7_0:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 3;
+                MJR <= fetchF7_1;
+                STAR <= readM;
             end
 
             fetchF7_1:
             begin
+                DEST_ADDR <= {APP2, APP1, APP0};
+                STAR <= fetchEnd;
             end
 
             //------------------------------------------------------------------
             //              TERMINAZIONE DELLA FASE DI CHIAMTA
             //              E PASSAGGIO ALLA FASE DI ESECUZIONE
             fetchEnd:
+            begin
+                MJR <= first_execution_state(OPCODE);
+                STAR <= fetchEnd1;
+            end
+
             fetchEnd1:
+            begin
+                STAR <= MJR;
+            end
 
             //------------------------------------------------------------------
             //                      FASE DI ESECUZIONE
-
-            //------------ istruzione NOP
-            nop:
-
-            //------------ istruzione HLT
+            
+            //------------------------------------------------------------------
+            // istruzione HLT: in the x86 computer architecture, HLT (halt) is
+            // an assembly language instruction which halts the central
+            // processing unit (CPU) until the next external interrupt is fired.
+            // Interrupts are signals sent by hardware devices to the CPU
+            // alerting it that an event occurred to which it should react. For
+            // example, hardware timers send interrupts to the CPU at regular
+            // intervals.
+            // The HLT instruction is executed by the operating system when
+            // there is no immediate work to be done, and the system enters its
+            // idle state.
             hlt:
+            begin
+                STAR <= hlt;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione NOP: in computer science, a NOP, no-op, or NOOP
+            // (pronounced "no op"; short for no operation) is an assembly
+            // language instruction, programming language statement, or computer
+            // protocol command that does nothing. 
+            nop:
+            begin
+                STAR <= fetch0;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione MOV AL, AH
             ALtoAH:
+            begin
+                AH <= AL;
+                STAR <= fetch0;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione MOV AH, AL
             AHtoAL:
+            begin
+                AL <= AH;
+                STAR <= fetch0;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione INC DP
             incDP:
+            begin
+                DP <= DP + 1;
+                STAR <= fetch0;
+            end
+
+            ldAL:
+            begin
+            end
+
             ldAH:
+            begin
+            end
+
             storeAL:
+            begin
+            end
+
             storeAH:
+            begin
+            end
+
             ldSP:
+            begin
+            end
+
             ldSP1:
+            begin
+            end
+
             ldimmDP:
+            begin
+            end
+
             ldimmDP1:
+            begin
+            end
+
             lddirDP:
+            begin
+            end
+
             lddirDP1:
+            begin
+            end
+
             lddirDP2:
+            begin
+            end
+
             storeDP:
+            begin
+            end
+
             storeDP1:
+            begin
+            end
+            
             in:
+            begin
+            end
+
             in1:
+            begin
+            end
+
             in2:
+            begin
+            end
+
             in3:
+            begin
+            end
+
             out:
+            begin
+            end
+
             out1:
+            begin
+            end
+
             out2:
+            begin
+            end
+
             out3:
+            begin
+            end
+
             out4:
+            begin
+            end
+
             aluAL:
+            begin
+            end
+
             aluAH:
+            begin
+            end
+
             jmp:
+            begin
+            end
+
             pushAL:
+            begin
+            end
+
             pushAH:
+            begin
+            end
+
             pushDP:
+            begin
+            end
+
             popAL:
+            begin
+            end
+
             popAL1:
+            begin
+            end
+
             popAH:
+            begin
+            end
+
             popAH1:
+            begin
+            end
+
             popDP:
+            begin
+            end
+
             popDP1:
+            begin
+            end
+
             call:
+            begin
+            end
+
             call1:
+            begin
+            end
+
             ret:
+            begin
+            end
+
             ret1:
+            begin
+            end
+
+            //------------------------------------------------------------------
+            // ISTRUZIONE NON VALIDA: HALT
             nvi:
+            begin
+                STAR <= nvi;
+            end
 
             //------------------------------------------------------------------
             //          MICROSOTTOPROGRAMMA PER LETTURE IN MEMORIA
@@ -531,14 +856,74 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             //  d) in APP3 il contenuto della quarta locazione a cui
             //     eventualmente accede.
             readB:
+            begin
+                MR_ <= 0;
+                DIR <= 0;
+                NUMLOC <= 1;
+                STAR <= read0;
+            end
+
             readW:
+            begin
+                MR_ <= 0;
+                DIR <= 0;
+                NUMLOC <= 2;
+                STAR <= read0;
+            end
+
             readM:
+            begin
+                MR_ <= 0;
+                DIR <= 0;
+                NUMLOC <= 3;
+                STAR <= read0;
+            end
+
             readL:
+            begin
+                MR_ <= 0;
+                DIR <= 0;
+                NUMLOC <= 4;
+                STAR <= read0;
+            end
+
             read0:
+            begin
+                APP0 <= d7_d0;
+                A23_A0 <= A23_A0 + 1;
+                NUMLOC <= NUMLOC - 1;
+                STAR <= (NUMLOC == 1)? read4:read1;
+            end
+
             read1:
+            begin
+                APP1 <= d7_d0;
+                A23_A0 <= A23_A0 + 1;
+                NUMLOC <= NUMLOC - 1;
+                STAR <= (NUMLOC == 1)? read4:read2;
+            end
+
             read2:
+            begin
+                APP2 <= d7_d0;
+                A23_A0 <= A23_A0 + 1;
+                NUMLOC <= NUMLOC - 1;
+                STAR <= (NUMLOC == 1)? read4:read3;
+            end
+
             read3:
+            begin
+                APP3 <= d7_d0;
+                A23_A0 <= A23_A0 + 1;
+                NUMLOC <= NUMLOC - 1;
+                STAR <= read4;
+            end
+
             read4:
+            begin
+                MR_ <= 1;
+                STAR <= MJR;
+            end
 
             //------------------------------------------------------------------
             //          MICROSOTTOPROGRAMMA PER SCRITTURE IN MEMORIA
@@ -561,21 +946,113 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             //  d) il contenuto del registro APP3 nella quarta locazione a cui
             //     eventualmente accede.
             writeB:
+            begin
+                D7_D0 <= APP0;
+                DIR <= 1;
+                NUMLOC <= 1;
+                STAR <= write0;
+            end
+
             writeW:
+            begin
+                D7_D0 <= APP0;
+                DIR <= 1;
+                NUMLOC <= 2;
+                STAR <= write0;
+            end
+
             writeM:
+            begin
+                D7_D0 <= APP0;
+                DIR <= 1;
+                NUMLOC <= 3;
+                STAR <= write0;
+            end
+
             writeL:
+            begin
+                D7_D0 <= APP0;
+                DIR <= 1;
+                NUMLOC <= 4;
+                STAR <= write0;
+            end
+
             write0:
+            begin
+                MW_ <= 0;
+                STAR <= write1;
+            end
+
             write1:
+            begin
+                MW_ <= 1;
+                STAR <= (NUMLOC == 1)? write11:write2;
+            end
+
             write2:
+            begin
+                D7_D0 <= APP1;
+                A23_A0 <= A23_A0 + 1;
+                NUMLOC <= NUMLOC - 1;
+                STAR <= write3;
+            end
+
             write3:
+            begin
+                MW_ <= 0;
+                STAR <= write4;
+            end
+
             write4:
+            begin
+                MW_ <= 1;
+                STAR <= (NUMLOC == 1)? write11:write5;
+            end
+
             write5:
+            begin
+				D7_D0 <= APP2;
+                A23_A0 <= A23_A0 + 1;
+                NUMLOC <= NUMLOC - 1;
+                STAR <= write6;
+            end
+
             write6:
+            begin
+				MW_ <= 0;
+                STAR <= write7;
+            end
+
             write7:
+            begin
+				MW_ <= 1;
+                STAR <= (NUMLOC == 1)? write11:write8;
+            end
+
             write8:
+            begin
+				D7_D0 <= APP3;
+                A23_A0 <= A23_A0 + 1;
+                STAR <= write9;
+            end
+
             write9:
+            begin
+                MW_ <= 0;
+                STAR <= write10;
+            end
+
             write10:
+            begin
+                MW_ <= 1;
+                STAR <= write11;
+            end
+
             write11:
+            begin
+                DIR <= 0;
+                STAR <= MJR;
+            end
         endcase
 endmodule
 
