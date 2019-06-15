@@ -1069,60 +1069,114 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= writeB;
             end
 
-            //
+            //------------------------------------------------------------------
+            // istruzione PUSH DP
             pushDP:
             begin
+                A23_A0 <= SP - 3;
+                SP <= SP - 3;
+                {APP2, APP1, APP0} <= DP;
+                MJR <= fetch0;
+                STAR <= writeM;
             end
 
 
+            //------------------------------------------------------------------
+            // istruzione POP AP
             //
+            // lettura del valore indirizzato dal registro SP
             popAL:
             begin
+                A23_A0 <= SP;
+                SP <= SP + 1;
+                MJR <= popAL1;
+                STAR <= readB;
             end
 
-            //
+            // copia del valore letto in AL
             popAL1:
             begin
+                AL <= APP0;
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzione POP AH
             //
+            // lettura del valore indirizzato dal registro SP
             popAH:
             begin
+                A23_A0 <= SP;
+                SP <= SP + 1;
+                MJR <= popAH1;
+                STAR <= readB;
             end
 
-            //
+            // copia del valore letto in AH
             popAH1:
             begin
+                AH <= APP0;
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzione POP DP
             //
+            // lettura di 3 locazioni di memoria a partire dall'indirizzo nel
+            // registro SP
             popDP:
             begin
+                A23_A0 <= SP;
+                SP <= SP + 3;
+                MJR <= popDP1;
+                STAR <= readM;
             end
 
-            //
+            // copia del valore letto dalle 3 locazioni di memoria in DP
             popDP1:
             begin
+                DP <= {APP2, APP1, APP0};
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzione CALL indirizzo
             //
+            // salvataggio nella pila del contenuto del registro IP
             call:
             begin
+                A23_A0 <= SP - 3;
+                SP <= SP - 3;
+                {APP2, APP1, APP0} <= IP;
+                MJR <= call1;
+                STAR <= writeM;
             end
 
-            //
+            // copia nel registro IP dell'indirizzo contenuto in DEST_ADDR
             call1:
             begin
+                IP <= DEST_ADDR;
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzione RET
             //
+            // lettura dalla pila del contenuto salvato precedentemente del
+            // registro IP
             ret:
             begin
+                A23_A0 <= SP;
+                SP <= SP + 3;
+                MJR <= ret1;
+                STAR <= readM;
             end
 
-            //
+            // scrittura in IP del valore prelevato dalla pila
             ret1:
             begin
+                IP <= {APP2, APP1, APP0};
+                STAR <= fetch0;
             end
 
             //------------------------------------------------------------------
@@ -1356,6 +1410,4 @@ endmodule
 // [0]
 // Il registro NUMLOC viene usato nei sottoprogrammi di lettura e scrittura in
 // memoria che permettono l'accesso a locazioni multiple cosecutive.
-
-// [1]
 
