@@ -325,96 +325,104 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
         input [7:0] opcode;
         casex(opcode)
             // Formato F0
-            'B00000000: first_execution_state = hlt;
-            'B00000001: first_execution_state = nop;
-            'B00000010: first_execution_state = ALtoAH;
-            'B00000011: first_execution_state = AHtoAL;
-            'B00000100: first_execution_state = incDP;
-            'B00000101: first_execution_state = hlt;
-            'B00000110: first_execution_state = hlt;
-            'B00000111: first_execution_state = hlt;
-            'B00001000: first_execution_state = hlt;
-            'B00001001: first_execution_state = hlt;
-            'B00001010: first_execution_state = hlt;
-			'B00001011: first_execution_state = hlt;
-            'B00001100: first_execution_state = hlt;
-            'B00001101: first_execution_state = hlt;
-            'B00001110: first_execution_state = hlt;
-            'B00001111: first_execution_state = hlt;
-            'B00010000: first_execution_state = hlt;
-            'B00010001: first_execution_state = hlt;
+            'B00000000: first_execution_state = hlt;        // HLT
+            'B00000001: first_execution_state = nop;        // NOP
+            'B00000010: first_execution_state = ALtoAH;     // MOV  AL, AH
+            'B00000011: first_execution_state = AHtoAL;     // MOV  AH, AL
+            'B00000100: first_execution_state = incDP;      // INC  DP
+            'B00000101: first_execution_state = aluAL;      // SHL  AL
+            'B00000110: first_execution_state = aluAL;      // SHR  AL
+            'B00000111: first_execution_state = aluAL;      // NOT  AL
+            'B00001000: first_execution_state = aluAH;      // SHL  AH
+            'B00001001: first_execution_state = aluAH;      // SHR  AH
+            'B00001010: first_execution_state = aluAH;      // NOT  AH
+			'B00001011: first_execution_state = pushAL;     // PUSH AL
+            'B00001100: first_execution_state = popAL;      // POP  AL
+            'B00001101: first_execution_state = pushAH;     // PUSH AH
+            'B00001110: first_execution_state = popAH;      // POP  AH
+            'B00001111: first_execution_state = pushDP;     // PUSH DP
+            'B00010000: first_execution_state = popDP;      // POP  DP
+            'B00010001: first_execution_state = ret;        // RET
 
             // Formato F1
-            'B00100000: first_execution_state = hlt;
-            'B00100001: first_execution_state = hlt;
-            'B00100010: first_execution_state = hlt;
-            'B00100011: first_execution_state = hlt;
-            'B00100100: first_execution_state = hlt;
-            'B00100101: first_execution_state = hlt;
+            'B00100000: first_execution_state = in;         // IN  offset, AL
+            'B00100001: first_execution_state = out;        // OUT AL, offset
+            'B00100010: first_execution_state = ldimmDP;    // MOV $operando, DP
+            'B00100011: first_execution_state = ldSP;       // MOV $operando, SP
+            'B00100100: first_execution_state = lddirDP;    // MOV indirizzo, DP
+            'B00100101: first_execution_state = storeDP;    // MOV DP, indirizzo
 
             // Formato F2
-            'B01000000: first_execution_state = hlt;
-            'B01000001: first_execution_state = hlt;
-            'B01000010: first_execution_state = hlt;
-            'B01000011: first_execution_state = hlt;
-            'B01000100: first_execution_state = hlt;
-            'B01000101: first_execution_state = hlt;
-            'B01000110: first_execution_state = hlt;
-            'B01000111: first_execution_state = hlt;
-            'B01001000: first_execution_state = hlt;
-            'B01001001: first_execution_state = hlt;
-            'B01001010: first_execution_state = hlt;
-            'B01001011: first_execution_state = hlt;
+            'B01000000: first_execution_state = ldAL;       // MOV (DP), AL
+            'B01000001: first_execution_state = aluAL;      // CMP (DP), AL
+            'B01000010: first_execution_state = aluAL;      // ADD (DP), AL
+            'B01000011: first_execution_state = aluAL;      // SUB (DP), AL
+            'B01000100: first_execution_state = aluAL;      // AND (DP), AL
+            'B01000101: first_execution_state = aluAL;      // OR  (DP), AL
+            'B01000110: first_execution_state = ldAH;       // MOV (DP), AH
+            'B01000111: first_execution_state = aluAH;      // CMP (DP), AH
+            'B01001000: first_execution_state = aluAH;      // ADD (DP), AH
+            'B01001001: first_execution_state = aluAH;      // SUB (DP), AH
+            'B01001010: first_execution_state = aluAH;      // AND (DP), AH
+            'B01001011: first_execution_state = aluAH;      // OR  (DP), AH
 
             // Formato F3
-            'B01100000: first_execution_state = hlt;
-            'B01100001: first_execution_state = hlt;
+            'B01100000: first_execution_state = storeAL;    // MOV AL, (DP)
+            'B01100001: first_execution_state = storeAH;    // MOV AH, (DP)
 
             // Formato F4
-            'B10000000: first_execution_state = hlt;
-            'B10000001: first_execution_state = hlt;
-            'B10000010: first_execution_state = hlt;
-            'B10000011: first_execution_state = hlt;
-            'B10000100: first_execution_state = hlt;
-            'B10000101: first_execution_state = hlt;
-            'B10000110: first_execution_state = hlt;
-            'B10000111: first_execution_state = hlt;
-            'B10001000: first_execution_state = hlt;
-            'B10001001: first_execution_state = hlt;
-            'B10001010: first_execution_state = hlt;
-            'B10001011: first_execution_state = hlt;
+            'B10000000: first_execution_state = ldAL;       // MOV $operando, AL
+            'B10000001: first_execution_state = aluAH;      // CMP $operando, AL
+            'B10000010: first_execution_state = aluAL;      // ADD $operando, AL
+            'B10000011: first_execution_state = aluAL;      // SUB $operando, AL
+            'B10000100: first_execution_state = aluAL;      // AND $operando, AL
+            'B10000101: first_execution_state = aluAL;      // OR  $operando, AL
+            'B10000110: first_execution_state = ldAH;       // MOV $operando, AH
+            'B10000111: first_execution_state = aluAH;      // CMP $operando, AH
+            'B10001000: first_execution_state = aluAH;      // ADD $operando, AH
+            'B10001001: first_execution_state = aluAH;      // SUB $operando, AH
+            'B10001010: first_execution_state = aluAH;      // AND $operando, AH
+            'B10001011: first_execution_state = aluAH;      // OR  $operando, AH
 
             // Formato F5
-			      'B10100000: first_execution_state = hlt;
-            'B10100001: first_execution_state = hlt;
-            'B10100010: first_execution_state = hlt;
-            'B10100011: first_execution_state = hlt;
-            'B10100100: first_execution_state = hlt;
-            'B10100101: first_execution_state = hlt;
-            'B10100110: first_execution_state = hlt;
-            'B10100111: first_execution_state = hlt;
-            'B10101000: first_execution_state = hlt;
-            'B10101001: first_execution_state = hlt;
-            'B10101010: first_execution_state = hlt;
-            'B10101011: first_execution_state = hlt;
+			'B10100000: first_execution_state = dlAL;       // MOV indirizzo, AL
+            'B10100001: first_execution_state = aluAL;      // CMP indirizzo, AL
+            'B10100010: first_execution_state = aluAL;      // ADD indirizzo, AL
+            'B10100011: first_execution_state = aluAL;      // SUB indirizzo, AL
+            'B10100100: first_execution_state = aluAL;      // AND indirizzo, AL
+            'B10100101: first_execution_state = aluAL;      // OR  indirizzo, AL
+            'B10100110: first_execution_state = ldAH;       // MOV indirizzo, AH
+            'B10100111: first_execution_state = aluAH;      // CMP indirizzo, AH
+            'B10101000: first_execution_state = aluAH;      // ADD indirizzo, AH
+            'B10101001: first_execution_state = aluAH;      // SUB indirizzo, AH
+            'B10101010: first_execution_state = aluAH;      // AND indirizzo, AH
+            'B10101011: first_execution_state = aluAH;      // OR  indirizzo, AH
 
             // Formato F6
-            'B11000000: first_execution_state = hlt;
-            'B11000001: first_execution_state = hlt;
+            'B11000000: first_execution_state = storeAL;    // MOV AL, indirizzo
+            'B11000001: first_execution_state = storeAH;    // MOV AH, indirizzo
 
             // Formato F7
-            'B11100000: first_execution_state = hlt;
-            'B11100001: first_execution_state = hlt;
-            'B11100010: first_execution_state = hlt;
-            'B11100011: first_execution_state = hlt;
-            'B11100100: first_execution_state = hlt;
-            'B11100101: first_execution_state = hlt;
-            'B11100110: first_execution_state = hlt;
-            'B11100111: first_execution_state = hlt;
-            'B11101000: first_execution_state = hlt;
-            'B11101001: first_execution_state = hlt;
-            'B11101010: first_execution_state = hlt;
-            'B11101011: first_execution_state = hlt;
+            'B11100000: first_execution_state = jmp;        // JMP  indirizzo
+            'B11100001: first_execution_state = jmp;        // JE   indirizzo
+            'B11100010: first_execution_state = jmp;        // JNE  indirizzo
+            'B11100011: first_execution_state = jmp;        // JA   indirizzo
+            'B11100100: first_execution_state = jmp;        // JAE  indirizzo
+            'B11100101: first_execution_state = jmp;        // JB   indirizzo
+            'B11100110: first_execution_state = jmp;        // JBE  indirizzo
+            'B11100111: first_execution_state = jmp;        // JG   indirizzo
+            'B11101000: first_execution_state = jmp;        // JGE  indirizzo
+            'B11101001: first_execution_state = jmp;        // JL   indirizzo
+            'B11101010: first_execution_state = jmp;        // JLE  indirizzo
+            'B11101011: first_execution_state = jmp;        // JZ   indirizzo
+            'B11101100: first_execution_state = jmp;        // JNZ  indirizzo
+            'B11101101: first_execution_state = jmp;        // JC   indirizzo
+            'B11101110: first_execution_state = jmp;        // JNC  indirizzo
+            'B11101111: first_execution_state = jmp;        // JO   indirizzo
+            'B11110000: first_execution_state = jmp;        // JNO  indirizzo
+            'B11110001: first_execution_state = jmp;        // JS   indirizzo
+            'B11110010: first_execution_state = jmp;        // JNS  indirizzo
+            'B11110011: first_execution_state = call;       // CALL indirizzo
         endcase
     endfunction
 
@@ -487,6 +495,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
         casex(STAR)
             //------------------------------------------------------------------
             //                  FASE DI CHIAMATA
+            //
+            // lettura di un byte all'indirizzo puntato da IP
             fetch0:
             begin
                 A23_A0 <= IP;
@@ -495,6 +505,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= readB;
             end
 
+            // inserimento in OPCODE del valore letto e verifica dell codice
+            // operativo dell'istruzione letta
             fetch1:
             begin
                 OPCODE <= APP0;
@@ -511,6 +523,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= (valid_fetch(APP0) == 1)? fetch2:nvi;
             end
 
+            // se l'OPCODE e' validom prosegui con il fetch per quel tipo di
+            // formato
             fetch2:
             begin
                 STAR <= MJR;
@@ -518,6 +532,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
 
             // Formato F2: Indirizzo dell'operando Sorgente da 1 byte in DP,
             // operando destinatario AL o AH.
+            //
+            // lettura del byte indirizzato da DP
             fetchF2_0:
             begin
                 A23_A0 <= DP;
@@ -525,6 +541,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= readB;
             end
 
+            // inserimento del byte letto in SOURCE
             fetchF2_1:
             begin
                 SOURCE <= APP0;
@@ -533,6 +550,9 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
 
             // Formato F3: Operando sorgente in AL o AH, indirizzo dell'operando
             // destinatario da 1 byte in DP.
+            //
+            // inserimento dell'indirizzo dell'operando destinatario in
+            // DEST_ADDR
             fetchF3_0:
             begin
                 DEST_ADDR <= DP;
@@ -541,6 +561,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
 
             // Formato F4: Operando sorgente immediato da 1 byte, operando
             // destinatario in AL o AH.
+            //
+            // lettura di un byte a partire dall'indirizzo puntato da IP
             fetchF4_0:
             begin
                 A23_A0 <= IP;
@@ -549,6 +571,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= readB;
             end
 
+            // inserimento del byte letto in SOURCE
             fetchF4_1:
             begin
                 SOURCE <= APP0;
@@ -557,6 +580,9 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
 
             // Formato F5: Operando sorgente in memoria, operando destinatario
             // in AL o AH.
+            //
+            // lettura di 3 locazioni di memoria contigue ciascuna contenente
+            // un byte componente l'indirizzo dell'operando sorgente
             fetchF5_0:
             begin
                 A23_A0 <= IP;
@@ -565,13 +591,15 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= readM;
             end
 
+            // lettura di un byte all'indirizzo composto usando i 3 byte letti
             fetchF5_1:
             begin
-                A23_A0 <={APP2, APP1, APP0};
+                A23_A0 <= {APP2, APP1, APP0};
                 MJR <= fetchF5_2;
                 STAR <= readB;
             end
 
+            // copia in SOURCE del byte letto
             fetchF5_2:
             begin
                 SOURCE <= APP0;
@@ -580,6 +608,9 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
 
             // Formato F6: Operando sorgente in AL o AH, operando destinatario
             // in memoria.
+            //
+            // lettura di 3 locazioni di memoria contigue ciascuna contenente
+            // un byte componente l'indirizzo destinatario
             fetchF6_0:
             begin
                 A23_A0 <= IP;
@@ -588,13 +619,18 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= readM;
             end
 
+            // copia in DEST_ADDR dell'indirizzo da 24 bit ottenuto dai 3 byte
+            // letti precedentemente
             fetchF6_1:
             begin
                 DEST_ADDR <= {APP2, APP1, APP0};
                 STAR <= fetchEnd;
             end
 
-            // Formato F7: Operando sorgente in memoria.
+            // Formato F7: Operando destinatario in memoria.
+            //
+            // lettura di 3 locazioni di memoria contigue ciascuna contenente
+            // un byte componente l'indirizzo destinatario del salto
             fetchF7_0:
             begin
                 A23_A0 <= IP;
@@ -603,6 +639,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= readM;
             end
 
+            // copia in DEST_ADDR dell'indirizzo di salto
             fetchF7_1:
             begin
                 DEST_ADDR <= {APP2, APP1, APP0};
@@ -676,154 +713,414 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzioni MOV (DP), AL
+            //            MOV $operando, AL
+            //            MOV indirizzo, AL
             ldAL:
             begin
+                AL <= SOURCE;
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzioni MOV (DP), AH
+            //            MOV $operando, AH
+            //            MOV indirizzo, AH
             ldAH:
             begin
+                AH <= SOURCE;
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzioni MOV AL, (DP)
+            //            MOV AL, indirizzo
             storeAL:
             begin
+                A23_A0 <= DEST_ADDR;
+                APP0 <= AL;
+                MJR <= fetch0;
+                STAR <= writeB;
             end
 
+            //------------------------------------------------------------------
+            // istruzioni MOV AH, (DP)
+            //            MOV AH, indirizzo
             storeAH:
             begin
+                A23_A0 <= DEST_ADDR;
+                APP0 <= AH;
+                MJR <= fetch0;
+                STAR <= writeB;
             end
 
+            //------------------------------------------------------------------
+            // istruzione MOV $operando, SP
+            // lettura operando dall'IP
             ldSP:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 3;
+                MJR <= ldSP1;
+                STAR <= readM;
             end
 
+            // copia dell'operando letto in SP
             ldSP1:
             begin
+                SP <= {APP2, APP1, APP0};
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzione MOV $operando, DP
+            // lettura oeprando dall'IP
             ldimmDP:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 3;
+                MJR <= ldimmDP1;
+                STAR <= readM;
             end
 
+            // copia dell'operando letto in DP
             ldimmDP1:
             begin
+                DP <= {APP2, APP1, APP0};
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzione MOV indirizzo, DP
+            //
+            // lettura di 3 locazioni di memoria contigue ciascuno contenente
+            // uno dei byte componenti l'indirizzo dell'operando sorgente
             lddirDP:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 3;
+                MJR <= lddirDP1;
+                STAR <= readM;
             end
 
+            // lettura del valore presente all'indirizzo ottenuto dai 3 byte
+            // letti
             lddirDP1:
             begin
+                A23_A0 <= {APP2, APP1, APP0};
+                MJR <= lddirDP2;
+                STAR <= readM;
             end
 
+            // copia del valore letto in DP
             lddirDP2:
             begin
+                DP <= {APP2, APP1, APP0};
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzione MOV DP, indirizzo
+            //
+            // lettura di 3 locazioni di memoria contigue ciascuno contenente
+            // uno dei byte componenti l'indirizzo dell'operando destinario
             storeDP:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 3;
+                MJR <= storeDP1;
+                STAR <= readM;
             end
 
+            // scrittura del contenuto di DP all'indirizzo composto dai 3 byte
+            // letti
             storeDP1:
             begin
+                A23_A0 <= {APP2, APP1, APP0};
+                {APP2, APP1, APP0} <= DP;
+                MJR <= fetch0;
+                STAR <= writeM;
             end
             
+            //------------------------------------------------------------------
+            // Quattro statement, del tipo di quelli che seguono, descrivono
+            // un ciclo di lettura nello spazio di I/O: essi sono molti simili
+            // a quelli che descrivono un ciclo di lettura in memoria, con la
+            // differenza che
+            //  a) e' previsto l'uso del registro /IOR invece del registro
+            //     /MR;
+            //  b) l'indirizzo a 24 bit e' ottenuto estendendo l'offset;
+            //  c) l'indirizzo e' predisposto (per tener conto della complessa
+            //     struttura delle interfacce) con un anticipo pari a un periodo
+            //     di clock, rispetto all'istante in cui il valore di /ior
+            //     viene messo a 0.
+            //
+            //------------------------------------------------------------------
+            // istruzione IN offset, AL
+            //
+            // lettura di 2 locazioni di memoria contigue contenenti ciascuno
+            // uno dei byte dell'offset
             in:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 2;
+                MJR <= in1;
+                STAR <= readW;
             end
 
+            // preparazione alla lettura all'offset nello spazio di I/O
             in1:
             begin
+                A23_A0 <= {'H00, APP1, APP0};
+                STAR <= in2;
             end
 
+            // lettura nello spazio di I/O
             in2:
             begin
+                IOR_ <= 0;
+                STAR <= in3;
             end
 
+            // copia in AL del valore letto nello spazio di I/O
             in3:
             begin
+                AL <= d7_d0;
+                IOR_ <= 1;
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // Quattro statement, del tipo di quelli che seguono, descrivono
+            // un ciclo di scrittura nello spazio di I/O: il valore della
+            // variabile /mw va a 0 quando gli indirizzi e i dati sono ormai
+            // stabili da un tempo pari a un periodo di clock e rimane a 0 per
+            // un ulteriore periodo di clock; la variabile d7_d0 e' variabile
+            // di uscita per un tempo piu' ampio di quello in cui il valore di
+            // /mw e' 0.
+            //
+            //------------------------------------------------------------------
+            // istruzione OUT AL, offset
+            //
+            // lettura in memoria di 2 locazioni contigue contenenti ciascuno
+            // uno dei byte che compongono l'offset relativo allo spazio di
+            // I/O
             out:
             begin
+                A23_A0 <= IP;
+                IP <= IP + 2;
+                MJR <= out1;
+                STAR <= readW;
             end
 
+            // preparazione per la scrittura all'offset letto nello spazio I/O
             out1:
             begin
+                A23_A0 <= {'H00, APP1, APP0};
+                D7_D0 <= AL;
+                DIR <= 1;
+                STAR <= out2;
             end
 
+            // inizio scrittura nello spazio di I/O
             out2:
             begin
+                IOW_ <= 0;
+                STAR <= out3;
             end
 
+            // fine scrittura
             out3:
             begin
+                IOW_ <= 1;
+                STAR <= out4;
             end
 
+            // alta impedenza in uscita a d7_d0
             out4:
             begin
+                DIR <= 0;
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzioni ADD (DP), AL
+            //            ADD $operando, AL
+            //            ADD indirizzo, AL
+			//			  SUB (DP), AL
+            //            SUB $operando, AL
+            //            SUB indirizzo, AL
+			//			  ADD (DP), AL
+            //            ADD $operando, AL
+            //            ADD indirizzo, AL
+			//			  ADD (DP), AL
+            //            ADD $operando, AL
+            //            ADD indirizzo, AL
+			//			  ADD (DP), AL
+            //            ADD $operando, AL
+            //            ADD indirizzo, AL
+	        //	          NOT AL
+            //	          SHL AL
+            //	          SHR AL
             aluAL:
             begin
+                AL <= alu_result(OPCODE, SOURCE, AL);
+                F <= {F[7:4], alu_flag(OPCODE, SOURCE, AL)};
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzioni ADD (DP), AH
+            //            ADD $operando, AH
+            //            ADD indirizzo, AH
+			//			  SUB (DP), AH
+            //            SUB $operando, AH
+            //            SUB indirizzo, AH
+			//			  ADD (DP), AH
+            //            ADD $operando, AH
+            //            ADD indirizzo, AH
+			//			  ADD (DP), AH
+            //            ADD $operando, AH
+            //            ADD indirizzo, AH
+			//			  ADD (DP), AH
+            //            ADD $operando, AH
+            //            ADD indirizzo, AH
+	        //	          NOT AH
+            //	          SHL AH
+            //	          SHR AH
             aluAH:
             begin
+                AH <= alu_result(OPCODE, SOURCE, AH);
+                F <= {F[7:4], alu_flag(OPCODE, SOURCE, AH)};
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            // istruzioni JMP indirizzo
+            //            JE  indirizzo
+            //            JNE indirizzo
+            //            JA  indirizzo
+            //            JAE indirizzo
+            //            JB  indirizzo
+            //            JBE indirizzo
+            //            JG  indirizzo
+            //            JGE indirizzo
+            //            JL  indirizzo
+            //            JLE indirizzo
+            //            JZ  indirizzo
+            //            JNZ indirizzo
+            //            JC  indirizzo
+            //            JNC indirizzo
+            //            JO  indirizzo
+            //            JNO indirizzo
+            //            JS  indirizzo
+            //            JNS indirizzo
             jmp:
             begin
+                IP <= (jmp_condition(OPCODE, F) == 1)? DEST_ADDR : IP;
+                STAR <= fetch0;
             end
 
+            //------------------------------------------------------------------
+            //                SUPPORTO ALLA GESTIONE DELLA PILA
+            // Per vari motivi (chiamata e ritorno da sottoprogramma,
+            // salvataggio e ripristino dei contenuti di registri, ecc...) e'
+            // utile disporre di una pila (o stack), cioe' di un deposito in
+            // cui immettere e prelevare dati in accordo alla disciplina LIF
+            // (Last In First Out): il dato che vi e' stato immessi per ultimo
+            // e' quello che viene prelevato per primo. La pila viene
+            // realizzata utilizzando piu' locazioni contigue di memoria
+            // e ogni dato occupa una o piu' locazioni; nei casi che
+            // esamineremo un dato e' costituito da 1, 2, 3 o 4 byte e quindi
+            // occupa da una a quattro locazioni. I dati vengono immessi uno
+            // sopra l'altro e il primo dato viene immesso nel fondo della
+            // pila, cioe' nella locazione o nelle locazioni a maggior
+            // indirizzo fra quelle costituenti la pila stessa (quindi per
+            // ogni immissione in pila decremento l'indirzzo e ad ogni
+            // prelievo incrimento l'indirizzo). La funzione del registro SP
+            // (Stack Pointer) e' quella di contenere, a ogni istante,
+            // l'indirizzo top della porzione piena della pila, cioe'
+            // l'indirizzo della locazione a partire dalla quale e' stato
+            // immesso l'ultimo dato, fra quelli ancora presenti nella pila;
+            // il contenuto di tale registro e' quindi automaticamente
+            // aggiornato dal processore ogni volta che esso immette o preleva
+            // dati dalla pila.
+
+            //------------------------------------------------------------------
+            // istruzione PUSH AL
             pushAL:
             begin
+                A23_A0 <= SP - 1;
+                SP <= SP - 1;
+                APP0 <= AL;
+                MJR <= fetch0;
+                STAR <= writeB;
             end
 
+            //------------------------------------------------------------------
+            // istruzione PUSH AH
             pushAH:
             begin
+                A23_A0 <= SP - 1;
+                SP <= SP - 1;
+                APP0 <= AH;
+                MJR <= fetch0;
+                STAR <= writeB;
             end
 
+            //
             pushDP:
             begin
             end
 
+
+            //
             popAL:
             begin
             end
 
+            //
             popAL1:
             begin
             end
 
+            //
             popAH:
             begin
             end
 
+            //
             popAH1:
             begin
             end
 
+            //
             popDP:
             begin
             end
 
+            //
             popDP1:
             begin
             end
 
+            //
             call:
             begin
             end
 
+            //
             call1:
             begin
             end
 
+            //
             ret:
             begin
             end
 
+            //
             ret1:
             begin
             end
