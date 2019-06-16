@@ -70,11 +70,9 @@ video:
 ##
 uscita:
     MOVL    $0, %EBX    # risultato per sistema operativo UNIX
-    MOVL    $1, %EAX    # primitiva UNIX exit
-                        # [1]
+    MOVL    $1, %EAX    # primitiva UNIX exit, [1]
     INT     $0x80       # Invokes system call - in this case system call number
-                        # 1 with argument 0
-                        # [2]
+                        # 1 with argument 0, [2]
 
 # [1]
 # On many computer operating systems, a computer process terminates its
@@ -105,4 +103,3 @@ uscita:
 # consecutive arguments, starting with the EBX register. If there are more than
 # six arguments, then the memory location of the first argument is stored in the
 # EBX register.
-
