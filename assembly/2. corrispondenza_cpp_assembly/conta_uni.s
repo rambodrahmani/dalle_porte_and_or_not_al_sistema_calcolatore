@@ -48,6 +48,10 @@ fine:
     CALL    scrivinaturale
     CALL    nuovalinea     
 
-    XORQ    %RAX, %RAX
+    XORQ    %RAX, %RAX      # [0]
     RET
+
+# [0]
+# XORQ %RAX, %RAX is equivalent to MOV %EAX, 0, but for some reason, GCC uses
+# the xor method for optimization.
 
