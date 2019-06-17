@@ -48,12 +48,14 @@ main:
     CALL    legginaturale
     MOV     %RAX, %RDI
     CALL    scrivinaturale
+    CALL    nuovalinea
 
     # TEST leggiintero() scriviintero()
     # Legge e stampa un numero intero
     CALL    leggiintero
     MOV     %RAX, %RDI
     CALL    scriviintero
+    CALL    nuovalinea
 
     RET
 
