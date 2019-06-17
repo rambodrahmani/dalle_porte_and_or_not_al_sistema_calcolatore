@@ -321,7 +321,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
     // contenuto nel registro OPCODE e fornisce in uscita la codifica dello
     // stato interno corrispondente al primo degli statement che descrivono la
     // fase di esecuzione di quella istruzione.
-    function first_execution_state;
+    function [6:0] first_execution_state;
         input [7:0] opcode;
         casex(opcode)
             // Formato F0
@@ -1082,7 +1082,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
 
 
             //------------------------------------------------------------------
-            // istruzione POP AP
+            // istruzione POP AL
             //
             // lettura del valore indirizzato dal registro SP
             popAL:

@@ -6,96 +6,97 @@
  *       *         PER SUPPORTARE IL MECCANISMO DELLE INTERRUZIONI             *
  *       ***********************************************************************
  *
- *       Esaminiamo adesso in maggior dettaglio il funzionamento del
- *       processore sEP8. Come gia' detto piu' volte, esso preleva dalla
- *       memoria un'istruzione alla volta e quindi la esegue. Per svolgere
- *       questa sua attivita', il processore adopera oltre ai registri
- *       descritti nei paragrafi precedenti (registri visibili al
- *       programmatore) anche un certo numero di registri di appoggio
- *       (registri non visibili al programmatore).
- *       
- *       Piu' in dettaglio, l'evoluzione del processore sEP8 puo' essere
- *       ripartita nelle seguenti tre fasi:
- *       
- *       1) Fase Iniziale. Quando viene messo a 0 il valore della variabile
- *       /reset per il reset iniziale, alcuni registri vengono opportunamente
- *       inizializzati. In particolare:
- *          a) il registro DIR viene azzerato, in modo che la variabile d7_d0
- *          sia in alta impedenza;
- *          b) i registri /MR, /MW, /IOR, /IOW vengono settati per evitare che
- *          la memoria e le interfacce ricevano comandi spuri e quindi
- *          potenzialmente pericolosi;
- *          c) il registro IP viene inizializzato con 'HFF0000 (dove inizia la
- *          ROM nello spazio di memoria) e il registro dei flag F con 'H00,
- *          conformemente alle specifiche date precedentemente;
- *          d) il registro di stato STAR viene inizializzato con la codifica
- *          dello stato interno iniziale della cosiddetta fase di chiamata.
+ *       Le istruzioni connesse al meccanismo di interruzione sono globalmente
+ *       5, e in accordo alla terminologia INTEL, le denomineremo
+ *       rispettivamente
+ *          LIDTP: durante l'esecuzione di tale operazione, il processore
+ *          inizializza il contenuto del registro IDTP (Interrupt Descriptor
+ *          Table Pointer), immettendovi l'indirizzo specificato come operando
+ *          immediato (a 24 bit) dell'istruzione stessa.
  *          
- *       2) Fase Di Chiamata. In questa fase il processore si procura,
- *       effettuando uno o piu' cicli di lettura in memoria, una nuova
- *       istruzione. Esso utilizza come inidirzzo della prima delle locazioni
- *       cui accedere, il contenuto del registro IP e, dopo ogni ciclo di
- *       lettura, incrementa di 1 il contenuto di detto registro. In tal modo,
- *       alla fine della fase di chiamta, il contenuto del registro IP risulta
- *       incrementato di tante unita' quante sono le locazioni occupate
- *       dall'istruzione letta: risultano cosi' predisposte le condizioni per
- *       il prelievo dell'isutrzione sequenziale successiva. Piu' in
- *       dettaglio, le operazioni che il processore compie nella fase di
- *       chiamata sono le seguenti. Dopo aver effettuato il primo ciclo di
- *       accesso in memoria, verifica se il byte che ha letto concide con il
- *       codice operativo di una delle sue istruzioni. Se la verifica da'
- *       esito negativo il processore si blocca in modo analogo a come fa
- *       quando esegue l'istruzione HLT. Se la verifica da' esito positivo, il
- *       processore immette il byte nel registro OPCODE e passa ad esaminare
- *       il formato dell'istruzione che ha trovato. Se l'istruzione prevede un
- *       operando sorgente a 8 bit, sia esso immediato o allocato in memoria
- *       (formati F2, F4 e F5), allora il processore si procura l'operando
- *       sorgente e lo immette nel registro SOURCE. Se l'istruzione prevede un
- *       operando destinatario allocato in memoria (formati F3 e F6), allora
- *       il processore si procura l'indirizzo dell'operando destinatario e lo
- *       immette nel registro DEST_ADDR. Se l'istruzione prevede un salto o la
- *       chiamata di un sottoprogramma (formato F7), il processore si procura
- *       l'indirizzo di salto e lo immette nel registro DEST_ADDR. Se
- *       l'istruzione e' di formato F0 o di formato F1, il processore, stante
- *       la disomogeneita' e la singolarita' delle istruzioni appartenenti
- *       a tali formati, non compie nella fase di chiamta altre particolari
- *       operazioni. Il processore termina in ogni caso la fase di chiamata
- *       passando nello stato interno iniziale della fase di esecuzione
- *       e dell'istruzione che e' stata letta (e il cui codice operativo e'
- *       conservato nel registro OPCODE).
- *       
- *       3) Fase Di Esecuzione. In questa fase il processore compie le
- *       operazioni specificate dal tipo di istruzione che e' stata letta in
- *       fase di chiamata.
- *       
- *       Il processore e' una rete sequenziale sincronizzata (implementata
- *       generalmente tramite decomposizione in parte operativa e parte
- *       controllo), dotata di 8 porte 3-state che supportano la variabile
- *       bidirezionale d7_d0 e che sono comandate dalla variabile di uscita
- *       del registro DIR. Il contenuto di tale registro e' normalmente 0,
- *       cosicche' la variabile d7_d0 funge normalmente da variabile di
- *       ingresso; durante i cicli di scrittura (nello spazio di memoria o di
- *       I/O) il registro DIR contiene invece 1, cosicche' la variabile d7_d0
- *       e' variabile di uscita e il suo stato coincide con il contenuto del
- *       registro D7_D0. Il registro A23_A0 supporta invece la variabile per
- *       gli indirizzi a23_a0.
- *       
- *       Il processore e' descrivibile in Verilog, a livello di linguaggio di
- *       trasferimento tra registri, come riportato di seguito.
+ *          INT: durante l'esecuzione di tale istruzione, il processore
+ *          maschera le richieste di interruzioni esterne ed effettua la
+ *          chiamata di un sottoprogramma di servizio. Piu' precisamente il
+ *          processore compie le seguenti azioni: i) salva nella pila il
+ *          contenuto del registro dei flag F e l'indirizzo dell'istruzione di
+ *          rientro (contenuto nel registro IP); ii) azzera il contenuto del
+ *          registro dei flag F, mascherando cosi' le richieste di
+ *          interruzioni esterne; iii) interpreta l'operando immediato
+ *          dell'istruzione come il tipo dell'interruzione e si procura nella
+ *          Interrupt Descriptor Table l'indirizzo della prima istruzione del
+ *          sottoprogramma di servizio; iv) immette tale indirizzo nel
+ *          registro IP.
+ *          
+ *          IRET: durante l'esecuzione di tale istruzione, il processore
+ *          effettua il ritorno da un sottoprogramma di servizio di una
+ *          interruzione. Piu' precisamente, il processore rimuove dalla pila
+ *          4 byte e con essi rinnova il contenuto dei due registri IP e F.
+ *          
+ *          CLI: (Clear Interrupt Flag) durante l'esecuzione di tale
+ *          istruzione, il processore mette a 0 il contenuto del flag IF,
+ *          lasciando inalterato il contenuto di tutti gli altri flag.
+ *
+ *          STI: (Set Interrupt Flag) durante l'esecuzione di tale istruzione,
+ *          il processore mette a 1 il contenuto del flag IF, lasciando
+ *          inalterato il contenuto di tutti gli altri flag.
+ *          
+ *       Come gia' detto piu' volte, tra le azioni compiute dal processore
+ *       nel gestire una richiesta di interruzione, c'e' anche
+ *       l'azzeramento del contenuto del registro dei flag F. Questo fatto
+ *       implica che, quando un sottoprogramma di servizio di una
+ *       interruzione viene messo in esecuzione, il contenuto del registro
+ *       IF e' 0 e quindi il processore non e' abilitato ad accettare nuove
+ *       richieste di interruzione esterne (mascherabili). In altre parole,
+ *       e' precluso un annidamento di sottoprogrammi di servizio di
+ *       interruzioni esternem a meno che i sottoprogrammi syessi non
+ *       contengano esplicitamente l'istruzione STI.
+ *          
+ *       Cio' premesso, le ulteriori modifiche da apportare alla
+ *       descrizione del processore sEP8 per renderlo capace di gestire
+ *       anche le richieste di itnerruzioni esterne mascherabili, sono le
+ *       seguenti:
+ *          1) Introduzione della variabile di ingresso intr, della variabile
+ *          di uscita inta e di un registro INTA (a sostegno di inta),
+ *          azzerato al reset iniziale.
+ *          2) Potenziamento del registro dei flag F, introduzione delle due
+ *          istruzioni CLI e STI e revisione degli statement di etichetta
+ *          aluAL e aluAH tenendo conto che ora e' significativo anche F[4].
+ *          3) Introduzione di nuovi stati interi, fra cui uno stato interno
+ *          test_intr in cui il processore va a verificare l'eventuale
+ *          presenza di interruzioni esterne non mascherate e quindi passa
+ *          a selezionare, come stato interno successivo, lo stato fetch0 se
+ *          il test da' esito negativo, oppure se il test da' esito positivo,
+ *          un nuvoo stato interno pre_tipo0.
+ *          4) Raggiungimento dello stato interno test_intr tramite
+ *          sostituzione dei microsalti STAR <= fetch0 con il microsalto STAR
+ *          <= test_intr e delle microperazioni MJR <= fetch0 con la
+ *          microoperazione MJR <= test_intr.
+ *          5) Inizio, a partire dallo stato interno pre_tipo0, dell'handshake
+ *          con la sorgente equivalente di interruzioni esterne per la
+ *          ricezione, tramite la variabile d7_d0 del bus, del tipo
+ *          dell'interruzione.
+ *
+ *      Ricompattando la descrizione del processore sEP8 fatta nel capitolo
+ *      VI, con le modifiche e integrazioni apportate nei paragrafi
+ *      precedenti, risulta che la descrizione completa del processore,
+ *      potenziato per supportare il meccanismo delle interruzioni, e' la
+ *      seguente:
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
- *         Created on 09/06/2019.
+ *         Created on 15/06/2019.
  */
 
 //------------------------------------------------------------------------------
 //  DESCRIZIONE COMPLETA DEL PROCESSORE sEP8
 //------------------------------------------------------------------------------
-module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
+module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     input           clock, reset_;
+    input           intr;
     input   [7:0]   d7_d0;
     output  [23:0]  a23_a0;
     output          mr_, mw_;
     output          ior_, iow_;
+    output          inta;
 
     // REGISTRI OPERATIVI DI SUPPORTO ALLE VARIABILI DI USCITA E ALLE
     // VARIABILI BIDIREZIONALI E CONNESSIONE DELLE VARIABILI AI REGISTRI
@@ -103,17 +104,19 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
     reg [7:0]   D7_D0;
     reg [23:0]  A23_A0;
     reg         MR_, MW_, IOR_, IOW_;
+    reg         INTA;
     assign      mr_ = MR_;
     assign      mw_ = MW_;
     assign      ior_ = IOR_;
     assign      iow_ = IOW_;
+    assign      inta = INTA;
     assign      a23_a0 = A23_A0;
     assign      d7_d0 = (DIR == 1)?D7_D0:'HZZ;
 
     // REGISTRI OPERATIVI INTERNI
     reg [2:0]   NUMLOC;     // [0]
     reg [7:0]   AL, AH, F, OPCODE, SOURCE, APP3, APP2, APP1, APP0;
-    reg [23:0]  DP, IP, SP, DEST_ADDR;
+    reg [23:0]  DP, IP, SP, DEST_ADDR, IDTP;
 
     // REGISTRO DI STATO, REGISTRO MJR E CODIFICA DEGLI STATI INTERNI
     reg [6:0]   STAR, MJR;
@@ -152,57 +155,71 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
               lddirDP2=32,
               storeDP=33,
               storeDP1=34,
-              in=35,
-              in1=36,
-              in2=37,
-              in3=38,
-              out=39,
-              out1=40,
-              out2=41,
-              out3=42,
-              out4=43,
-              aluAL=44,
-              aluAH=45,
-              jmp=46,
-              pushAL=47,
-              pushAH=48,
-              pushDP=49,
-              popAL=50,
-              popAL1=51,
-              popAH=52,
-              popAH1=53,
-              popDP=54,
-              popDP1=55,
-              call=56,
-              call1=57,
-              ret=58,
-              ret1=59,
-              nvi=60,
-              readB=61,
-              readW=62,
-              readM=63,
-              readL=64,
-              read0=65,
-              read1=66,
-              read2=67,
-              read3=68,
-              read4=69,
-              writeB=70,
-              writeW=71,
-              writeM=72,
-              writeL=73,
-              write0=74,
-              write1=75,
-              write2=76,
-              write3=77,
-              write4=78,
-              write5=79,
-              write6=80,
-              write7=81,
-              write8=82,
-              write9=83,
-              write10=84,
-              write11=85;
+
+              ldIDTP=35,
+              ldIDTP1=36,
+
+              in=37,
+              in1=38,
+              in2=39,
+              in3=40,
+              out=41,
+              out1=42,
+              out2=43,
+              out3=44,
+              out4=45,
+              aluAL=46,
+              aluAH=47,
+              jmp=48,
+              pushAL=49,
+              pushAH=50,
+              pushDP=51,
+              popAL=52,
+              popAL1=53,
+              popAH=54,
+              popAH1=55,
+              popDP=56,
+              popDP1=57,
+              call=58,
+              call1=59,
+              ret=60,
+              ret1=61,
+              int=62,
+              int1=63,
+              int2=64,
+              iret=65,
+              iret1=66,
+              cli=67,
+              sti=68,
+              test_intr=69,
+              pre_tipo0=70,
+              pre_tipo1=71,
+              nvi=72,
+              readB=73,
+              readW=74,
+              readM=75,
+              readL=76,
+              read0=77,
+              read1=78,
+              read2=79,
+              read3=80,
+              read4=81,
+              writeB=82,
+              writeW=83,
+              writeM=84,
+              writeL=85,
+              write0=86,
+              write1=87,
+              write2=88,
+              write3=89,
+              write4=90,
+              write5=91,
+              write6=92,
+              write7=93,
+              write8=94,
+              write9=95,
+              write10=96,
+              write11=97;
 
     //--------------------------------------------------------------------------
     //                    RETI COMBINATORIE NON STANDARD
@@ -238,6 +255,9 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                     'B01111: valid_fetch = 1;
                     'B10000: valid_fetch = 1;
                     'B10001: valid_fetch = 1;
+                    'B10010: valid_fetch = 1;
+                    'B10011: valid_fetch = 1;
+                    'B10100: valid_fetch = 1;
                 endcase
             'B001:          // FORMATO F1
                 casex(opcode[4:0])
@@ -247,6 +267,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                     'B00011: valid_fetch = 1;
                     'B00100: valid_fetch = 1;
                     'B00101: valid_fetch = 1;
+                    'B00110: valid_fetch = 1;
                 endcase
             'B010:          // FORMATO F2
                 casex(opcode[4:0])
@@ -282,6 +303,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                     'B01001: valid_fetch = 1;
                     'B01010: valid_fetch = 1;
                     'B01011: valid_fetch = 1;
+                    'B01100: valid_fetch = 1;
+
                 endcase
             'B101:          // FORMATO F5
                 casex(opcode[4:0])
@@ -327,7 +350,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
     // contenuto nel registro OPCODE e fornisce in uscita la codifica dello
     // stato interno corrispondente al primo degli statement che descrivono la
     // fase di esecuzione di quella istruzione.
-    function first_execution_state;
+    function [6:0] first_execution_state;
         input [7:0] opcode;
         casex(opcode)
             // Formato F0
@@ -349,6 +372,9 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             'B00001111: first_execution_state = pushDP;     // PUSH DP
             'B00010000: first_execution_state = popDP;      // POP  DP
             'B00010001: first_execution_state = ret;        // RET
+            'B00010010: first_execution_state = iret;       // IRET
+            'B00010011: first_execution_state = cli;        // CLI
+            'B00010100: first_execution_state = sti;
 
             // Formato F1
             'B00100000: first_execution_state = in;         // IN  offset, AL
@@ -357,6 +383,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             'B00100011: first_execution_state = ldSP;       // MOV $operando, SP
             'B00100100: first_execution_state = lddirDP;    // MOV indirizzo, DP
             'B00100101: first_execution_state = storeDP;    // MOV DP, indirizzo
+            'B00100110: first_execution_state = lidtp;      // LIDTP $operando
 
             // Formato F2
             'B01000000: first_execution_state = ldAL;       // MOV (DP), AL
@@ -389,6 +416,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             'B10001001: first_execution_state = aluAH;      // SUB $operando, AH
             'B10001010: first_execution_state = aluAH;      // AND $operando, AH
             'B10001011: first_execution_state = aluAH;      // OR  $operando, AH
+            'B10001100: first_execution_state = int;        // INT $operando
 
             // Formato F5
 			'B10100000: first_execution_state = dlAL;       // MOV indirizzo, AL
@@ -492,6 +520,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             MW_ <= 1;
             IOR_ <= 1;
             IOW_ <= 1;
+            INTA <= 0;
             STAR <= fetch0;
         end
 
@@ -529,7 +558,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 STAR <= (valid_fetch(APP0) == 1)? fetch2:nvi;
             end
 
-            // se l'OPCODE e' validom prosegui con il fetch per quel tipo di
+            // se l'OPCODE e' valido prosegui con il fetch per quel tipo di
             // formato
             fetch2:
             begin
@@ -692,7 +721,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             // protocol command that does nothing. 
             nop:
             begin
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -700,7 +729,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             ALtoAH:
             begin
                 AH <= AL;
-                STAR <= fetch0;
+                STAR <= test_int;
             end
 
             //------------------------------------------------------------------
@@ -708,7 +737,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             AHtoAL:
             begin
                 AL <= AH;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -716,7 +745,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             incDP:
             begin
                 DP <= DP + 1;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -726,7 +755,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             ldAL:
             begin
                 AL <= SOURCE;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -736,7 +765,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             ldAH:
             begin
                 AH <= SOURCE;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -746,7 +775,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             begin
                 A23_A0 <= DEST_ADDR;
                 APP0 <= AL;
-                MJR <= fetch0;
+                MJR <= test_intr;
                 STAR <= writeB;
             end
 
@@ -757,7 +786,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             begin
                 A23_A0 <= DEST_ADDR;
                 APP0 <= AH;
-                MJR <= fetch0;
+                MJR <= test_intr;
                 STAR <= writeB;
             end
 
@@ -776,7 +805,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             ldSP1:
             begin
                 SP <= {APP2, APP1, APP0};
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -794,7 +823,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             ldimmDP1:
             begin
                 DP <= {APP2, APP1, APP0};
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -823,7 +852,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             lddirDP2:
             begin
                 DP <= {APP2, APP1, APP0};
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -845,8 +874,24 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             begin
                 A23_A0 <= {APP2, APP1, APP0};
                 {APP2, APP1, APP0} <= DP;
-                MJR <= fetch0;
+                MJR <= test_intr;
                 STAR <= writeM;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione LIDTP $operando
+            ldIDTP:
+            begin
+                A23_A0 <= IP;
+                IP <= IP + 3;
+                MJR <= ldIDTP1;
+                STAR <= readM;
+            end
+
+            ldIDTP1:
+            begin
+                IDTP <= {APP2, APP1, APP0};
+                STAR <= test_intr;
             end
             
             //------------------------------------------------------------------
@@ -894,7 +939,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             begin
                 AL <= d7_d0;
                 IOR_ <= 1;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -947,7 +992,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             out4:
             begin
                 DIR <= 0;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -973,7 +1018,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             begin
                 AL <= alu_result(OPCODE, SOURCE, AL);
                 F <= {F[7:4], alu_flag(OPCODE, SOURCE, AL)};
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -999,7 +1044,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             begin
                 AH <= alu_result(OPCODE, SOURCE, AH);
                 F <= {F[7:4], alu_flag(OPCODE, SOURCE, AH)};
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -1025,7 +1070,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             jmp:
             begin
                 IP <= (jmp_condition(OPCODE, F) == 1)? DEST_ADDR : IP;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -1060,7 +1105,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 A23_A0 <= SP - 1;
                 SP <= SP - 1;
                 APP0 <= AL;
-                MJR <= fetch0;
+                MJR <= test_intr;
                 STAR <= writeB;
             end
 
@@ -1071,7 +1116,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 A23_A0 <= SP - 1;
                 SP <= SP - 1;
                 APP0 <= AH;
-                MJR <= fetch0;
+                MJR <= test_intr;
                 STAR <= writeB;
             end
 
@@ -1082,13 +1127,13 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
                 A23_A0 <= SP - 3;
                 SP <= SP - 3;
                 {APP2, APP1, APP0} <= DP;
-                MJR <= fetch0;
+                MJR <= test_intr;
                 STAR <= writeM;
             end
 
 
             //------------------------------------------------------------------
-            // istruzione POP AP
+            // istruzione POP AL
             //
             // lettura del valore indirizzato dal registro SP
             popAL:
@@ -1103,7 +1148,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             popAL1:
             begin
                 AL <= APP0;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -1122,7 +1167,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             popAH1:
             begin
                 AH <= APP0;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -1142,7 +1187,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             popDP1:
             begin
                 DP <= {APP2, APP1, APP0};
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -1162,7 +1207,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             call1:
             begin
                 IP <= DEST_ADDR;
-                STAR <= fetch0;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------
@@ -1182,14 +1227,106 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, clock, reset_);
             ret1:
             begin
                 IP <= {APP2, APP1, APP0};
+                STAR <= test_intr;
+            end
+
+            //------------------------------------------------------------------
+            // INT $operando
+            //
+            // salvataggio nella pila del registro IP e del registro dei flag
+            // F e azzeramento del registro F.
+            int:
+            begin
+                A23_A0 <= SP - 4;
+                SP <= SP - 4;
+                {APP3, APP2, APP1, APP0} <= {F, IP};
+                F <= 'H00;
+                MJR <= int1;
+                STAR <= writeL;
+            end
+
+            // lettura dall'IDT dell'indirizzo per il sottoprogramma richiesto
+            int1:
+            begin
+                A23_A0 <= IDTP + {SOURCE, 3'B000};
+                MJR <= int2;
+                STAR <= readM;
+            end
+
+            // immissione nell'IP dell'indirizzo del sottoprogramma
+            int2:
+            begin
+                IP <= {APP2, APP1, APP0};
                 STAR <= fetch0;
             end
 
             //------------------------------------------------------------------
-            // ISTRUZIONE NON VALIDA: HALT
+            // istruzione IRET
+            //
+            // lettura dalla pila dei contenuti salvati dei registri IP ed F
+            iret:
+            begin
+                A23_A0 <= SP;
+                SP <= SP + 4;
+                MJR <= iret1;
+                STAR <= readL;
+            end
+
+            // ripristino del contenuto dei registri F e IP
+            iret1:
+            begin
+                {F, IP} <= {APP3, APP2, APP1, APP0};
+                STAR <= fetch0;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione CLI
+            //
+            // resetta l'elemento 4 del registro F
+            cli:
+            begin
+                F <= {F[7:5], 1'B0, F[3:0]};
+                STAR <= fetch0;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione STI
+            //
+            // setta l'elemento 4 del registro F
+            sti:
+            begin
+                F <= {F[7:5], 1'B1, F[3:0]};
+                STAR <= fetch0;
+            end
+
+            //------------------------------------------------------------------
+            // VERIFICA DELLA PRESENZA DI INTERRUZIONI ESTERNE
+            // NON MASCHERATE ED EVENTUALE PRELIEVO DEL TIPO
+            test_intr:
+            begin
+                DIR <= 0;
+                STAR <= ((intr & F[4]) == 0)? fetch0:pre_tipo0;
+            end
+
+            pre_tipo0:
+            begin
+                INTA <= 1;
+                STAR <= (intr == 1)? pre_tipo0:pre_tipo1;
+            end
+
+            pre_tipo1:
+            begin
+                SOURCE <= d7_d0;
+                INTA <= 0;
+                STAR <= int;
+            end
+
+            //------------------------------------------------------------------
+            // ECCEZIONE PER CODICE OPERATIVO NON VALIDO
             nvi:
             begin
-                STAR <= nvi;
+                SOURCE <= 'H06;
+                STAR <= int;
             end
 
             //------------------------------------------------------------------
