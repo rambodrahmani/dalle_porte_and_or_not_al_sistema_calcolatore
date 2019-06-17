@@ -33,11 +33,11 @@ programma bootstrap).
 
 In base alle modalita' con cui vengono richieste, le interruzioni sono
 usualmente suddivise in tre classi:
-    1) interruzioni esterne: vengono richieste dalle interfacce facendo giungere
+    1. interruzioni esterne: vengono richieste dalle interfacce facendo giungere
     al processore opportuni segnali tramite apposiute variabili di collegamento;
-    2) interruzioni software: vengono richieste come espletamento della fase di
+    2. interruzioni software: vengono richieste come espletamento della fase di
     esecuzione di una specifica istruzione (nota come INT $operando);
-    3) interruzioni interne (o eccezioni): vengono richieste da circuiterie
+    3. interruzioni interne (o eccezioni): vengono richieste da circuiterie
     interne al processore, quando si verificano in esso condizioni anomale che
     impediscono il completamento dell'istruzione in corso.
 
