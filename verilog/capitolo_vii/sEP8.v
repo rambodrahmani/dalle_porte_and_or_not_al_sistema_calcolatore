@@ -155,10 +155,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
               lddirDP2=32,
               storeDP=33,
               storeDP1=34,
-
               ldIDTP=35,
               ldIDTP1=36,
-
               in=37,
               in1=38,
               in2=39,

@@ -6,7 +6,59 @@
  *       *           PER SUPPORTARE IL MECCANISMO DI PROTEZIONE                *
  *       ***********************************************************************
  *       
+ *       Tutte le precedenti considerazioni portano a una profonda revisione
+ *       della struttura del processore. In primo luogo va potenziato il
+ *       registro del flag F con l'aggiunta del nuovo flag U/S, che noi
+ *       supporremo essere l'elemento n. 5 del registro. Le impostazioni dei
+ *       contenuti dei registri al reset iniziale debbono essere poi
+ *       modificate, in modo da prevedere l'azzeramento dell'intero contenuto
+ *       del registro F, cosicche' il processore possa iniziare ad eseguire il
+ *       programma bootstrap operando in modo sistema e con le interruzioni
+ *       esterne disabilitate.
  *       
+ *       Per quanto rigiuarda le due nuove istruzioni privilegiate EXCHSP
+ *       e STUM, noi ammetteremo che valgano le seguenti specifiche: durante
+ *       l'esecuzione dell'istruzione EXCHSP, il processore scambia il
+ *       contenuto del registro SP con quello del registro PMSP, permettendone
+ *       anche l'inizializzazione. Durante l'esecuzione dell'istruzione STUM,
+ *       il processore: i) mette a 1 il contenuto del flag U/S, passando
+ *       a lavorare in modo utente e lasciando inalterato il contenuto di
+ *       tutti gli altri flag; ii) scambia il contenuto del registro SP con
+ *       quello del registro PMSP, rendendo non ulteriormente accessibile la
+ *       pila di sistema.
+ *        
+ *       Non serve invece un'istruzione per impostare a 9 il contenuto del
+ *       flag U/S, cioe' per portare il processore a operare in modo sistema.
+ *       La giustificazione e' ovvia: l'esecuzione di una tale istruzione
+ *       sarebbe inutile quando il processore opera in modo sistema
+ *       e renderebbe privo di senso il meccanismo di protezione se potesse
+ *       essere eseguita quando il processore opera in modo utente.
+ *       
+ *       Sempre con riferimento al sei di istruzioni, noi ammetteremo che per
+ *       l'istruzione INT e per l'istruzione privilegiata IRET, valgano le
+ *       seguenti nuove specifiche:
+ *       
+ *          INT $operando
+ *          Durante l'esecuzione di tale istruzione, il processore passa
+ *          a operare in modo sistema, maschera le richieste di interruzione
+ *          esterne ed effettua la chiamata di un sottoprorgramma di servizio.
+ *          Piu' precisamente il processore compie le seguenti azioni: i) se
+ *          sta lavorando in modo utente, scambia il contenuto del registro SP
+ *          con quello del registro PMSP; ii) azzera il contenuto del registro
+ *          F, portandosi cosi' a operare definitivamente in modo sistema
+ *          e mascherando le richieste di interruzioni esterne; iv) si procura
+ *          dalla tabella delle interruzioni l'indirizzo della prima
+ *          istruzione del sottoprogramma di servizio e mette tale indirizzo
+ *          nel regitro IP.
+ *          
+ *          IRET
+ *          Durante l'esecuzione di tale istruzione, il processore effettua il
+ *          ritorno da un sottoprogramma di servizio di una interruzione
+ *          rimuovendo dalla pila di sistema 4 byte e rinnovando con essi il
+ *          contenuto dei due registri IP e F. Se il nuovo contenuto del
+ *          registro F indica che il processore sta tornando a lavorare in
+ *          modo utente, viene scambiato il contenuto del registro SP con
+ *          quello del registro PMSP.
  *
  *       Ricompattando la descrizione del processore sEP8 fatta nel capitolo
  *       VII, con le modifiche e integrazioni apportate nei paragrafi
