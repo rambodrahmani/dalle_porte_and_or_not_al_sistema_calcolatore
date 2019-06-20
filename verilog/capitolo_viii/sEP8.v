@@ -103,12 +103,13 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     assign      iow_ = IOW_;
     assign      inta = INTA;
     assign      a23_a0 = A23_A0;
-    assign      d7_d0 = (DIR == 1)?D7_D0:'HZZ;
+    assign      d7_d0 = (DIR == 1) ? D7_D0:'HZZ;
 
     // REGISTRI OPERATIVI INTERNI
-    reg [2:0]   NUMLOC;     // [0]
-    reg [7:0]   AL, AH, F, OPCODE, SOURCE, APP3, APP2, APP1, APP0;
-    reg [23:0]  DP, IP, SP, DEST_ADDR, IDTP;
+    reg [2:0]   NUMLOC;
+    reg [7:0]   AL, AH, F
+    reg [7:0]   OPCODE, SOURCE, APP3, APP2, APP1, APP0;
+    reg [23:0]  DP, IP, SP, PMSP, DEST_ADDR, IDTP;
 
     // REGISTRO DI STATO, REGISTRO MJR E CODIFICA DEGLI STATI INTERNI
     reg [6:0]   STAR, MJR;
@@ -1352,9 +1353,18 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             //------------------------------------------------------------------
             // INT $operando
             //
-            // salvataggio nella pila del registro IP e del registro dei flag
-            // F e azzeramento del registro F.
+            // Eventuale scambio del contenuto del registro SP con quello del
+            // registro PMSP
             int:
+            begin
+                SP <= (F[5] == 1) ? PMSP : SP;
+                PMSP <= (F[5] == 1) ? SP : PMSP;
+                STAR <= int1;
+            end
+
+            // salvataggio nella pila del contenuto del registro IP e del
+            // registro F e azzeramento del contenuto del registro F
+            int1:
             begin
                 A23_A0 <= SP - 4;
                 SP <= SP - 4;
@@ -1364,16 +1374,19 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
                 STAR <= writeL;
             end
 
-            // lettura dall'IDT dell'indirizzo per il sottoprogramma richiesto
-            int1:
+            // accesso alla tabella delle interruzioni per procurarsi
+            // l'indirizzo della prima istruzione del sottoprogramma di
+            // servizio
+            int2:
             begin
                 A23_A0 <= IDTP + {SOURCE, 3'B000};
                 MJR <= int2;
                 STAR <= readM;
             end
 
-            // immissione nell'IP dell'indirizzo del sottoprogramma
-            int2:
+            // successiva immissione nel registro IP dell'indirizzo del
+            // sottoprogramma
+            int3:
             begin
                 IP <= {APP2, APP1, APP0};
                 STAR <= fetch0;
@@ -1668,8 +1681,4 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             end
         endcase
 endmodule
-
-// [0]
-// Il registro NUMLOC viene usato nei sottoprogrammi di lettura e scrittura in
-// memoria che permettono l'accesso a locazioni multiple cosecutive.
 
