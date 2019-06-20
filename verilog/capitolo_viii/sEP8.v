@@ -107,7 +107,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
 
     // REGISTRI OPERATIVI INTERNI
     reg [2:0]   NUMLOC;
-    reg [7:0]   AL, AH, F
+    reg [7:0]   AL, AH, F;
     reg [7:0]   OPCODE, SOURCE, APP3, APP2, APP1, APP0;
     reg [23:0]  DP, IP, SP, PMSP, DEST_ADDR, IDTP;
 
@@ -240,9 +240,6 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     function [1:0] valid_fetch;
         input [7:0] opcode;
         input us;
-
-        // return invalid fatch as default
-        valid_fetch = 'B00;
 
         casex(us)
             0:      // SYSTEM MODE
@@ -503,7 +500,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             'B00100011: first_execution_state = ldSP;       // MOV $operando, SP
             'B00100100: first_execution_state = lddirDP;    // MOV indirizzo, DP
             'B00100101: first_execution_state = storeDP;    // MOV DP, indirizzo
-            'B00100110: first_execution_state = lidtp;      // LIDTP $operando
+            'B00100110: first_execution_state = ldIDTP;     // LIDTP $operando
 
             // Formato F2
             'B01000000: first_execution_state = ldAL;       // MOV (DP), AL
@@ -539,7 +536,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             'B10001100: first_execution_state = int;        // INT $operando
 
             // Formato F5
-			'B10100000: first_execution_state = dlAL;       // MOV indirizzo, AL
+			'B10100000: first_execution_state = ldAL;       // MOV indirizzo, AL
             'B10100001: first_execution_state = aluAL;      // CMP indirizzo, AL
             'B10100010: first_execution_state = aluAL;      // ADD indirizzo, AL
             'B10100011: first_execution_state = aluAL;      // SUB indirizzo, AL
@@ -593,6 +590,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     function jmp_condition;
         input [7:0] opcode;
         input [7:0] flag;
+        jmp_condition = 0;
         // ...
         // ...
     endfunction
@@ -610,6 +608,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     // compie le operazioni sul solo operando destinatario).
     function [7:0] alu_result;
         input [7:0] opcode, operando1, operando2;
+        alu_result = 'B00000000;
         // ...
         // ...
     endfunction
@@ -621,6 +620,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     // richiesti nelle istruzioni logico/aritmetiche. 
     function [3:0] alu_flag;
         input [7:0] opcode, operando1, operando2;
+        alu_flag = 'B0000;
         // ...
         // ...
     endfunction
@@ -849,7 +849,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             ALtoAH:
             begin
                 AH <= AL;
-                STAR <= test_int;
+                STAR <= test_intr;
             end
 
             //------------------------------------------------------------------

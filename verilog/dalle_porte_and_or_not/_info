@@ -620,6 +620,28 @@ Z26 !s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/De
 R3
 R4
 n@ricevitore
+vsEP8
+!s110 1561037800
+!i10b 1
+!s100 d^o6DT67I<R>IIPR@:A6n0
+I_^ZDQG=WXzbF2KmzVFNgh2
+R1
+R0
+w1561037789
+8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_vii/sEP8.v
+F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_vii/sEP8.v
+L0 100
+R2
+r1
+!s85 0
+31
+!s108 1561037800.000000
+!s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_vii/sEP8.v|
+!s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_vii/sEP8.v|
+!i113 1
+R3
+R4
+ns@e@p8
 vSistema
 !i10b 1
 R1
