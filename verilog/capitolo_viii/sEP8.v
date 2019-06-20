@@ -3,83 +3,15 @@
  *       
  *       ***********************************************************************
  *       *      DESCRIZIONE COMPLETA DEL PROCESSORE sEP8, POTENZIATO           *
- *       *         PER SUPPORTARE IL MECCANISMO DELLE INTERRUZIONI             *
+ *       *           PER SUPPORTARE IL MECCANISMO DI PROTEZIONE                *
  *       ***********************************************************************
- *
- *       Le istruzioni connesse al meccanismo di interruzione sono globalmente
- *       5, e in accordo alla terminologia INTEL, le denomineremo
- *       rispettivamente
- *          LIDTP: durante l'esecuzione di tale operazione, il processore
- *          inizializza il contenuto del registro IDTP (Interrupt Descriptor
- *          Table Pointer), immettendovi l'indirizzo specificato come operando
- *          immediato (a 24 bit) dell'istruzione stessa.
- *          
- *          INT: durante l'esecuzione di tale istruzione, il processore
- *          maschera le richieste di interruzioni esterne ed effettua la
- *          chiamata di un sottoprogramma di servizio. Piu' precisamente il
- *          processore compie le seguenti azioni: i) salva nella pila il
- *          contenuto del registro dei flag F e l'indirizzo dell'istruzione di
- *          rientro (contenuto nel registro IP); ii) azzera il contenuto del
- *          registro dei flag F, mascherando cosi' le richieste di
- *          interruzioni esterne; iii) interpreta l'operando immediato
- *          dell'istruzione come il tipo dell'interruzione e si procura nella
- *          Interrupt Descriptor Table l'indirizzo della prima istruzione del
- *          sottoprogramma di servizio; iv) immette tale indirizzo nel
- *          registro IP.
- *          
- *          IRET: durante l'esecuzione di tale istruzione, il processore
- *          effettua il ritorno da un sottoprogramma di servizio di una
- *          interruzione. Piu' precisamente, il processore rimuove dalla pila
- *          4 byte e con essi rinnova il contenuto dei due registri IP e F.
- *          
- *          CLI: (Clear Interrupt Flag) durante l'esecuzione di tale
- *          istruzione, il processore mette a 0 il contenuto del flag IF,
- *          lasciando inalterato il contenuto di tutti gli altri flag.
- *
- *          STI: (Set Interrupt Flag) durante l'esecuzione di tale istruzione,
- *          il processore mette a 1 il contenuto del flag IF, lasciando
- *          inalterato il contenuto di tutti gli altri flag.
- *          
- *       Come gia' detto piu' volte, tra le azioni compiute dal processore
- *       nel gestire una richiesta di interruzione, c'e' anche
- *       l'azzeramento del contenuto del registro dei flag F. Questo fatto
- *       implica che, quando un sottoprogramma di servizio di una
- *       interruzione viene messo in esecuzione, il contenuto del registro
- *       IF e' 0 e quindi il processore non e' abilitato ad accettare nuove
- *       richieste di interruzione esterne (mascherabili). In altre parole,
- *       e' precluso un annidamento di sottoprogrammi di servizio di
- *       interruzioni esternem a meno che i sottoprogrammi syessi non
- *       contengano esplicitamente l'istruzione STI.
- *          
- *       Cio' premesso, le ulteriori modifiche da apportare alla
- *       descrizione del processore sEP8 per renderlo capace di gestire
- *       anche le richieste di itnerruzioni esterne mascherabili, sono le
- *       seguenti:
- *          1) Introduzione della variabile di ingresso intr, della variabile
- *          di uscita inta e di un registro INTA (a sostegno di inta),
- *          azzerato al reset iniziale.
- *          2) Potenziamento del registro dei flag F, introduzione delle due
- *          istruzioni CLI e STI e revisione degli statement di etichetta
- *          aluAL e aluAH tenendo conto che ora e' significativo anche F[4].
- *          3) Introduzione di nuovi stati interi, fra cui uno stato interno
- *          test_intr in cui il processore va a verificare l'eventuale
- *          presenza di interruzioni esterne non mascherate e quindi passa
- *          a selezionare, come stato interno successivo, lo stato fetch0 se
- *          il test da' esito negativo, oppure se il test da' esito positivo,
- *          un nuvoo stato interno pre_tipo0.
- *          4) Raggiungimento dello stato interno test_intr tramite
- *          sostituzione dei microsalti STAR <= fetch0 con il microsalto STAR
- *          <= test_intr e delle microperazioni MJR <= fetch0 con la
- *          microoperazione MJR <= test_intr.
- *          5) Inizio, a partire dallo stato interno pre_tipo0, dell'handshake
- *          con la sorgente equivalente di interruzioni esterne per la
- *          ricezione, tramite la variabile d7_d0 del bus, del tipo
- *          dell'interruzione.
+ *       
+ *       
  *
  *       Ricompattando la descrizione del processore sEP8 fatta nel capitolo
- *       VI, con le modifiche e integrazioni apportate nei paragrafi
+ *       VII, con le modifiche e integrazioni apportate nei paragrafi
  *       precedenti, risulta che la descrizione completa del processore,
- *       potenziato per supportare il meccanismo delle interruzioni, e' la
+ *       potenziato per supportare il meccanismo di protezione, e' la
  *       seguente:
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
@@ -114,7 +46,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     assign      d7_d0 = (DIR == 1)?D7_D0:'HZZ;
 
     // REGISTRI OPERATIVI INTERNI
-    reg [2:0]   NUMLOC;
+    reg [2:0]   NUMLOC;     // [0]
     reg [7:0]   AL, AH, F, OPCODE, SOURCE, APP3, APP2, APP1, APP0;
     reg [23:0]  DP, IP, SP, DEST_ADDR, IDTP;
 
@@ -1549,4 +1481,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             end
         endcase
 endmodule
+
+// [0]
+// Il registro NUMLOC viene usato nei sottoprogrammi di lettura e scrittura in
+// memoria che permettono l'accesso a locazioni multiple cosecutive.
 
