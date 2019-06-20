@@ -81,6 +81,14 @@
  *         Created on 09/06/2019.
  */
 
+/**
+ * DISCLAIMER: No Optimization techniques were adopted for the following
+ * Verilog Description. Please do not consider the following as an example of
+ * optimized Verilog coding. The objective here was only to provide
+ * a simplified Verilog description for a theoretical educational purpose
+ * processor.
+ */
+
 //------------------------------------------------------------------------------
 //  DESCRIZIONE COMPLETA DEL PROCESSORE sEP8
 //------------------------------------------------------------------------------

@@ -70,6 +70,14 @@
  *         Created on 15/06/2019.
  */
 
+/**
+ * DISCLAIMER: No Optimization techniques were adopted for the following
+ * Verilog Description. Please do not consider the following as an example of
+ * optimized Verilog coding. The objective here was only to provide
+ * a simplified Verilog description for a theoretical educational purpose
+ * processor.
+ */
+
 //------------------------------------------------------------------------------
 //  DESCRIZIONE COMPLETA DEL PROCESSORE sEP8
 //------------------------------------------------------------------------------
@@ -231,113 +239,225 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     function [1:0] valid_fetch;
         input [7:0] opcode;
         input us;
-        valid_fetch = 'B00;
-        casex(opcode[7:5])
-            'B000:          // FORMATO F0
-                casex(opcode[4:0])
-                    'B00000: valid_fetch = 'B11;    // HTL
-                    'B00001: valid_fetch = 'B11;
-                    'B00010: valid_fetch = 'B11;
-                    'B00011: valid_fetch = 'B11;
-                    'B00100: valid_fetch = 'B11;
-                    'B00101: valid_fetch = 'B11;
-                    'B00110: valid_fetch = 'B11;
-                    'B00111: valid_fetch = 'B11;
-                    'B01000: valid_fetch = 'B11;
-                    'B01001: valid_fetch = 'B11;
-                    'B01010: valid_fetch = 'B11;
-                    'B01011: valid_fetch = 'B11;
-                    'B01111: valid_fetch = 'B11;
-                    'B10000: valid_fetch = 'B11;
-                    'B10001: valid_fetch = 'B11;
-                    'B10010: valid_fetch = 'B11;    // IRET
-                    'B10011: valid_fetch = 'B11;    // CLI
-                    'B10100: valid_fetch = 'B11;    // STI
-                    'B10101: valid_fetch = 'B11;    // EXCHSP
-                    'B10110: valid_fetch = 'B11;    // STUM
-                endcase
-            'B001:          // FORMATO F1
-                casex(opcode[4:0])
-                    'B00000: valid_fetch = 'B11;    // IN
-                    'B00001: valid_fetch = 'B11;    // OUT
-                    'B00010: valid_fetch = 'B11;
-                    'B00011: valid_fetch = 'B11;
-                    'B00100: valid_fetch = 'B11;
-                    'B00101: valid_fetch = 'B11;
-                    'B00110: valid_fetch = 'B11;    // LIDTP
-                endcase
-            'B010:          // FORMATO F2
-                casex(opcode[4:0])
-                    'B00000: valid_fetch = 'B11;
-                    'B00001: valid_fetch = 'B11;
-                    'B00010: valid_fetch = 'B11;
-                    'B00011: valid_fetch = 'B11;
-                    'B00100: valid_fetch = 'B11;
-                    'B00101: valid_fetch = 'B11;
-                    'B00110: valid_fetch = 'B11;
-                    'B00111: valid_fetch = 'B11;
-                    'B01000: valid_fetch = 'B11;
-                    'B01001: valid_fetch = 'B11;
-                    'B01010: valid_fetch = 'B11;
-                    'B01011: valid_fetch = 'B11;
-                endcase
-            'B011:          // FORMATO F3
-                casex(opcode[4:0])
-                    'B00000: valid_fetch = 'B11;
-                    'B00001: valid_fetch = 'B11;
-                endcase
-            'B100:          // FORMATO F4
-                casex(opcode[4:0])
-                    'B00000: valid_fetch = 'B11;
-                    'B00001: valid_fetch = 'B11;
-                    'B00010: valid_fetch = 'B11;
-                    'B00011: valid_fetch = 'B11;
-                    'B00100: valid_fetch = 'B11;
-                    'B00101: valid_fetch = 'B11;
-                    'B00110: valid_fetch = 'B11;
-                    'B00111: valid_fetch = 'B11;
-                    'B01000: valid_fetch = 'B11;
-                    'B01001: valid_fetch = 'B11;
-                    'B01010: valid_fetch = 'B11;
-                    'B01011: valid_fetch = 'B11;
-                    'B01100: valid_fetch = 'B11;
 
-                endcase
-            'B101:          // FORMATO F5
-                casex(opcode[4:0])
-                    'B00000: valid_fetch = 'B11;
-                    'B00001: valid_fetch = 'B11;
-                    'B00010: valid_fetch = 'B11;
-                    'B00011: valid_fetch = 'B11;
-                    'B00100: valid_fetch = 'B11;
-                    'B00101: valid_fetch = 'B11;
-                    'B00110: valid_fetch = 'B11;
-                    'B00111: valid_fetch = 'B11;
-                    'B01000: valid_fetch = 'B11;
-                    'B01001: valid_fetch = 'B11;
-                    'B01010: valid_fetch = 'B11;
+        // return invalid fatch as default
+        valid_fetch = 'B00;
+
+        casex(us)
+            0:      // SYSTEM MODE
+            casex(opcode[7:5])
+                'B000:          // FORMATO F0
+                    casex(opcode[4:0])
+                        'B00001: valid_fetch = 'B11;    // HTL
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
+                        'B01011: valid_fetch = 'B11;
+                        'B01111: valid_fetch = 'B11;
+                        'B10000: valid_fetch = 'B11;
+                        'B10001: valid_fetch = 'B11;
+                        'B10010: valid_fetch = 'B11;    // IRET
+                        'B10011: valid_fetch = 'B11;    // CLI
+                        'B10100: valid_fetch = 'B11;    // STI
+                        'B10101: valid_fetch = 'B11;    // EXCHSP
+                        'B10110: valid_fetch = 'B11;    // STUM
+                    endcase
+                'B001:          // FORMATO F1
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;    // IN
+                        'B00001: valid_fetch = 'B11;    // OUT
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;    // LIDTP
+                    endcase
+                'B010:          // FORMATO F2
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
+                        'B01011: valid_fetch = 'B11;
+                    endcase
+                'B011:          // FORMATO F3
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                    endcase
+                'B100:          // FORMATO F4
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
+                        'B01011: valid_fetch = 'B11;
+                        'B01100: valid_fetch = 'B11;
+                    endcase
+                'B101:          // FORMATO F5
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
                     'B01011: valid_fetch = 'B11;
-                endcase
-            'B110:          // FORMATO F6
-                casex(opcode[4:0])
-                    'B00000: valid_fetch = 'B11;
-                    'B00001: valid_fetch = 'B11;
-                endcase
-            'B111:          // FORMATO F7
-                casex(opcode[4:0])
-                    'B00000: valid_fetch = 'B11;
-                    'B00001: valid_fetch = 'B11;
-                    'B00010: valid_fetch = 'B11;
-                    'B00011: valid_fetch = 'B11;
-                    'B00100: valid_fetch = 'B11;
-                    'B00101: valid_fetch = 'B11;
-                    'B00110: valid_fetch = 'B11;
-                    'B00111: valid_fetch = 'B11;
-                    'B01000: valid_fetch = 'B11;
-                    'B01001: valid_fetch = 'B11;
-                    'B01010: valid_fetch = 'B11;
+                    endcase
+                'B110:          // FORMATO F6
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                    endcase
+                'B111:          // FORMATO F7
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
+                        'B01011: valid_fetch = 'B11;
+                    endcase
+            endcase
+            1:      // USER MODE
+            casex(opcode[7:5])
+                'B000:          // FORMATO F0
+                    casex(opcode[4:0])
+                        'B00001: valid_fetch = 'B01;    // HTL
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
+                        'B01011: valid_fetch = 'B11;
+                        'B01111: valid_fetch = 'B11;
+                        'B10000: valid_fetch = 'B11;
+                        'B10001: valid_fetch = 'B11;
+                        'B10010: valid_fetch = 'B01;    // IRET
+                        'B10011: valid_fetch = 'B01;    // CLI
+                        'B10100: valid_fetch = 'B01;    // STI
+                        'B10101: valid_fetch = 'B01;    // EXCHSP
+                        'B10110: valid_fetch = 'B01;    // STUM
+                    endcase
+                'B001:          // FORMATO F1
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B01;    // IN
+                        'B00001: valid_fetch = 'B01;    // OUT
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B01;    // LIDTP
+                    endcase
+                'B010:          // FORMATO F2
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
+                        'B01011: valid_fetch = 'B11;
+                    endcase
+                'B011:          // FORMATO F3
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                    endcase
+                'B100:          // FORMATO F4
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
+                        'B01011: valid_fetch = 'B11;
+                        'B01100: valid_fetch = 'B11;
+                    endcase
+                'B101:          // FORMATO F5
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
                     'B01011: valid_fetch = 'B11;
-                endcase
+                    endcase
+                'B110:          // FORMATO F6
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                    endcase
+                'B111:          // FORMATO F7
+                    casex(opcode[4:0])
+                        'B00000: valid_fetch = 'B11;
+                        'B00001: valid_fetch = 'B11;
+                        'B00010: valid_fetch = 'B11;
+                        'B00011: valid_fetch = 'B11;
+                        'B00100: valid_fetch = 'B11;
+                        'B00101: valid_fetch = 'B11;
+                        'B00110: valid_fetch = 'B11;
+                        'B00111: valid_fetch = 'B11;
+                        'B01000: valid_fetch = 'B11;
+                        'B01001: valid_fetch = 'B11;
+                        'B01010: valid_fetch = 'B11;
+                        'B01011: valid_fetch = 'B11;
+                    endcase
+            endcase
         endcase
     endfunction
 
