@@ -1,24 +1,21 @@
-##
-#
+#*******************************************************************************
 # File: caso_illustrativo_1.s
 #       Caso Illustrativo 1. Fare riferimento al file caso_illustrativo_1.cpp
 #       per il codice sorgente C++ di partenza.
 #       
 # Author: Rambod Rahmani <rambodrahmani@autistici.org>
 #         Created on 22/05/2019.
-#
-##
+#*******************************************************************************
 
+#-------------------------------------------------------------------------------
 .INCLUDE "util.s"
-
+#-------------------------------------------------------------------------------
 .DATA
-
 .GLOBAL n, m
     n:  .LONG   5
     m:  .LONG   10
-
+#-------------------------------------------------------------------------------
 .TEXT
-
 .GLOBAL fai
 
 .SET a, -16     # intero, 4 byte

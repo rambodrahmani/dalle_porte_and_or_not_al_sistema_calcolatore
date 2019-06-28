@@ -1,5 +1,4 @@
-##
-#
+#*******************************************************************************
 # File: ser.s
 #       Fornisce funzioni di utilita'. Da includere nei file assembly che
 #       effettuano operazioni di I/O.
@@ -12,12 +11,12 @@
 #
 # Author: Rambod Rahmani <rambodrahmani@autistici.org>
 #         Created on 29/04/2019.
-#
-##
+#*******************************************************************************
 
+#-------------------------------------------------------------------------------
 .DATA
     buff:   .byte 0
-
+#-------------------------------------------------------------------------------
 .TEXT
 
 ##
@@ -103,3 +102,4 @@ uscita:
 # consecutive arguments, starting with the EBX register. If there are more than
 # six arguments, then the memory location of the first argument is stored in the
 # EBX register.
+
