@@ -37,16 +37,29 @@ ripeti:
     JE      fine            # in tal caso vai a fine
     SHRQ    %RAX            # altrimenti shift right del contenuto di RAX
     JC      avanti          # se il bit shiftato era un 1, vai ad avanti
+    PUSH    %RAX
+    PUSH    %RCX
+    MOVQ    $0, %RDI
+    CALL    scrivinaturale
+    POP     %RCX
+    POP     %RAX
     JMP     ripeti          # altrimenti vai a ripeti
 
 avanti:
+    PUSH    %RAX
+    PUSH    %RCX
+    MOVQ    $1, %RDI
+    CALL    scrivinaturale
+    POP     %RCX
+    POP     %RAX
     ADDB    $1, %CL         # incrementa di 1 il contenuto di CL
     JMP     ripeti          # vai a ripeti
 
 fine:
-    MOVB    %CL, risultato  # copia il contenuto di CL in risultato
-    MOVQ    $0, %RAX        # azzera il contenuto di RAX
-    MOVQ    risultato, %RDI     # stampa del risultato
+    MOVB    %CL, risultato    # copia il contenuto di CL in risultato
+    MOVQ    $0, %RAX          # azzera il contenuto di RAX
+    CALL    nuovalinea
+    MOVQ    risultato, %RDI   # stampa del risultato
     CALL    scrivinaturale
     CALL    nuovalinea     
 
