@@ -35,30 +35,30 @@ vett:       .fill   10, 4, 0
 .GLOBAL main
 #-------------------------------------------------------------------------------
 main:
-    MOVB    $10, %R12B
+    MOVB    $10, %R12B      # contatore numero di elementi del vettore
     MOVQ    $vett, %RBX
 
 ancora:                     # lettura degli elementi del vettore
-    CALL    leggiintero
-    MOVQ    %RAX, (%RBX)
-    ADDQ    $4, %RBX
-    SUBB    $1, %R12B
-    JNZ     ancora
+    CALL    leggiintero     # legge un intero in %RAX
+    MOVQ    %RAX, (%RBX)    # copia dell'intero letto nel vettore
+    ADDQ    $4, %RBX        # incrementa il puntatore al vettore
+    SUBB    $1, %R12B       # decrementa il numero di elementi mancanti
+    JNZ     ancora          # continua se diverso da zero
 
-    MOVQ    $0, %RAX
-    MOVB    $10, %R12B
-    MOVQ    $vett, %RBX
+    MOVQ    $0, %RAX        # azzera RAX
+    MOVB    $10, %R12B      # prepara il contatore
+    MOVQ    $vett, %RBX     # copia in RBX l'indirizzo del primo elemento
 
 ripeti:
-    ADDQ    (%RBX), %RAX
-    ADDQ    $4, %RBX
-    SUBB    $1, %R12B
-    JNZ     ripeti
-    MOVQ    %RAX, risultato
+    ADDQ    (%RBX), %RAX    # somma in RAX il valore dell'elemento puntato
+    ADDQ    $4, %RBX        # incrementa il puntatore al vettore
+    SUBB    $1, %R12B       # decrementa il numero di elementi mancanti
+    JNZ     ripeti          # ripeti se diverso da zero
+    MOVQ    %RAX, risultato # copia della somma finale in risultato
 
-    MOVQ    risultato, %RDI # scrittura del risultato
-    CALL    scriviintero
-    CALL    nuovalinea
+    MOVQ    risultato, %RDI # scrittura del risultato in RDI
+    CALL    scriviintero    # stampa il naturale contenuto in RDI
+    CALL    nuovalinea      # stampa una nuova linea
 
     XORQ    %RAX, %RAX      # [0]
     RET

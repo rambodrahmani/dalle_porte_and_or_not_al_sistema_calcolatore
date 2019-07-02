@@ -83,7 +83,7 @@ fine:
 # It performs a bitwise AND of the two operands. Neither of the operands is
 # altered, however, the instruction alters the flags, most importantly the ZF
 # flag to either 1 if the result of the AND is zero, or 0 otherwise.
-# The following jne performs a jump if ZF is equal to 0.
+# The following jz performs a jump if ZF is equal to 0.
 
 # [1]
 # Usando i shift left possiamo posizionare nella posizione piu' significativa
