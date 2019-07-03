@@ -38,7 +38,7 @@
  *              ./codifica3
  *
  *          - Sviluppo della versione mista numero 4:
- *              g++ codifica4a.cpp codifica4.s -o codifica4
+ *              g++ codifica4a.cpp codifica4b.s -o codifica4
  *              ./codifica4
  *
  *          - Sviluppo della versione mista numero 5:
