@@ -123,11 +123,16 @@ extern "C" int leggiintero()
 }
 
 /**
- *
+ * salta eventuali caratteri bianchi, legge da tastiera una sequenza di
+ * caratteri congruente con la rappresentazione decimale di un numero reale
+ * (letterale reale senza i caratteri iniziali 0e), la converte in un reale
+ * esteso che pone in ST (immette in pila).
  */
-extern "C" void leggireale()
+extern "C" float leggireale()
 {
-    // work in progress
+    float f;
+    cin >> f;
+    return f;
 }
 
 /**
@@ -151,11 +156,15 @@ extern "C" void scriviintero(int i)
 }
 
 /**
- * 
+ * Converte il reale esteso contenuto in ST in una sequenza di caratteri che
+ * rappresentano un numero reale senza esponente (parte intera ed eventuale
+ * parte frazionaria separata da '.') e scrive tale sequenza su video.
  */
-extern "C" void scrivireale(float f)
+extern "C" void scrivireale(float fa)
 {
-    fprintf(stdout, "%f", f);
+    //fprintf(stdout, "%f", f);
+    double d = 34.55;
+    fprintf(stdout, "%f", d);
 }
 
 /**

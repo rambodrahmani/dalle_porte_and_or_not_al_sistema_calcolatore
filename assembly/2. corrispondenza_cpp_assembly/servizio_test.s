@@ -59,5 +59,11 @@ main:
     CALL    scriviintero
     CALL    nuovalinea
 
+    # TEST leggireale() scrivireale()
+    # Legge e stampa un numero reale
+    CALL    leggireale
+    CALL    scrivireale
+    CALL    nuovalinea
+
     RET
 

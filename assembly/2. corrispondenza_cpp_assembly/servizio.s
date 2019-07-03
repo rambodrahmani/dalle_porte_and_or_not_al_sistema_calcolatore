@@ -205,8 +205,21 @@ leggireale:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	nop
-	popq	%rbp
+	subq	$16, %rsp
+	movq	%fs:40, %rax
+	movq	%rax, -8(%rbp)
+	xorl	%eax, %eax
+	leaq	-12(%rbp), %rax
+	movq	%rax, %rsi
+	leaq	_ZSt3cin(%rip), %rdi
+	call	_ZNSirsERf@PLT
+	movss	-12(%rbp), %xmm0
+	movq	-8(%rbp), %rax
+	xorq	%fs:40, %rax
+	je	.L18
+	call	__stack_chk_fail@PLT
+.L18:
+	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
@@ -267,7 +280,7 @@ scriviintero:
 .LFE1527:
 	.size	scriviintero, .-scriviintero
 	.section	.rodata
-.LC1:
+.LC2:
 	.string	"%f"
 	.text
 	.globl	scrivireale
@@ -280,11 +293,13 @@ scrivireale:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$16, %rsp
-	movss	%xmm0, -4(%rbp)
-	cvtss2sd	-4(%rbp), %xmm0
+	subq	$32, %rsp
+	movss	%xmm0, -20(%rbp)
+	movsd	.LC1(%rip), %xmm0
+	movsd	%xmm0, -8(%rbp)
 	movq	stdout(%rip), %rax
-	leaq	.LC1(%rip), %rsi
+	movsd	-8(%rbp), %xmm0
+	leaq	.LC2(%rip), %rsi
 	movq	%rax, %rdi
 	movl	$1, %eax
 	call	fprintf@PLT
@@ -297,7 +312,7 @@ scrivireale:
 	.size	scrivireale, .-scrivireale
 	.type	_Z41__static_initialization_and_destruction_0ii, @function
 _Z41__static_initialization_and_destruction_0ii:
-.LFB2010:
+.LFB2011:
 	.cfi_startproc
 	pushq	%rbp
 	.cfi_def_cfa_offset 16
@@ -308,9 +323,9 @@ _Z41__static_initialization_and_destruction_0ii:
 	movl	%edi, -4(%rbp)
 	movl	%esi, -8(%rbp)
 	cmpl	$1, -4(%rbp)
-	jne	.L22
+	jne	.L24
 	cmpl	$65535, -8(%rbp)
-	jne	.L22
+	jne	.L24
 	leaq	_ZStL8__ioinit(%rip), %rdi
 	call	_ZNSt8ios_base4InitC1Ev@PLT
 	leaq	__dso_handle(%rip), %rdx
@@ -318,17 +333,17 @@ _Z41__static_initialization_and_destruction_0ii:
 	movq	_ZNSt8ios_base4InitD1Ev@GOTPCREL(%rip), %rax
 	movq	%rax, %rdi
 	call	__cxa_atexit@PLT
-.L22:
+.L24:
 	nop
 	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
-.LFE2010:
+.LFE2011:
 	.size	_Z41__static_initialization_and_destruction_0ii, .-_Z41__static_initialization_and_destruction_0ii
 	.type	_GLOBAL__sub_I_leggisuccessivo, @function
 _GLOBAL__sub_I_leggisuccessivo:
-.LFB2011:
+.LFB2012:
 	.cfi_startproc
 	pushq	%rbp
 	.cfi_def_cfa_offset 16
@@ -342,11 +357,16 @@ _GLOBAL__sub_I_leggisuccessivo:
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
-.LFE2011:
+.LFE2012:
 	.size	_GLOBAL__sub_I_leggisuccessivo, .-_GLOBAL__sub_I_leggisuccessivo
 	.section	.init_array,"aw"
 	.align 8
 	.quad	_GLOBAL__sub_I_leggisuccessivo
+	.section	.rodata
+	.align 8
+.LC1:
+	.long	1717986918
+	.long	1078019686
 	.hidden	__dso_handle
 	.ident	"GCC: (GNU) 8.3.0"
 	.section	.note.GNU-stack,"",@progbits
