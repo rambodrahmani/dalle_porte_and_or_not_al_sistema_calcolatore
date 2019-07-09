@@ -199,6 +199,28 @@ R2
 R3
 R4
 n@eprom
+vFlipFlop_JK
+!s110 1562684629
+!i10b 1
+!s100 [ZYcE<>NBBO4BG<c5fXgn2
+IC3LUU@6RS3MIMZW1UgCGj3
+R1
+R0
+w1562684626
+8/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_v/FlipFlop_JK.v
+F/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_v/FlipFlop_JK.v
+L0 17
+R2
+r1
+!s85 0
+31
+!s108 1562684629.000000
+!s107 /home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_v/FlipFlop_JK.v|
+!s90 -reportprogress|300|-work|dalle_porte_and_or_not|/home/rambodrahmani/DevOps/dalle_porte_and_or_not_al_sistema_calcolatore/verilog/capitolo_v/FlipFlop_JK.v|
+!i113 1
+R3
+R4
+n@flip@flop_@j@k
 vFormatore_di_Impulsi
 !i10b 1
 R1
