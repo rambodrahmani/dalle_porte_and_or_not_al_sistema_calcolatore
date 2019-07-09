@@ -150,67 +150,80 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
               storeDP1=34,
               ldIDTP=35,
               ldIDTP1=36,
-              in=37,
-              in1=38,
-              in2=39,
-              in3=40,
-              out=41,
-              out1=42,
-              out2=43,
-              out3=44,
-              out4=45,
-              aluAL=46,
-              aluAH=47,
-              jmp=48,
-              pushAL=49,
-              pushAH=50,
-              pushDP=51,
-              popAL=52,
-              popAL1=53,
-              popAH=54,
-              popAH1=55,
-              popDP=56,
-              popDP1=57,
-              call=58,
-              call1=59,
-              ret=60,
-              ret1=61,
-              int=62,
-              int1=63,
-              int2=64,
-              iret=65,
-              iret1=66,
-              cli=67,
-              sti=68,
-              test_intr=69,
-              pre_tipo0=70,
-              pre_tipo1=71,
-              nvi=72,
-              readB=73,
-              readW=74,
-              readM=75,
-              readL=76,
-              read0=77,
-              read1=78,
-              read2=79,
-              read3=80,
-              read4=81,
-              writeB=82,
-              writeW=83,
-              writeM=84,
-              writeL=85,
-              write0=86,
-              write1=87,
-              write2=88,
-              write3=89,
-              write4=90,
-              write5=91,
-              write6=92,
-              write7=93,
-              write8=94,
-              write9=95,
-              write10=96,
-              write11=97;
+              
+              exchSP=37,
+              stum=38,
+
+              in=39,
+              in1=40,
+              in2=41,
+              in3=42,
+              out=43,
+              out1=44,
+              out2=45,
+              out3=46,
+              out4=47,
+              aluAL=48,
+              aluAH=49,
+              jmp=50,
+              pushAL=51,
+              pushAH=52,
+              pushDP=53,
+              popAL=54,
+              popAL1=55,
+              popAH=56,
+              popAH1=57,
+              popDP=58,
+              popDP1=59,
+              call=60,
+              call1=61,
+              ret=62,
+              ret1=63,
+              int=64,
+              int1=65,
+              int2=66,
+
+              int3=67,
+
+              iret=68,
+              iret1=69,
+
+              iret2=70,
+
+              cli=71,
+              sti=72,
+              test_intr=73,
+              pre_tipo0=74,
+              pre_tipo1=75,
+              nvi=76,
+
+              nvma=77,
+
+              readB=78,
+              readW=79,
+              readM=80,
+              readL=81,
+              read0=82,
+              read1=83,
+              read2=84,
+              read3=85,
+              read4=86,
+              writeB=87,
+              writeW=88,
+              writeM=89,
+              writeL=90,
+              write0=91,
+              write1=92,
+              write2=93,
+              write3=94,
+              write4=95,
+              write5=96,
+              write6=97,
+              write7=98,
+              write8=99,
+              write9=100,
+              write10=101,
+              write11=102;
 
     //--------------------------------------------------------------------------
     //                    RETI COMBINATORIE NON STANDARD
@@ -633,15 +646,15 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     //                             INITIAL RESET
     always @(reset_ == 0) #1
         begin
-            IP <= 'HFF0000;
-            F <= 'H00;
-            DIR <= 0;
-            MR_ <= 1;
-            MW_ <= 1;
-            IOR_ <= 1;
-            IOW_ <= 1;
-            INTA <= 0;
-            STAR <= fetch0;
+            IP <= 'HFF0000;     // point to the rom start location
+            F <= 'H00;          // empty flags register
+            DIR <= 0;           // 
+            MR_ <= 1;           // disable memory readings
+            MW_ <= 1;           // disable memory writings
+            IOR_ <= 1;          // disable i/o readings
+            IOW_ <= 1;          // disable i/o writings
+            INTA <= 0;          // disable external interrupts
+            STAR <= fetch0;     // start with fetch0
         end
 
     //--------------------------------------------------------------------------
@@ -675,7 +688,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
                        (APP0[7:5] == F6)? fetchF6_0:
                        /* default */      fetchF7_0;
 
-                STAR <= (valid_fetch(APP0) == 1)? fetch2:nvi;
+                STAR <= (valid_fetch(APP0, F[5]) == 'B11)? fetch2:nvi;
             end
 
             // se l'OPCODE e' valido prosegui con il fetch per quel tipo di
@@ -831,7 +844,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             // idle state.
             hlt:
             begin
-                STAR <= hlt;
+                STAR <= hlt;    // halt the processor in this state
             end
 
             //------------------------------------------------------------------
@@ -841,7 +854,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             // protocol command that does nothing. 
             nop:
             begin
-                STAR <= test_intr;
+                STAR <= test_intr;  // test for external interrupts 
             end
 
             //------------------------------------------------------------------
@@ -1011,6 +1024,35 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             ldIDTP1:
             begin
                 IDTP <= {APP2, APP1, APP0};
+                STAR <= test_intr;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione EXCHSP
+            // Durante l'esecuzione di tale istruzione, il processore scambia
+            // il contenuto del registro SP con quello del registro PMSP,
+            // permettendone anche l'inizializzazione.
+            exchSP:
+            begin
+                SP <= PMSP;
+                PMSP <= SP;
+                STAR <= test_intr;
+            end
+
+            //------------------------------------------------------------------
+            // istruzione STUM
+            // Durante l'esecuzione di tale istruzione, il processore
+            //  1. mette a 1 il contenuto del flag U/S, passando a lavorare in
+            //     modo utente e lasciando inalterato il contenuto di tutti
+            //     gli altri flag;
+            //  2. scambia il contenuto del registro SP con quello del
+            //     registro PMSP, rendendo non ulteriormente accessibile la
+            //     pila di sistema.
+            stum:
+            begin
+                F <= {F[7:6], 1'B1, F[4:0]};
+                SP <= PMSP;
+                PMSP <= SP;
                 STAR <= test_intr;
             end
             
@@ -1357,8 +1399,8 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             // registro PMSP
             int:
             begin
-                SP <= (F[5] == 1) ? PMSP : SP;
-                PMSP <= (F[5] == 1) ? SP : PMSP;
+                SP <= (F[5] == 1) ? PMSP : SP;   // if in user mode, exchange SP
+                PMSP <= (F[5] == 1) ? SP : PMSP; // with PMSP
                 STAR <= int1;
             end
 
@@ -1370,7 +1412,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
                 SP <= SP - 4;
                 {APP3, APP2, APP1, APP0} <= {F, IP};
                 F <= 'H00;
-                MJR <= int1;
+                MJR <= int2;
                 STAR <= writeL;
             end
 
@@ -1389,7 +1431,7 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             int3:
             begin
                 IP <= {APP2, APP1, APP0};
-                STAR <= fetch0;
+                STAR <= fetch0;         // execute the interrupt sub program
             end
 
             //------------------------------------------------------------------
@@ -1408,6 +1450,15 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             iret1:
             begin
                 {F, IP} <= {APP3, APP2, APP1, APP0};
+                STAR <= iret2;
+            end
+
+            // scambia il contenuto di SP con PMSP e viceversa se il
+            // processore sta passando in modalita' utente
+            iret2:
+            begin
+                SP <= (F[5] == 1) ? PMSP:SP;
+                PMSP <= (F[5] == 1) ? SP:PMSP;
                 STAR <= fetch0;
             end
 
@@ -1434,33 +1485,47 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
             //------------------------------------------------------------------
             // VERIFICA DELLA PRESENZA DI INTERRUZIONI ESTERNE
             // NON MASCHERATE ED EVENTUALE PRELIEVO DEL TIPO
+            // check for external interrupts
             test_intr:
             begin
                 DIR <= 0;
                 STAR <= ((intr & F[4]) == 0)? fetch0:pre_tipo0;
             end
 
+            // accept the interrupt
             pre_tipo0:
             begin
-                INTA <= 1;
+                INTA <= 1;      // accept interrupt
                 STAR <= (intr == 1)? pre_tipo0:pre_tipo1;
             end
 
+            // retrieve the interrupt type and execute it
             pre_tipo1:
             begin
-                SOURCE <= d7_d0;
-                INTA <= 0;
-                STAR <= int;
+                SOURCE <= d7_d0;    // retrieve interrupt type
+                INTA <= 0;          // disable external interrupts
+                STAR <= int;        // start interrupt execution
             end
 
             //------------------------------------------------------------------
-            // ECCEZIONE PER CODICE OPERATIVO NON VALIDO
+            // ECCEZIONE PER CODICE OPERATIVO NON VALIDO O TENTATA ESECUZIONE,
+            // IN MODO UTENTE, DI ISTRUZIONE PRIVILEGIATA
             nvi:
             begin
-                SOURCE <= 'H06;
-                STAR <= int;
+                SOURCE <= (valid_fetch(OPCODE, F[5]) == 'B00) ? 'H06 : 'H05;
+                STAR <= int;        // execute interrupt
             end
 
+            //------------------------------------------------------------------
+            // ECCEZIONE PER TENTATA SCRITTURA, IN MODO UTENTE, NELLA MEMORIA
+            // PROTETTA
+            nvma:
+            begin
+                DIR <= 0;
+                SOURCE <= 'H04;
+                STAR <= int;
+            end
+            
             //------------------------------------------------------------------
             //          MICROSOTTOPROGRAMMA PER LETTURE IN MEMORIA
             // Le etichette degli stati interni da immettere nel registro STAR

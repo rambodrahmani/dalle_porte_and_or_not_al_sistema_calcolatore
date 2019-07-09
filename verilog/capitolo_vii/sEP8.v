@@ -522,15 +522,15 @@ module sEP8(d7_d0, a23_a0, mr_, mw_, ior_, iow_, inta, intr, clock, reset_);
     //                             INITIAL RESET
     always @(reset_ == 0) #1
         begin
-            IP <= 'HFF0000;
-            F <= 'H00;
-            DIR <= 0;
-            MR_ <= 1;
-            MW_ <= 1;
-            IOR_ <= 1;
-            IOW_ <= 1;
-            INTA <= 0;
-            STAR <= fetch0;
+            IP <= 'HFF0000;     // point to the rom start location
+            F <= 'H00;          // empty flags register
+            DIR <= 0;           //
+            MR_ <= 1;           // disable memory readings
+            MW_ <= 1;           // disable memory writings
+            IOR_ <= 1;          // disable i/o readings
+            IOW_ <= 1;          // disable i/o writings
+            INTA <= 0;          // disable external interrupts
+            STAR <= fetch0;     // start with fetch0
         end
 
     //--------------------------------------------------------------------------
