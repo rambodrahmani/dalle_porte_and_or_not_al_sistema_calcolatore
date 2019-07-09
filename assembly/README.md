@@ -31,3 +31,7 @@ referenced as %EAX). Memory addresses are denoted using parantheses, so that
 in Unix development tools such as the GNU tools, while the Intel notation is
 primarily used in Windows tools.
 
+--
+
+Originariamente visto qui: [Dalle porte AND OR NOT al sistema
+calcolatore](http://www.edizioniets.com/scheda.asp?n=9788846743114).
