@@ -5,7 +5,7 @@
  *          Created on 10/07/2019.
  */
 
-module XXX(in_comb, out_comb, dav_, rfd, riga, clock, reset_);
+module RL_20190625(in_comb, out_comb, dav_, rfd, riga, clock, reset_);
     input			clock, reset_;
     output	[3:0]	in_comb;
     input	[3:0]	out_comb;
