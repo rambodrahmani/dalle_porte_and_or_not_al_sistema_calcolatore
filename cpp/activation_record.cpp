@@ -1,26 +1,24 @@
 /**
+ *  File: activation_record.cpp
+ *        Listed below is a small example program. The purpose of this program
+ *        is to demonstrate how activation records work; the program is
+ *        not intended to serve as a good example of style or program
+ *        organization.
  *
- *  File:   activation_record.cpp
- *          Listed below is a small example program. The purpose of this program
- *          is to demonstrate how activation records work; the program is
- *          not intended to serve as a good example of style or program
- *          organization.
+ *        There are comments in the program marking point 1, point 2, etc. For
+ *        example, the program is at point 1 just beforethe statement i = -8;
+ *        is executed. The program passes through these points in order.
+ *        Diagrams showing what the stack looks like at each of these are
+ *        shown further down in this document. If you are using a Web browser
+ *        to read this document, you can use hypertext links to jump back and
+ *        forth between the listing and the diagrams.
  *
- *          There are comments in the program marking point 1, point 2, etc. For
- *          example, the program is at point 1 just beforethe statement i = -8;
- *          is executed. The program passes through these points in order.
- *          Diagrams showing what the stack looks like at each of these are
- *          shown further down in this document. If you are using a Web browser
- *          to read this document, you can use hypertext links to jump back and
- *          forth between the listing and the diagrams.
- *
- *          Originally seen at:
- *          https://people.ucalgary.ca/~norman/encm501winter2016/assignments/enc
- *          m339f15lab1/Activation%20Records%20and%20the%20Stack.pdf
+ *        Originally seen at:
+ *        https://people.ucalgary.ca/~norman/encm501winter2016/assignments/enc
+ *        m339f15lab1/Activation%20Records%20and%20the%20Stack.pdf
  *
  *  Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/05/19.
- *
  */
 
 #include <iostream>

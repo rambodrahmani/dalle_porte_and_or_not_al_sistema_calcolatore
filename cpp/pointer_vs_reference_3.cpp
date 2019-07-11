@@ -1,19 +1,17 @@
 /**
+ * File: pointer_vs_reference_3.cpp
+ *       Passing by pointer Vs Passing by Reference in C++.
  *
- *  File:   pointer_vs_reference_3.cpp
- *          Passing by pointer Vs Passing by Reference in C++.
+ *       In C++, we can pass parameters to a function either by pointers or
+ *       by reference. In both the cases, we get the same result. So the
+ *       following questions are inevitable; when is one preferred over the
+ *       other? What are the reasons we use one over the other?
  *
- *          In C++, we can pass parameters to a function either by pointers or
- *          by reference. In both the cases, we get the same result. So the
- *          following questions are inevitable; when is one preferred over the
- *          other? What are the reasons we use one over the other?
+ *       C++ program to demonstrate differences between pointer and
+ *       reference.
  *
- *          C++ program to demonstrate differences between pointer and
- *          reference.
- *
- *  Author: Rambod Rahmani <rambodrahmani@autistici.org>
- *          Created on 22/05/19.
- *
+ * Author: Rambod Rahmani <rambodrahmani@autistici.org>
+ *         Created on 22/05/19.
  */
 
 #include <iostream>

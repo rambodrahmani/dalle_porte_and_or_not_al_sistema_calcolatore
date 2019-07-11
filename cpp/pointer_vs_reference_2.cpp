@@ -1,36 +1,22 @@
 /**
+ * File: pointer_vs_reference_2.cpp
+ *       Passing by pointer Vs Passing by Reference in C++.
  *
- *  File:   pointer_vs_reference_2.cpp
- *          Passing by pointer Vs Passing by Reference in C++.
+ *       In C++, we can pass parameters to a function either by pointers or
+ *       by reference. In both the cases, we get the same result. So the
+ *       following questions are inevitable; when is one preferred over the
+ *       other? What are the reasons we use one over the other?
  *
- *          In C++, we can pass parameters to a function either by pointers or
- *          by reference. In both the cases, we get the same result. So the
- *          following questions are inevitable; when is one preferred over the
- *          other? What are the reasons we use one over the other?
- *
- *          Passing by Reference: C++ program to swap two numbers using pass by
- *                                reference.
+ *       Passing by Reference: C++ program to swap two numbers using pass by
+ *                             reference.
  *
  *  Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *          Created on 22/05/19.
- *
  */
 
 #include <iostream>
 
 using namespace std;
-
-void swap(int* x, int* y)
-{
-    // copy the value pointer by x in z
-    int z = *x;
-
-    // copy the value pointed by y in x
-    *x = *y;
-
-    // copy the value of z in y
-    *y = z;
-}
 
 void swap(int& x, int& y)
 {
