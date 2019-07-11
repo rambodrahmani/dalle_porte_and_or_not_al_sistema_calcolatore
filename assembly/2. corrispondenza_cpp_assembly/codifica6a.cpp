@@ -1,39 +1,23 @@
 /**
+ * File: codifica6a.cpp
+ *       Reads the input chars from the keyboard and prints out the
+ *       corresponding ASCII char binary code for each input.
  *
- * File: caso_illustrativo_1.cpp
- *       Caso Illustrativo 1 - File C++.
+ *       Compile using:
+ *          g++ codifica6a.cpp codifica6b.cpp -o codifica6
+ *
+ *       or using:
+ *          g++ codifica6a.cpp codifica7b.s -o codifica8
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
- *         Created on 22/05/19.
- *
+ *         Created on 11/07/19.
  */
 
 #include <iostream>
 
 using namespace std;
 
-/**
- * Variabili globali.
- */
-int n = 5;
-int m = 10;
-
-extern "C" int fai(int h, int& k)
-{
-    int a;
-
-    // ...
-
-    h = h + 3;
-
-    a = h;
-
-    k = k + 4;
-
-    // ...
-
-    return a;
-}
+extern "C" void esamina(char aa, char bb[]);
 
 /**
  * Entry point.
@@ -45,12 +29,46 @@ extern "C" int fai(int h, int& k)
  */
 int main(int argc, char * argv[])
 {
-    int t;
+    // each char is coded in ASCII using 8 bits
+    char kappa[8];
 
-    // ...
+    // input char
+    char cc;
 
-    t = fai(n, m);
+    // array loop index
+    int i;
 
-    // ...
+    // infinite loop
+    for (;;)
+    {
+        // read an input character and store it in cc
+        cin.get(cc);
+
+        // check if the new line character was read
+        if (cc == '\n')
+        {
+            // exit loop in that case
+            break;
+        }
+
+        // print the character followd by a blank space
+        cout << cc << " ";
+
+        // call esamina
+        esamina(cc, kappa);
+
+        // loop through the kappa[] array
+        for (i = 0; i < 8; i++)
+        {
+            // print element i in the kappa array
+            cout << kappa[i];
+        }
+
+        // print a new line
+        cout << endl;
+    }
+
+    // return with no errors
+    return 0;
 }
 
