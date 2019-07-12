@@ -38,11 +38,11 @@ module RL_20190625(in_comb, out_comb, dav_, rfd, riga, clock, reset_);
                 end
             S1: begin
                     DAV_ <= 0;
-                    STAR <= (rfd == 1)?S1:S2;
+                    STAR <= (rfd == 1)? S1:S2;
                 end
             S2: begin
                     DAV_ <= 1;
-                    STAR <= (rfd == 1)?S3:S2;
+                    STAR <= (rfd == 1)? S3:S2;
                 end
             S3: begin
                     IN_COMB <= (IN_COMB == 7)? IN_COMB:(IN_COMB + 1);

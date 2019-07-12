@@ -35,13 +35,13 @@ module RL_20190604(x, d15_d0, a3_a0, z7_z0, clock, reset_);
         casex(STAR)
             S0: begin
                     COUNT <= COUNT - 1;
-                    A3_A0 <= (x == 0)? d15_d0[15:12] : d15_d0[11:8];
-                    OUT <= d15_d0[7:0];
-                    STAR <= S1;
+                    STAR <= (COUNT == 2)? S1:S0;
                 end
             S1: begin
-                    COUNT <= (COUNT == 1)? Num_Periodi : (COUNT - 1);
-                    STAR <= (COUNT == 9)? S0 : S1;
+                    COUNT <= Num_Periodi;
+                    A3_A0 <= (x == 0)? d15_d0[15:12] : d15_d0[11:8];
+                    OUT <= d15_d0[7:0];
+                    STAR <= S0;
                 end
         endcase
 endmodule
