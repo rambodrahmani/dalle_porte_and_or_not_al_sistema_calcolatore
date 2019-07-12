@@ -25,7 +25,7 @@ module RL_20190129(soc, eoc, x7_x0, out, pulse_sicuro, reset_sr, clock, reset_);
     assign reset_sr = RESET_SR;
 
     reg  [1:0]  STAR;
-    parameter S0 = 0, S1 = 1, S2 = 2, S3 = 3;
+    parameter S0 = 0, S1 = 1, S2 = 2;
 
     parameter Num_Periodi = 100;
 
