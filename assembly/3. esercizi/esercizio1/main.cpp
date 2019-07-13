@@ -3,7 +3,7 @@
  *       Developer harness test for esercizio1.cpp.
  *
  *       Compile using:
- *          g++ main.cpp -o main
+ *           g++ -m32 main.cpp -o main
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 12/07/19.

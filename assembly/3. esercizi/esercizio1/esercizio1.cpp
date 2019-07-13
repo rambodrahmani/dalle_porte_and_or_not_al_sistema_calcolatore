@@ -1,5 +1,6 @@
 /**
  * File: esercizio1.cpp
+ *       CPP code to be translated into Assembly code.
  *
  * Author: Rambod Rahmani <rambodrahmani@autistici.org>
  *         Created on 12/07/19.
