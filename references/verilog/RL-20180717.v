@@ -1,0 +1,53 @@
+/**
+ * File:    RL-20180717.v
+ *
+ * Author:  Rambod Rahmani <rambodrahmani@autistici.org>
+ *          Created on 14/07/2019.
+ */
+
+module RL_20180717(soc, eoc, numero, out, clock, reset_);
+    input           clock, reset_;
+    output          soc;
+    input           eoc;
+    input   [7:0]   numero;
+    output          out;
+
+    reg         SOC;
+    reg         OUT;
+    reg  [7:0]  COUNT;
+    reg  [7:0]  APP;
+
+    assign soc = SOC;
+    assign out = OUT;
+
+    reg  [1:0]  STAR;
+    parameter S0 = 0, S1 = 1, S2 = 2, S3 = 3;
+
+    always @(reset_ == 0) #1 begin
+                                SOC <= 0;
+                                OUT <= 0;
+                                COUNT <= 10;
+                                STAR <= S0;
+                             end
+
+    always @(posedge clock) if (reset_ == 1) #3
+        casex(STAR)
+            S0: begin
+                    COUNT <= COUNT - 1;
+                    SOC <= 1;
+                    STAR <= (eoc == 1)? S0:S1;
+                end
+            S1: begin
+                    COUNT <= COUNT - 1;
+                    SOC <= 0;
+                    APP <= numero;
+                    STAR <= (eoc == 0)? S1:S2;
+                end
+            S2: begin
+                    COUNT <= (COUNT == 1)? APP:(COUNT - 1);
+                    OUT <= (COUNT == 1)? ~OUT : OUT;
+                    STAR <= (COUNT == 1)? S0:S2;
+                end
+        endcase
+endmodule
+
